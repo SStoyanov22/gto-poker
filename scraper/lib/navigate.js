@@ -150,6 +150,19 @@ export async function scrapeSpot(id, rootQ, path) {
   return extractAllActions(data)
 }
 
+/**
+ * Navigate to a decision point and return the raw API response.
+ *
+ * @param {number}   id     - spot id
+ * @param {string}   rootQ  - starting q-string
+ * @param {string[]} path   - steps to reach the decision point
+ * @returns {Promise<{ data: object, q: string, path: string[] }>}
+ */
+export async function scrapeSpotRaw(id, rootQ, path) {
+  const { data, q } = await navigateTo(id, rootQ, path)
+  return { data, q, path }
+}
+
 /** Clear the in-memory cache. */
 export function clearCache() {
   cache.clear()

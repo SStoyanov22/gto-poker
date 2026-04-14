@@ -15,6 +15,7 @@
 //   --scenario <id>       Scrape a single scenario id
 //   --inspect             Print API response for the root node and exit
 //   --dry-run             Navigate without writing files
+//   --raw                 Save raw JSON responses (no transformation)
 //   --out-dir <dir>       Output directory                (default: scraper/out)
 //
 // Examples:
@@ -30,13 +31,15 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { setToken, getStrategy } from './lib/api.js' // getStrategy used in --inspect mode
-import { scrapeSpot, clearCache } from './lib/navigate.js'
+import { scrapeSpot, scrapeSpotRaw, clearCache } from './lib/navigate.js'
 import { formatRange } from './lib/format.js'
 import { getSpotId } from './lib/spot_ids.js'
 import { writeRangeFile } from './lib/write_output.js'
 import SCENARIO_PATHS from './lib/paths.js'
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
+import { writeFile, mkdir } from 'fs/promises'
+import { dirname } from 'path'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -87,6 +90,18 @@ function scenarioName(id) {
     .replace(/\b(vs|allin)\b/gi, s => s)
 }
 
+// ── Raw JSON file writer ──────────────────────────────────────────────────────
+async function writeRawFile(filePath, data) {
+  await mkdir(dirname(filePath), { recursive: true })
+  await writeFile(filePath, JSON.stringify(data, null, 2), 'utf8')
+}
+
+// ── Raw file path resolver ────────────────────────────────────────────────────
+function scenarioToRawFilePath(id, stake, stack, pfrSize, outDir) {
+  const stackStr = `${stack}bb`
+  return join(outDir, 'raw', stake, pfrSize, stackStr, `${id}.json`)
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   const args = parseArgs(process.argv.slice(2))
@@ -98,6 +113,7 @@ async function main() {
   const outDir  = resolve(__dirname, args['out-dir'] ?? 'out')
   const singleId = args.scenario ?? null
   const dryRun  = !!args['dry-run']
+  const rawMode = !!args.raw
 
   if (!token || token === true) {
     console.error('Error: --token <JWT> is required')
@@ -158,6 +174,7 @@ async function main() {
   console.log(`Scraping ${scenarioIds.length} scenarios — ${stake}/${pfrSize}/${stack}bb`)
   console.log(`Spot id: ${spotId}, root q: "${rootQ}"`)
   if (dryRun) console.log('(dry-run: files will not be written)')
+  if (rawMode) console.log('(raw mode: saving raw JSON responses)')
 
   let ok = 0, skipped = 0, errors = 0
 
@@ -172,52 +189,82 @@ async function main() {
     process.stdout.write(`  ${id} … `)
 
     try {
-      let entry = {}
+      if (rawMode) {
+        // ── Raw mode: save raw API responses ──────────────────────────────────
+        const rawData = {
+          meta: { scenarioId: id, stake, pfrSize, stack, spotId, rootQ, timestamp: new Date().toISOString() }
+        }
 
-      if (spec.variants) {
-        // sqz vs 4b: scrape all 3 variants and merge into one entry
-        for (const [variantKey, variantPath] of Object.entries(spec.variants)) {
-          try {
-            const { raise: raiseFreqs, call: callFreqs } = await scrapeSpot(spotId, rootQ, variantPath)
-            const variantEntry = {}
-            const raiseRanges = {}
-            for (const [sizeBb, freqs] of Object.entries(raiseFreqs)) {
-              const r = formatRange(freqs)
-              if (r) raiseRanges[sizeBb] = r
+        if (spec.variants) {
+          rawData.variants = {}
+          for (const [variantKey, variantPath] of Object.entries(spec.variants)) {
+            try {
+              const { data, q, path } = await scrapeSpotRaw(spotId, rootQ, variantPath)
+              rawData.variants[variantKey] = { q, path, response: data }
+            } catch (variantErr) {
+              process.stdout.write(`(${variantKey}: ${variantErr.message.slice(0, 40)}) `)
             }
-            const callRanges = {}
-            for (const [sizeBb, freqs] of Object.entries(callFreqs)) {
-              const r = formatRange(freqs)
-              if (r) callRanges[sizeBb] = r
-            }
-            if (Object.keys(raiseRanges).length) variantEntry.raise = raiseRanges
-            if (Object.keys(callRanges).length)  variantEntry.call  = callRanges
-            if (Object.keys(variantEntry).length) entry[variantKey] = variantEntry
-          } catch (variantErr) {
-            // Some variants don't exist at short stacks — skip silently
-            process.stdout.write(`(${variantKey}: ${variantErr.message.slice(0, 40)}) `)
           }
+        } else {
+          const { data, q, path } = await scrapeSpotRaw(spotId, rootQ, spec.path)
+          rawData.q = q
+          rawData.path = spec.path
+          rawData.response = data
+        }
+
+        if (!dryRun) {
+          const filePath = scenarioToRawFilePath(id, stake, stack, pfrSize, outDir)
+          await writeRawFile(filePath, rawData)
         }
       } else {
-        // Standard scenario: single path
-        const { raise: raiseFreqs, call: callFreqs } = await scrapeSpot(spotId, rootQ, spec.path)
-        const raiseRanges = {}
-        for (const [sizeBb, freqs] of Object.entries(raiseFreqs)) {
-          const r = formatRange(freqs)
-          if (r) raiseRanges[sizeBb] = r
-        }
-        const callRanges = {}
-        for (const [sizeBb, freqs] of Object.entries(callFreqs)) {
-          const r = formatRange(freqs)
-          if (r) callRanges[sizeBb] = r
-        }
-        if (Object.keys(raiseRanges).length) entry.raise = raiseRanges
-        if (Object.keys(callRanges).length)  entry.call  = callRanges
-      }
+        // ── Standard mode: transform and write JS files ───────────────────────
+        let entry = {}
 
-      if (!dryRun) {
-        const filePath = scenarioToFilePath(id, stake, stack, outDir)
-        await writeRangeFile(filePath, scenarioName(id), { [pfrSize]: entry })
+        if (spec.variants) {
+          // sqz vs 4b: scrape all 3 variants and merge into one entry
+          for (const [variantKey, variantPath] of Object.entries(spec.variants)) {
+            try {
+              const { raise: raiseFreqs, call: callFreqs } = await scrapeSpot(spotId, rootQ, variantPath)
+              const variantEntry = {}
+              const raiseRanges = {}
+              for (const [sizeBb, freqs] of Object.entries(raiseFreqs)) {
+                const r = formatRange(freqs)
+                if (r) raiseRanges[sizeBb] = r
+              }
+              const callRanges = {}
+              for (const [sizeBb, freqs] of Object.entries(callFreqs)) {
+                const r = formatRange(freqs)
+                if (r) callRanges[sizeBb] = r
+              }
+              if (Object.keys(raiseRanges).length) variantEntry.raise = raiseRanges
+              if (Object.keys(callRanges).length)  variantEntry.call  = callRanges
+              if (Object.keys(variantEntry).length) entry[variantKey] = variantEntry
+            } catch (variantErr) {
+              // Some variants don't exist at short stacks — skip silently
+              process.stdout.write(`(${variantKey}: ${variantErr.message.slice(0, 40)}) `)
+            }
+          }
+        } else {
+          // Standard scenario: single path
+          const { raise: raiseFreqs, call: callFreqs } = await scrapeSpot(spotId, rootQ, spec.path)
+          const raiseRanges = {}
+          for (const [sizeBb, freqs] of Object.entries(raiseFreqs)) {
+            const r = formatRange(freqs)
+            if (r) raiseRanges[sizeBb] = r
+          }
+          const callRanges = {}
+          for (const [sizeBb, freqs] of Object.entries(callFreqs)) {
+            const r = formatRange(freqs)
+            if (r) callRanges[sizeBb] = r
+          }
+          if (Object.keys(raiseRanges).length) entry.raise = raiseRanges
+          if (Object.keys(callRanges).length)  entry.call  = callRanges
+        }
+
+        if (!dryRun) {
+          const filePath = scenarioToFilePath(id, stake, stack, outDir)
+          await writeRangeFile(filePath, scenarioName(id), { [pfrSize]: entry })
+        }
       }
 
       console.log('✓')
