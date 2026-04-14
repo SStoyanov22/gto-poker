@@ -1,0 +1,238 @@
+/* ─── CSS Variables / Theme ─────────────────────────────────── */
+:root {
+  --bg-page:          #111318;
+  --bg-surface:       #1a1e27;
+  --bg-surface-2:     #222736;
+
+  --text-primary:     #f0f2f8;
+  --text-secondary:   #9da5bc;
+  --text-muted:       #5c6480;
+
+  --accent:           #5b7cfa;
+
+  --btn-bg:           #1e2435;
+  --btn-border:       #2e3550;
+  --btn-hover-bg:     #262d42;
+  --btn-hover-border: #4a5270;
+
+  --tooltip-bg:       #1e2435;
+  --tooltip-border:   #2e3550;
+
+  --color-raise:      #3a8f92;
+  --color-raise2:     #1b5e46;
+  --color-call:       #cb8c2c;
+  --color-fold-dot:   #666a7a;
+
+  --divider:          #252c3e;
+  --left-panel-w:     380px;
+  --header-h:         48px;
+}
+
+/* ─── Reset / Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── App Shell ──────────────────────────────────────────────── */
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.app-header {
+  height: var(--header-h);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--divider);
+  background: var(--bg-surface);
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-logo-icon {
+  font-size: 1.3rem;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.app-logo-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ─── Body ───────────────────────────────────────────────────── */
+.app-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ─── Left Panel ─────────────────────────────────────────────── */
+.left-panel {
+  width: var(--left-panel-w);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 16px 16px 16px;
+  border-right: 1px solid var(--divider);
+  overflow-y: auto;
+  background: var(--bg-surface);
+}
+
+.left-divider {
+  border-top: 1px solid var(--divider);
+  margin: 2px 0;
+}
+
+/* ─── Scenario info ──────────────────────────────────────────── */
+.scenario-context {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.scenario-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.scenario-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ─── Raise size ─────────────────────────────────────────────── */
+.raise-size-block {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.raise-size-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.raise-size-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-raise);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Stats ──────────────────────────────────────────────────── */
+.stats-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.stat-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-combos {
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-combos.raise-value { color: var(--color-raise); }
+.stat-combos.call-value  { color: var(--color-call); }
+
+.stat-value.raise-value { color: var(--color-raise); }
+.stat-value.call-value  { color: var(--color-call); }
+
+/* ─── Legend ─────────────────────────────────────────────────── */
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-swatch.raise { background: var(--color-raise); }
+.legend-swatch.call  { background: var(--color-call); }
+.legend-swatch.fold  { background: #c94d3a; }
+
+/* ─── Right Panel (grid) ─────────────────────────────────────── */
+.right-panel {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+/* ─── Grid info overlay ──────────────────────────────────────── */
+.grid-info-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

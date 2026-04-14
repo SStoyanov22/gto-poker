@@ -1,0 +1,91 @@
+.range-grid-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.range-grid {
+  display: grid;
+  grid-template-columns: 26px repeat(13, 1fr);
+  grid-template-rows: 26px repeat(13, 1fr);
+  gap: 2px;
+  /* Fill the right panel: constrained by both available width and height */
+  width: min(
+    calc(100vw - var(--left-panel-w) - 34px),
+    calc(100vh - var(--header-h) - 34px)
+  );
+  aspect-ratio: 1;
+  user-select: none;
+}
+
+/* Headers */
+.grid-corner {
+  /* empty top-left corner */
+}
+
+.grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.row-header {
+  /* left side */
+}
+
+/* Cells */
+.grid-cell {
+  position: relative;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: filter 0.1s, transform 0.1s;
+  overflow: hidden;
+}
+
+.grid-cell:hover {
+  filter: brightness(0.88);
+  transform: scale(1.08);
+  z-index: 10;
+  border-radius: 4px;
+}
+
+.cell-label {
+  font-size: clamp(0.46rem, 1.1vw, 0.65rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.01em;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.grid-cell.active .cell-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.grid-cell.pair-cell {
+  /* pairs on the diagonal — no extra style needed, colored by frequency */
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .range-grid {
+    gap: 1px;
+    grid-template-columns: 18px repeat(13, 1fr);
+    grid-template-rows: 18px repeat(13, 1fr);
+  }
+
+  .grid-header {
+    font-size: 0.6rem;
+  }
+
+  .cell-label {
+    font-size: 0.42rem;
+  }
+}

@@ -1,0 +1,28 @@
+// BB vs UTG+SB (6-max, 100bb)
+// Paste your GTO ranges under each pfr size below.
+export default {
+  name: "BB vs UTG+SB",
+  description: "BB faces UTG raise + SB call — 6-max, 100bb",
+  pfrSizes: {
+    '2bb': {
+      raise: "",
+      call: "",
+    },
+    '2.25bb': {
+      raise: "",
+      call: "",
+    },
+    '2.5bb': {
+      raise: {
+        '12bb': "[0.588854]7h5h, 7d5d, 7s5s, 7c5c[/0.588854], [0.69648]AhJh, AdJd, AsJs, AcJc[/0.69648], [1.35794]KhTh, KdTd, KsTs, KcTc[/1.35794], [2.41237]5d5h, 5s5h, 5c5h, 5s5d, 5c5d, 5c5s[/2.41237], [2.66522]4h3h, 4d3d, 4s3s, 4c3c[/2.66522], [3.0019299999999998]QhTh, QdTd, QsTs, QcTc[/3.0019299999999998], [3.39402]7h6h, 7d6d, 7s6s, 7c6c[/3.39402], [3.6251899999999995]4d4h, 4s4h, 4c4h, 4s4d, 4c4d, 4c4s[/3.6251899999999995], [6.45009]9d9h, 9s9h, 9c9h, 9s9d, 9c9d, 9c9s[/6.45009], [8.79298]Ah3h, Ad3d, As3s, Ac3c[/8.79298], [11.0468]5h4h, 5d4d, 5s4s, 5c4c[/11.0468], [11.555200000000001]Kh6h, Kd6d, Ks6s, Kc6c[/11.555200000000001], [12.158199999999999]8d8h, 8s8h, 8c8h, 8s8d, 8c8d, 8c8s[/12.158199999999999], [12.8324]KhQd, KhQs, KhQc, KdQh, KdQs, KdQc, KsQh, KsQd, KsQc, KcQh, KcQd, KcQs[/12.8324], [14.019499999999999]7d7h, 7s7h, 7c7h, 7s7d, 7c7d, 7c7s[/14.019499999999999], [15.9054]8h7h, 8d7d, 8s7s, 8c7c[/15.9054], [16.0868]6d6h, 6s6h, 6c6h, 6s6d, 6c6d, 6c6s[/16.0868], [21.8928]Ah8h, Ad8d, As8s, Ac8c[/21.8928], [27.763199999999998]KhJd, KhJs, KhJc, KdJh, KdJs, KdJc, KsJh, KsJd, KsJc, KcJh, KcJd, KcJs[/27.763199999999998], [28.347]Kh8h, Kd8d, Ks8s, Kc8c[/28.347], [30.8057]Jh9h, Jd9d, Js9s, Jc9c[/30.8057], [37.460100000000004]Ah6h, Ad6d, As6s, Ac6c[/37.460100000000004], [38.0912]Kh4h, Kd4d, Ks4s, Kc4c[/38.0912], [39.1899]AhJd, AhJs, AhJc, AdJh, AdJs, AdJc, AsJh, AsJd, AsJc, AcJh, AcJd, AcJs[/39.1899], [39.4632]6h5h, 6d5d, 6s5s, 6c5c[/39.4632], [45.1511]Ah4h, Ad4d, As4s, Ac4c[/45.1511], [46.2151]AhQd, AhQs, AhQc, AdQh, AdQs, AdQc, AsQh, AsQd, AsQc, AcQh, AcQd, AcQs[/46.2151], [48.3868]Kh9h, Kd9d, Ks9s, Kc9c[/48.3868], [49.0093]Kh7h, Kd7d, Ks7s, Kc7c[/49.0093], [58.3635]Kh5h, Kd5d, Ks5s, Kc5c[/58.3635], [60.899800000000006]Ah2h, Ad2d, As2s, Ac2c[/60.899800000000006], [62.449299999999994]Ah5h, Ad5d, As5s, Ac5c[/62.449299999999994], [63.4668]JdJh, JsJh, JcJh, JsJd, JcJd, JcJs[/63.4668], [78.8412]QhJh, QdJd, QsJs, QcJc[/78.8412], [81.6117]AhQh, AdQd, AsQs, AcQc[/81.6117], [84.8]KhJh, KdJd, KsJs, KcJc[/84.8], [99.6905]KhQh, KdQd, KsQs, KcQc[/99.6905], [99.9997]AhKh, AdKd, AsKs, AcKc[/99.9997], [99.9999]QdQh, QsQh, QcQh, QsQd, QcQd, QcQs[/99.9999], AdAh, AsAh, AcAh, AsAd, AcAd, AcAs, AhKd, AhKs, AhKc, AdKh, AdKs, AdKc, AsKh, AsKd, AsKc, AcKh, AcKd, AcKs, KdKh, KsKh, KcKh, KsKd, KcKd, KcKs"
+      },
+      call: {
+        '2.5bb': "[2.39105]Kh5h, Kd5d, Ks5s, Kc5c[/2.39105], [12.7177]QhJd, QhJs, QhJc, QdJh, QdJs, QdJc, QsJh, QsJd, QsJc, QcJh, QcJd, QcJs[/12.7177], [15.1979]KhJh, KdJd, KsJs, KcJc[/15.1979], [17.4575]9h6h, 9d6d, 9s6s, 9c6c[/17.4575], [18.388099999999998]AhQh, AdQd, AsQs, AcQc[/18.388099999999998], [21.1584]QhJh, QdJd, QsJs, QcJc[/21.1584], [33.683099999999996]Kh6h, Kd6d, Ks6s, Kc6c[/33.683099999999996], [35.970800000000004]Kh7h, Kd7d, Ks7s, Kc7c[/35.970800000000004], [36.5332]JdJh, JsJh, JcJh, JsJd, JcJd, JcJs[/36.5332], [37.5505]Ah5h, Ad5d, As5s, Ac5c[/37.5505], [39.0914]Ah2h, Ad2d, As2s, Ac2c[/39.0914], [40.8381]AhJd, AhJs, AhJc, AdJh, AdJs, AdJc, AsJh, AsJd, AsJc, AcJh, AcJd, AcJs[/40.8381], [45.5476]Kh9h, Kd9d, Ks9s, Kc9c[/45.5476], [52.22409999999999]8h5h, 8d5d, 8s5s, 8c5c[/52.22409999999999], [52.641000000000005]Kh8h, Kd8d, Ks8s, Kc8c[/52.641000000000005], [53.782700000000006]AhQd, AhQs, AhQc, AdQh, AdQs, AdQc, AsQh, AsQd, AsQc, AcQh, AcQd, AcQs[/53.782700000000006], [54.845600000000005]Ah4h, Ad4d, As4s, Ac4c[/54.845600000000005], [57.0168]KhJd, KhJs, KhJc, KdJh, KdJs, KdJc, KsJh, KsJd, KsJc, KcJh, KcJd, KcJs[/57.0168], [60.534200000000006]6h5h, 6d5d, 6s5s, 6c5c[/60.534200000000006], [62.5383]Ah6h, Ad6d, As6s, Ac6c[/62.5383], [68.4594]Jh9h, Jd9d, Js9s, Jc9c[/68.4594], [77.99080000000001]Ah8h, Ad8d, As8s, Ac8c[/77.99080000000001], [83.86019999999999]8h7h, 8d7d, 8s7s, 8c7c[/83.86019999999999], [83.9131]6d6h, 6s6h, 6c6h, 6s6d, 6c6d, 6c6s[/83.9131], [85.9804]7d7h, 7s7h, 7c7h, 7s7d, 7c7d, 7c7s[/85.9804], [87.1215]KhQd, KhQs, KhQc, KdQh, KdQs, KdQc, KsQh, KsQd, KsQc, KcQh, KcQd, KcQs[/87.1215], [87.8417]8d8h, 8s8h, 8c8h, 8s8d, 8c8d, 8c8s[/87.8417], [88.95309999999999]5h4h, 5d4d, 5s4s, 5c4c[/88.95309999999999], [91.1834]Ah3h, Ad3d, As3s, Ac3c[/91.1834], [93.5497]9d9h, 9s9h, 9c9h, 9s9d, 9c9d, 9c9s[/93.5497], [94.0178]4h3h, 4d3d, 4s3s, 4c3c[/94.0178], [95.5573]Th8h, Td8d, Ts8s, Tc8c[/95.5573], [96.3732]4d4h, 4s4h, 4c4h, 4s4d, 4c4d, 4c4s[/96.3732], [96.60560000000001]7h6h, 7d6d, 7s6s, 7c6c[/96.60560000000001], [96.9794]QhTh, QdTd, QsTs, QcTc[/96.9794], [97.5874]5d5h, 5s5h, 5c5h, 5s5d, 5c5d, 5c5s[/97.5874], [98.5963]KhTh, KdTd, KsTs, KcTc[/98.5963], [98.7235]9h8h, 9d8d, 9s8s, 9c8c[/98.7235], [98.8154]9h7h, 9d7d, 9s7s, 9c7c[/98.8154], [98.9814]7h5h, 7d5d, 7s5s, 7c5c[/98.9814], [99.303]AhJh, AdJd, AsJs, AcJc[/99.303], [99.4647]5h3h, 5d3d, 5s3s, 5c3c[/99.4647], [99.5667]8h6h, 8d6d, 8s6s, 8c6c[/99.5667], [99.6908]Ah9h, Ad9d, As9s, Ac9c[/99.6908], [99.7782]Ah7h, Ad7d, As7s, Ac7c[/99.7782], [99.839]Th9h, Td9d, Ts9s, Tc9c[/99.839], [99.8818]3d3h, 3s3h, 3c3h, 3s3d, 3c3d, 3c3s[/99.8818], [99.955]AhTh, AdTd, AsTs, AcTc[/99.955], [99.96000000000001]2d2h, 2s2h, 2c2h, 2s2d, 2c2d, 2c2s[/99.96000000000001], [99.9784]6h4h, 6d4d, 6s4s, 6c4c[/99.9784], [99.9971]JhTh, JdTd, JsTs, JcTc[/99.9971], [99.99860000000001]TdTh, TsTh, TcTh, TsTd, TcTd, TcTs[/99.99860000000001]"
+      }
+    },
+    '3bb': {
+      raise: "",
+      call: "",
+    },
+  }
+}
