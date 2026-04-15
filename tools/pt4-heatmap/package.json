@@ -1,0 +1,16 @@
+{
+  "name": "pt4-heatmap",
+  "version": "1.0.0",
+  "description": "Generate heat maps from PokerTracker 4 database",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "list": "node index.js --list-players",
+    "vpip": "node index.js --player",
+    "help": "node index.js --help"
+  },
+  "dependencies": {
+    "pg": "^8.11.0"
+  }
+}

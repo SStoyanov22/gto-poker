@@ -1,0 +1,1 @@
+Get-ChildItem -Path 'C:\Users\s.stoyanov\AppData\Local\PokerTracker 4' -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.Name -like '*PPH*' -or $_.Name -like '*Layout*' -or $_.Name -like '*hud*' } | Select-Object -ExpandProperty FullName

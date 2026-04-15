@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HudProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>6-Max Cash GTO</Name>
+  <Description>Comprehensive 6-max NL cash HUD with GTO-focused stats and popups</Description>
+  <GameType>CashRing</GameType>
+  <TableSize>6</TableSize>
+  <Version>1.0</Version>
+
+  <!-- Main HUD Panel -->
+  <Panels>
+    <Panel>
+      <Name>Main Stats</Name>
+      <Rows>3</Rows>
+      <Columns>4</Columns>
+      <BackgroundColor>#CC000000</BackgroundColor>
+      <BorderColor>#FF444444</BorderColor>
+      <FontSize>11</FontSize>
+      <FontFamily>Segoe UI</FontFamily>
+
+      <!-- Row 1: Core Preflop -->
+      <Stats>
+        <Stat Row="0" Column="0">
+          <Name>VPIP</Name>
+          <StatId>VPIP</StatId>
+          <Format>{0:0}</Format>
+          <ColorRanges>
+            <Range Min="0" Max="18" Color="#FF6699FF" />
+            <Range Min="19" Max="26" Color="#FFFFFFFF" />
+            <Range Min="27" Max="35" Color="#FFFFFF00" />
+            <Range Min="36" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="0" Column="1">
+          <Name>PFR</Name>
+          <StatId>PFR</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="12" Color="#FF6699FF" />
+            <Range Min="13" Max="22" Color="#FFFFFFFF" />
+            <Range Min="23" Max="32" Color="#FFFFFF00" />
+            <Range Min="33" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="0" Column="2">
+          <Name>3Bet</Name>
+          <StatId>ThreeBet</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="4" Color="#FF6699FF" />
+            <Range Min="5" Max="8" Color="#FFFFFFFF" />
+            <Range Min="9" Max="12" Color="#FFFFFF00" />
+            <Range Min="13" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="0" Column="3">
+          <Name>Hands</Name>
+          <StatId>Hands</StatId>
+          <Format>({0})</Format>
+          <ColorRanges>
+            <Range Min="0" Max="50" Color="#FFFF4444" />
+            <Range Min="51" Max="150" Color="#FFFF9944" />
+            <Range Min="151" Max="500" Color="#FFFFFF00" />
+            <Range Min="501" Max="1000" Color="#FFFFFFFF" />
+            <Range Min="1001" Max="999999" Color="#FF44FF44" />
+          </ColorRanges>
+        </Stat>
+
+        <!-- Row 2: Postflop Tendencies -->
+        <Stat Row="1" Column="0">
+          <Name>AF</Name>
+          <StatId>AggressionFactor</StatId>
+          <Format>{0:0.0}</Format>
+          <ColorRanges>
+            <Range Min="0" Max="1.4" Color="#FF6699FF" />
+            <Range Min="1.5" Max="2.9" Color="#FFFFFFFF" />
+            <Range Min="3.0" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="1" Column="1">
+          <Name>WTSD</Name>
+          <StatId>WTSD</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="24" Color="#FF6699FF" />
+            <Range Min="25" Max="32" Color="#FFFFFFFF" />
+            <Range Min="33" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="1" Column="2">
+          <Name>W$SD</Name>
+          <StatId>WSD</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="47" Color="#FFFF4444" />
+            <Range Min="48" Max="55" Color="#FFFFFFFF" />
+            <Range Min="56" Max="100" Color="#FF44FF44" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="1" Column="3">
+          <Name>WWSF</Name>
+          <StatId>WWSF</StatId>
+          <Format>{0:0}</Format>
+          <ColorRanges>
+            <Range Min="0" Max="40" Color="#FFFF4444" />
+            <Range Min="41" Max="50" Color="#FFFFFFFF" />
+            <Range Min="51" Max="100" Color="#FF44FF44" />
+          </ColorRanges>
+        </Stat>
+
+        <!-- Row 3: Key Exploit Stats -->
+        <Stat Row="2" Column="0">
+          <Name>F3B</Name>
+          <StatId>FoldToThreeBet</StatId>
+          <Format>{0:0}</Format>
+          <ColorRanges>
+            <Range Min="0" Max="54" Color="#FF44FF44" />
+            <Range Min="55" Max="65" Color="#FFFFFFFF" />
+            <Range Min="66" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="2" Column="1">
+          <Name>CB</Name>
+          <StatId>FlopCBet</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="54" Color="#FF6699FF" />
+            <Range Min="55" Max="75" Color="#FFFFFFFF" />
+            <Range Min="76" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="2" Column="2">
+          <Name>FCB</Name>
+          <StatId>FoldToFlopCBet</StatId>
+          <Format>{0:0}</Format>
+          <Separator>/</Separator>
+          <ColorRanges>
+            <Range Min="0" Max="39" Color="#FFFF4444" />
+            <Range Min="40" Max="55" Color="#FFFFFFFF" />
+            <Range Min="56" Max="100" Color="#FF44FF44" />
+          </ColorRanges>
+        </Stat>
+        <Stat Row="2" Column="3">
+          <Name>4B</Name>
+          <StatId>FourBet</StatId>
+          <Format>{0:0}</Format>
+          <ColorRanges>
+            <Range Min="0" Max="2" Color="#FF6699FF" />
+            <Range Min="3" Max="6" Color="#FFFFFFFF" />
+            <Range Min="7" Max="100" Color="#FFFF4444" />
+          </ColorRanges>
+        </Stat>
+      </Stats>
+    </Panel>
+  </Panels>
+</HudProfile>
