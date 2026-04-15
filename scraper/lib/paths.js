@@ -120,7 +120,8 @@ for (const [openerPos, callerPos] of [
   for (let i = oi + 1; i < ci; i++) path.push('f')
   add(`${callerPos.toLowerCase()}_vs_${openerPos.toLowerCase()}`, path)
 }
-add('sb_vs_bb', ['f', 'f', 'f', 'f', 'r'])
+// SB vs BB: SB limps, BB iso-raises, SB faces the raise
+add('sb_vs_bb', ['f', 'f', 'f', 'f', 'c', 'r'])
 
 // ── vs 3-bet ──────────────────────────────────────────────────────────────────
 const VS3B = [
@@ -133,12 +134,13 @@ const VS3B = [
   ['co',  'CO',  'bb',  'BB'],
   ['btn', 'BTN', 'sb',  'SB'],  ['btn', 'BTN', 'bb',  'BB'],
   ['sb',  'SB',  'bb',  'BB'],
-  // bb_vs_3b_sb omitted: when all 5 positions fold to BB, gtobase has no
-  // action node (BB wins the blinds automatically).
 ]
 for (const [op, OP, tb, TB] of VS3B) {
   add(`${op}_vs_3b_${tb}`, vs3bPath(OP, TB))
 }
+// bb_vs_3b_sb: SB limps → BB iso-raises → SB 3-bets → BB faces 3b
+// Path: f,f,f,f (UTG/HJ/CO/BTN fold), c (SB limp), r (BB iso), r (SB 3-bet)
+add('bb_vs_3b_sb', ['f', 'f', 'f', 'f', 'c', 'r', 'r'])
 
 // ── vs 4-bet ──────────────────────────────────────────────────────────────────
 const VS4B = [

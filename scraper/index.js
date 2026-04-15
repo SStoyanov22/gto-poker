@@ -91,6 +91,8 @@ function scenarioName(id) {
 }
 
 // ── Raw JSON file writer ──────────────────────────────────────────────────────
+import { existsSync, readFileSync } from 'fs'
+
 async function writeRawFile(filePath, data) {
   await mkdir(dirname(filePath), { recursive: true })
   await writeFile(filePath, JSON.stringify(data, null, 2), 'utf8')
@@ -112,8 +114,9 @@ async function main() {
   const stack   = parseInt(args.stack ?? '100', 10)
   const outDir  = resolve(__dirname, args['out-dir'] ?? 'out')
   const singleId = args.scenario ?? null
-  const dryRun  = !!args['dry-run']
-  const rawMode = !!args.raw
+  const dryRun       = !!args['dry-run']
+  const rawMode      = !!args.raw
+  const skipExisting = !!args['skip-existing']
 
   if (!token || token === true) {
     console.error('Error: --token <JWT> is required')
@@ -175,6 +178,7 @@ async function main() {
   console.log(`Spot id: ${spotId}, root q: "${rootQ}"`)
   if (dryRun) console.log('(dry-run: files will not be written)')
   if (rawMode) console.log('(raw mode: saving raw JSON responses)')
+  if (skipExisting) console.log('(skip-existing: already-scraped files will be skipped)')
 
   let ok = 0, skipped = 0, errors = 0
 
@@ -191,6 +195,22 @@ async function main() {
     try {
       if (rawMode) {
         // ── Raw mode: save raw API responses ──────────────────────────────────
+        const rawFilePath = scenarioToRawFilePath(id, stake, stack, pfrSize, outDir)
+        if (skipExisting && !dryRun && existsSync(rawFilePath)) {
+          // Only skip if the file has actual data — not an empty shell from a prior 429
+          try {
+            const existing = JSON.parse(readFileSync(rawFilePath, 'utf8'))
+            const isComplete = spec.variants
+              ? Object.keys(spec.variants).every(k => existing.variants?.[k]?.response)
+              : !!existing.response
+            if (isComplete) {
+              console.log('(skipped)')
+              skipped++
+              continue
+            }
+          } catch { /* corrupt file — re-scrape */ }
+        }
+
         const rawData = {
           meta: { scenarioId: id, stake, pfrSize, stack, spotId, rootQ, timestamp: new Date().toISOString() }
         }
@@ -213,8 +233,7 @@ async function main() {
         }
 
         if (!dryRun) {
-          const filePath = scenarioToRawFilePath(id, stake, stack, pfrSize, outDir)
-          await writeRawFile(filePath, rawData)
+          await writeRawFile(rawFilePath, rawData)
         }
       } else {
         // ── Standard mode: transform and write JS files ───────────────────────

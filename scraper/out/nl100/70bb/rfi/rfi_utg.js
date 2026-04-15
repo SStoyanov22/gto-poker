@@ -1,0 +1,10 @@
+export default {
+  name: "RFI UTG",
+  pfrSizes: {
+    "2.5bb": {
+      raise: {
+        "2.5bb": "2cAc, 2dAd, 2hAh, 2sAs, 3cAc, 3dAd, 3hAh, 3sAs, 4cAc, 4dAd, 4hAh, 4sAs, 5cAc, 5dAd, 5hAh, 5sAs, 6cAc, 6dAd, 6hAh, 6sAs, 7cAc, 7dAd, 7hAh, 7sAs, 8c8d, 8c8h, 8c8s, 8cAc, 8d8h, 8d8s, 8dAd, 8h8s, 8hAh, 8sAs, 9c9d, 9c9h, 9c9s, 9cKc, 9cAc, 9d9h, 9d9s, 9dKd, 9dAd, 9h9s, 9hKh, 9hAh, 9sKs, 9sAs, TcTd, TcTh, TcTs, TcJc, TcQc, TcKc, TcAc, TdTh, TdTs, TdJd, TdQd, TdKd, TdAd, ThTs, ThJh, ThQh, ThKh, ThAh, TsJs, TsQs, TsKs, TsAs, JcJd, JcJh, JcJs, JcQc, JcKc, JcAc, JcAd, JcAh, JcAs, JdJh, JdJs, JdQd, JdKd, JdAc, JdAd, JdAh, JdAs, JhJs, JhQh, JhKh, JhAc, JhAd, JhAh, JhAs, JsQs, JsKs, JsAc, JsAd, JsAh, JsAs, QcQd, QcQh, QcQs, QcKc, QcKd, QcKh, QcKs, QcAc, QcAd, QcAh, QcAs, QdQh, QdQs, QdKc, QdKd, QdKh, QdKs, QdAc, QdAd, QdAh, QdAs, QhQs, QhKc, QhKd, QhKh, QhKs, QhAc, QhAd, QhAh, QhAs, QsKc, QsKd, QsKh, QsKs, QsAc, QsAd, QsAh, QsAs, KcKd, KcKh, KcKs, KcAc, KcAd, KcAh, KcAs, KdKh, KdKs, KdAc, KdAd, KdAh, KdAs, KhKs, KhAc, KhAd, KhAh, KhAs, KsAc, KsAd, KsAh, KsAs, AcAd, AcAh, AcAs, AdAh, AdAs, AhAs, [4.5949]3c3d, 3c3h, 3c3s, 3d3h, 3d3s, 3h3s[/4.5949], [10.1545]4c4d, 4c4h, 4c4s, 4d4h, 4d4s, 4h4s[/10.1545], [16.8336]4c5c, 4d5d, 4h5h, 4s5s[/16.8336], [25.2943]5c5d, 5c5h, 5c5s, 5d5h, 5d5s, 5h5s[/25.2943], [15.1067]5c6c, 5d6d, 5h6h, 5s6s[/15.1067], [69.7688]5cKc, 5dKd, 5hKh, 5sKs[/69.7688], [36.6561]6c6d, 6c6h, 6c6s, 6d6h, 6d6s, 6h6s[/36.6561], [10.7159]6c7c, 6d7d, 6h7h, 6s7s[/10.7159], [56.7267]6cKc, 6dKd, 6hKh, 6sKs[/56.7267], [83.695]7c7d, 7c7h, 7c7s, 7d7h, 7d7s, 7h7s[/83.695], [64.8884]7cKc, 7dKd, 7hKh, 7sKs[/64.8884], 8cKc, 8dKd, 8hKh, 8sKs, 9cQc, 9dQd, 9hQh, 9sQs, [13.9938]9cTc, 9dTd, 9hTh, 9sTs[/13.9938], [30.9159]TcKd, TcKh, TcKs, TdKc, TdKh, TdKs, ThKc, ThKd, ThKs, TsKc, TsKd, TsKh[/30.9159], TcAd, TcAh, TcAs, TdAc, TdAh, TdAs, ThAc, ThAd, ThAs, TsAc, TsAd, TsAh, JcKd, JcKh, JcKs, JdKc, JdKh, JdKs, JhKc, JhKd, JhKs, JsKc, JsKd, JsKh, [53.0336]JcQd, JcQh, JcQs, JdQc, JdQh, JdQs, JhQc, JhQd, JhQs, JsQc, JsQd, JsQh[/53.0336]",
+      },
+    },
+  }
+}

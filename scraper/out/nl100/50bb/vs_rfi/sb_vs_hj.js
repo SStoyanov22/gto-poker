@@ -1,0 +1,13 @@
+export default {
+  name: "SB vs HJ",
+  pfrSizes: {
+    "2.5bb": {
+      raise: {
+        "8bb": "[90.2688]4cAc, 4dAd, 4hAh, 4sAs[/90.2688], [98.4423]5cAc, 5dAd, 5hAh, 5sAs[/98.4423], [11.3972]6c6d, 6c6h, 6c6s, 6d6h, 6d6s, 6h6s[/11.3972], [24.6213]7c7d, 7c7h, 7c7s, 7d7h, 7d7s, 7h7s[/24.6213], [42.9263]8c8d, 8c8h, 8c8s, 8d8h, 8d8s, 8h8s[/42.9263], [2.1048]8cAc, 8dAd, 8hAh, 8sAs[/2.1048], [90.288]9c9d, 9c9h, 9c9s, 9d9h, 9d9s, 9h9s[/90.288], [51.2022]9cAc, 9dAd, 9hAh, 9sAs[/51.2022], [99.3571]TcTd, TcTh, TcTs, TdTh, TdTs, ThTs[/99.3571], [96.0404]TcJc, TdJd, ThJh, TsJs[/96.0404], [54.2649]TcQc, TdQd, ThQh, TsQs[/54.2649], [96.2142]TcKc, TdKd, ThKh, TsKs[/96.2142], [91.9583]TcAc, TdAd, ThAh, TsAs[/91.9583], JcJd, JcJh, JcJs, JdJh, JdJs, JhJs, QcQd, QcQh, QcQs, QdQh, QdQs, QhQs, KcKd, KcKh, KcKs, KcAc, KcAd, KcAh, KcAs, KdKh, KdKs, KdAc, KdAd, KdAh, KdAs, KhKs, KhAc, KhAd, KhAh, KhAs, KsAc, KsAd, KsAh, KsAs, AcAd, AcAh, AcAs, AdAh, AdAs, AhAs, [96.7976]JcQc, JdQd, JhQh, JsQs[/96.7976], [97.1771]JcKc, JdKd, JhKh, JsKs[/97.1771], [81.5992]JcAc, JdAd, JhAh, JsAs[/81.5992], [66.9249]JcAd, JcAh, JcAs, JdAc, JdAh, JdAs, JhAc, JhAd, JhAs, JsAc, JsAd, JsAh[/66.9249], [88.1305]QcKc, QdKd, QhKh, QsKs[/88.1305], [73.9822]QcKd, QcKh, QcKs, QdKc, QdKh, QdKs, QhKc, QhKd, QhKs, QsKc, QsKd, QsKh[/73.9822], QcAc, QdAd, QhAh, QsAs, [97.595]QcAd, QcAh, QcAs, QdAc, QdAh, QdAs, QhAc, QhAd, QhAs, QsAc, QsAd, QsAh[/97.595]",
+      },
+      call: {
+        "2.5bb": "[0.2644]2c2d, 2c2h, 2c2s, 2d2h, 2d2s, 2h2s[/0.2644], [1.0098]3c3d, 3c3h, 3c3s, 3d3h, 3d3s, 3h3s[/1.0098], [1.8717]4c4d, 4c4h, 4c4s, 4d4h, 4d4s, 4h4s[/1.8717], [1.5906]4c5c, 4d5d, 4h5h, 4s5s[/1.5906], [0.5773]4cAc, 4dAd, 4hAh, 4sAs[/0.5773], [2.294]5c5d, 5c5h, 5c5s, 5d5h, 5d5s, 5h5s[/2.294], [0.8222]5c6c, 5d6d, 5h6h, 5s6s[/0.8222], [1.5577]5cAc, 5dAd, 5hAh, 5sAs[/1.5577], [2.5687]6c6d, 6c6h, 6c6s, 6d6h, 6d6s, 6h6s[/2.5687], [0.3998]6c7c, 6d7d, 6h7h, 6s7s[/0.3998], [4.5531]7c7d, 7c7h, 7c7s, 7d7h, 7d7s, 7h7s[/4.5531], [7.7237]8c8d, 8c8h, 8c8s, 8d8h, 8d8s, 8h8s[/7.7237], [9.712]9c9d, 9c9h, 9c9s, 9d9h, 9d9s, 9h9s[/9.712], [0.1423]9cTc, 9dTd, 9hTh, 9sTs[/0.1423], [2.0805]9cAc, 9dAd, 9hAh, 9sAs[/2.0805], [0.6429]TcTd, TcTh, TcTs, TdTh, TdTs, ThTs[/0.6429], [2.7755]TcJc, TdJd, ThJh, TsJs[/2.7755], [1.6041]TcQc, TdQd, ThQh, TsQs[/1.6041], [3.7858]TcKc, TdKd, ThKh, TsKs[/3.7858], [8.0417]TcAc, TdAd, ThAh, TsAs[/8.0417], [3.2024]JcQc, JdQd, JhQh, JsQs[/3.2024], [2.8229]JcKc, JdKd, JhKh, JsKs[/2.8229], [18.4007]JcAc, JdAd, JhAh, JsAs[/18.4007], [11.8695]QcKc, QdKd, QhKh, QsKs[/11.8695], [2.405]QcAd, QcAh, QcAs, QdAc, QdAh, QdAs, QhAc, QhAd, QhAs, QsAc, QsAd, QsAh[/2.405]",
+      },
+    },
+  }
+}

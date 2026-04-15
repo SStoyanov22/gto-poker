@@ -1,14 +1,12 @@
 import React, { useState, useMemo } from 'react'
 import './App.css'
-import { gameTypes, PFR_SIZES } from './ranges/index.js'
-import { parseRangeString, countCombos, TOTAL_COMBOS } from './utils/rangeUtils.js'
+import { gameTypes, PFR_SIZES } from './config/gameTypes.js'
+import { getRange } from './data/registry.js'
+import { countCombos, TOTAL_COMBOS } from './utils/rangeUtils.js'
 import RangeGrid from './components/RangeGrid.jsx'
 import ScenarioSelector from './components/ScenarioSelector.jsx'
 
-const defaultGameType  = gameTypes[0]
-const defaultStake     = defaultGameType.stakes?.find(s => s.id === 'nl100') ?? defaultGameType.stakes?.[0] ?? null
-const defaultStackSize = (defaultStake ?? defaultGameType).stackSizes[0]
-const defaultScenario  = defaultStackSize.scenarios[0]
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function getStackSizes(gameType, stakeId) {
   if (gameType.stakes) {
@@ -16,6 +14,38 @@ function getStackSizes(gameType, stakeId) {
   }
   return gameType.stackSizes
 }
+
+// Merge one or more { handType: freq } maps (used when combining call sizes)
+function mergeFreqMaps(maps) {
+  const merged = {}
+  for (const map of maps) {
+    for (const [hand, freq] of Object.entries(map)) {
+      merged[hand] = Math.min(1, (merged[hand] ?? 0) + freq)
+    }
+  }
+  return merged
+}
+
+// Build a human-readable name from a scenario definition
+function scenarioName(def) {
+  if (!def) return ''
+  const { section, group, label } = def
+  if (section === 'RFI') return `${group} RFI`
+  const cleanLabel = label
+    .replace(/^vs /, '')
+    .replace(/ [345]b$/, '')
+    .replace(/ limp$/, '')
+  return `${group} ${cleanLabel}`
+}
+
+// ── Defaults ──────────────────────────────────────────────────────────────────
+
+const defaultGameType  = gameTypes[0]
+const defaultStake     = defaultGameType.stakes?.find(s => s.id === 'nl100') ?? defaultGameType.stakes?.[0] ?? null
+const defaultStackSize = (defaultStake ?? defaultGameType).stackSizes[0]
+const defaultScenario  = defaultStackSize.scenarios[0]
+
+// ── App ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
   const [selectedGameTypeId,  setSelectedGameTypeId]  = useState(defaultGameType.id)
@@ -58,6 +88,7 @@ export default function App() {
     setSelectedScenarioId(newScene.id)
   }
 
+  // The scenario def selected in the UI (may differ from activeScenario due to toggles)
   const selectedScenario = useMemo(() => {
     const gt         = gameTypes.find(g => g.id === selectedGameTypeId)
     const stackSizes = getStackSizes(gt, selectedStakeId)
@@ -65,6 +96,7 @@ export default function App() {
     return stack.scenarios.find(s => s.id === selectedScenarioId) ?? stack.scenarios[0]
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedScenarioId])
 
+  // The effective scenario def after applying toggles (vs4b allin, sqz rfi-folds)
   const activeScenario = useMemo(() => {
     const gt         = gameTypes.find(g => g.id === selectedGameTypeId)
     const stackSizes = getStackSizes(gt, selectedStakeId)
@@ -79,73 +111,51 @@ export default function App() {
       return stack.scenarios.find(s => s.id === foldId) ?? selectedScenario
     }
     return selectedScenario
-  }, [selectedScenario, vs4bIsAllin, vsSqueezeRfiFolds, sqzVs4bType, selectedGameTypeId, selectedStakeId, selectedStackSizeId])
+  }, [selectedScenario, vs4bIsAllin, vsSqueezeRfiFolds, selectedGameTypeId, selectedStakeId, selectedStackSizeId])
 
   const scenarioContext = useMemo(() => {
     const gt = gameTypes.find(g => g.id === selectedGameTypeId)
     if (gt.stakes) {
       const stake = gt.stakes.find(s => s.id === selectedStakeId)
-      return `6max, ${stake.label}, ${selectedPfrSizeId}`
+      return `6-max, ${stake.label}, ${selectedPfrSizeId}`
     }
     return `Tournament, ${selectedStackSizeId}, ${selectedPfrSizeId}`
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedPfrSizeId])
 
+  // ── Load range data from processed JSON registry ──────────────────────────
   const { raiseData, raise2Data, callData, raiseTo, stats } = useMemo(() => {
-    const data    = activeScenario.data
-    let pfrData = data.pfrSizes?.[selectedPfrSizeId] ?? { raise: data.raise ?? '', call: data.call ?? '' }
-    if (activeScenario.section === 'sqz vs 4b') pfrData = pfrData?.[sqzVs4bType] ?? {}
-    // call: { 'Xbb': "..." } object or call: "" string
-    const callData = (() => {
-      if (!pfrData.call) return {}
-      if (typeof pfrData.call === 'object') {
-        const merged = {}
-        for (const rangeStr of Object.values(pfrData.call)) {
-          const parsed = parseRangeString(rangeStr)
-          for (const [hand, freq] of Object.entries(parsed)) {
-            merged[hand] = Math.min(1, (merged[hand] ?? 0) + freq)
-          }
-        }
-        return merged
-      }
-      return parseRangeString(pfrData.call)
-    })()
+    const raw = getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
 
-    let raiseData  = {}  // smaller raises (primary color)
-    let raise2Data = {}  // largest raise (dark green)
-    let raiseTo
+    // Handle sqz vs 4b variant key (rfi_4b / cc_fold / cc_call)
+    const data = (activeScenario.section === 'sqz vs 4b')
+      ? raw?.[sqzVs4bType] ?? {}
+      : raw ?? {}
 
-    if (pfrData.raise && typeof pfrData.raise === 'object') {
-      // New format: raise: { 'Xbb': "...", '100bb': "..." }
-      const entries = Object.entries(pfrData.raise)
-        .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
-      if (entries.length >= 2) {
-        raise2Data = parseRangeString(entries[entries.length - 1][1])
-        for (const [, rangeStr] of entries.slice(0, -1)) {
-          const parsed = parseRangeString(rangeStr)
-          for (const [hand, freq] of Object.entries(parsed)) {
-            raiseData[hand] = Math.min(1, (raiseData[hand] ?? 0) + freq)
-          }
-        }
-      } else if (entries.length === 1) {
-        raiseData = parseRangeString(entries[0][1])
-      }
-      const sizes = entries.map(e => e[0])
-      raiseTo = sizes.length === 1 ? sizes[0] : sizes.length > 1 ? sizes : null
-    } else {
-      // Legacy: raise: "" string
-      raiseData = parseRangeString(pfrData.raise ?? '')
-      raiseTo = activeScenario.raiseSizes?.[selectedPfrSizeId] ?? null
+    // call: merge all size maps into one frequency map
+    const callData = mergeFreqMaps(Object.values(data.call ?? {}))
+
+    // raise: sort sizes, smallest → raiseData (teal), largest → raise2Data (dark green)
+    const raiseEntries = Object.entries(data.raise ?? {})
+      .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+
+    let raiseData  = {}
+    let raise2Data = {}
+    let raiseTo    = null
+
+    if (raiseEntries.length >= 2) {
+      raise2Data = raiseEntries[raiseEntries.length - 1][1]
+      raiseData  = mergeFreqMaps(raiseEntries.slice(0, -1).map(e => e[1]))
+      raiseTo    = raiseEntries.map(e => e[0])
+    } else if (raiseEntries.length === 1) {
+      raiseData = raiseEntries[0][1]
+      raiseTo   = raiseEntries[0][0]
     }
 
-    // Merged for stats (total raise combos)
-    const mergedRaise = { ...raiseData }
-    for (const [hand, freq] of Object.entries(raise2Data)) {
-      mergedRaise[hand] = Math.min(1, (mergedRaise[hand] ?? 0) + freq)
-    }
-
-    const raiseCombos = countCombos(mergedRaise)
-    const callCombos  = countCombos(callData)
-    const totalCombos = raiseCombos + callCombos
+    // Stats
+    const mergedRaise  = mergeFreqMaps([raiseData, raise2Data])
+    const raiseCombos  = countCombos(mergedRaise)
+    const callCombos   = countCombos(callData)
+    const totalCombos  = raiseCombos + callCombos
 
     return {
       raiseData,
@@ -153,16 +163,17 @@ export default function App() {
       callData,
       raiseTo,
       stats: {
-        totalCombos:  Math.round(totalCombos  * 10) / 10,
-        raiseCombos:  Math.round(raiseCombos  * 10) / 10,
-        callCombos:   Math.round(callCombos   * 10) / 10,
+        totalCombos: Math.round(totalCombos  * 10) / 10,
+        raiseCombos: Math.round(raiseCombos  * 10) / 10,
+        callCombos:  Math.round(callCombos   * 10) / 10,
         totalPct:    ((totalCombos  / TOTAL_COMBOS) * 100).toFixed(1),
         raisePct:    ((raiseCombos  / TOTAL_COMBOS) * 100).toFixed(1),
         callPct:     ((callCombos   / TOTAL_COMBOS) * 100).toFixed(1),
         hasCall:     callCombos > 0,
+        hasData:     !!raw,
       },
     }
-  }, [activeScenario, selectedPfrSizeId])
+  }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId, sqzVs4bType])
 
   return (
     <div className="app">
@@ -188,19 +199,23 @@ export default function App() {
             selectedStackSizeId={selectedStackSizeId}
             selectedScenarioId={selectedScenarioId}
             selectedPfrSizeId={selectedPfrSizeId}
-            onGameTypeChange={handleGameTypeChange}
-            onStakeChange={handleStakeChange}
-            onStackSizeChange={handleStackSizeChange}
             vs4bIsAllin={vs4bIsAllin}
             onVs4bAllinChange={setVs4bIsAllin}
             vsSqueezeRfiFolds={vsSqueezeRfiFolds}
             onVsSqueezeRfiFoldsChange={setVsSqueezeRfiFolds}
             sqzVs4bType={sqzVs4bType}
             onSqzVs4bTypeChange={setSqzVs4bType}
-            onScenarioChange={(id) => { setSelectedScenarioId(id); setVs4bIsAllin(false); setVsSqueezeRfiFolds(false); setSqzVs4bType('rfi_4b') }}
+            onGameTypeChange={handleGameTypeChange}
+            onStakeChange={handleStakeChange}
+            onStackSizeChange={handleStackSizeChange}
+            onScenarioChange={(id) => {
+              setSelectedScenarioId(id)
+              setVs4bIsAllin(false)
+              setVsSqueezeRfiFolds(false)
+              setSqzVs4bType('rfi_4b')
+            }}
             onPfrSizeChange={setSelectedPfrSizeId}
           />
-
         </aside>
 
         {/* Grid + info bar */}
@@ -215,46 +230,50 @@ export default function App() {
 
           <div className="grid-info-overlay">
             <div className="scenario-context">{scenarioContext}</div>
-            <div className="scenario-title">{activeScenario.data.name}</div>
+            <div className="scenario-title">{scenarioName(activeScenario)}</div>
 
-            <div className="stats-block">
-              <div className="stat-item">
-                <span className="stat-label">Total range</span>
-                <span className="stat-value">{stats.totalPct}%</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Combos</span>
-                <span className="stat-value">{stats.totalCombos}</span>
-              </div>
-              {stats.hasCall ? (
-                <>
+            {!stats.hasData ? (
+              <div className="no-data-msg">No data scraped for this combination yet.</div>
+            ) : (
+              <div className="stats-block">
+                <div className="stat-item">
+                  <span className="stat-label">Total range</span>
+                  <span className="stat-value">{stats.totalPct}%</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Combos</span>
+                  <span className="stat-value">{stats.totalCombos}</span>
+                </div>
+                {stats.hasCall ? (
+                  <>
+                    <div className="stat-item">
+                      <span className="stat-label">Raise</span>
+                      <span className="stat-value raise-value">{stats.raisePct}%</span>
+                      <span className="stat-combos raise-value">{stats.raiseCombos} combos</span>
+                    </div>
+                    <div className="stat-item">
+                      <span className="stat-label">{activeScenario.callLabel ?? 'Call'}</span>
+                      <span className="stat-value call-value">{stats.callPct}%</span>
+                      <span className="stat-combos call-value">{stats.callCombos} combos</span>
+                    </div>
+                  </>
+                ) : (
                   <div className="stat-item">
                     <span className="stat-label">Raise</span>
                     <span className="stat-value raise-value">{stats.raisePct}%</span>
                     <span className="stat-combos raise-value">{stats.raiseCombos} combos</span>
                   </div>
+                )}
+                {raiseTo && (
                   <div className="stat-item">
-                    <span className="stat-label">{activeScenario.callLabel ?? 'Call'}</span>
-                    <span className="stat-value call-value">{stats.callPct}%</span>
-                    <span className="stat-combos call-value">{stats.callCombos} combos</span>
+                    <span className="stat-label">Raise to</span>
+                    {[raiseTo].flat().map(size => (
+                      <span key={size} className="stat-value raise-value">{size}</span>
+                    ))}
                   </div>
-                </>
-              ) : (
-                <div className="stat-item">
-                  <span className="stat-label">Raise</span>
-                  <span className="stat-value raise-value">{stats.raisePct}%</span>
-                  <span className="stat-combos raise-value">{stats.raiseCombos} combos</span>
-                </div>
-              )}
-              {raiseTo && (
-                <div className="stat-item">
-                  <span className="stat-label">Raise to</span>
-                  {[raiseTo].flat().map(size => (
-                    <span key={size} className="stat-value raise-value">{size}</span>
-                  ))}
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
 
             <div className="legend">
               <div className="legend-item">
