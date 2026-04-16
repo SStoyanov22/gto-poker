@@ -17,18 +17,18 @@ const BASE_URL = 'https://api.gtowizard.com'
 
 // ── Hand-type index mapping ───────────────────────────────────────────────────
 // The 169-element strategy array maps to hand types in a 13×13 matrix,
-// stored in row-major order. Ranks are indexed A(0)→2(12).
-//   row < col  → suited  (e.g. [0][8] → A6s)
-//   row > col  → offsuit (e.g. [1][0] → AKo, higher rank is col)
-//   row == col → pair    (e.g. [1][1] → KK)
-const RANKS = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+// stored in row-major order. Ranks are indexed 2(0)→A(12).
+//   row < col  → offsuit (e.g. [0][12] → A2o, higher rank is col)
+//   row > col  → suited  (e.g. [12][0] → A2s, higher rank is row)
+//   row == col → pair    (e.g. [0][0] → 22, [12][12] → AA)
+const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
 
 const HAND_TYPES = [] // length 169, index → hand notation
 for (let row = 0; row < 13; row++) {
   for (let col = 0; col < 13; col++) {
     if (row === col)      HAND_TYPES.push(RANKS[row] + RANKS[row])
-    else if (row < col)   HAND_TYPES.push(RANKS[row] + RANKS[col] + 's')
-    else                  HAND_TYPES.push(RANKS[col] + RANKS[row] + 'o')
+    else if (row < col)   HAND_TYPES.push(RANKS[col] + RANKS[row] + 'o')
+    else                  HAND_TYPES.push(RANKS[row] + RANKS[col] + 's')
   }
 }
 
