@@ -1,57 +1,99 @@
-// ── Range data registry ───────────────────────────────────────────────────────
+// ── Range data registry (GTOWizard) ───────────────────────────────────────────
 //
-// Loads all processed JSON range files via import.meta.glob and exposes
+// Loads GTOWizard JSON range files via import.meta.glob and exposes
 // a single getRange() lookup function.
 //
-// Processed JSON files live at:
-//   scraper/out/processed/{stake}/{pfrSize}/{stack}/{scenarioId}.json
+// GTOWizard files live at:
+//   scraper/gtowizard/out/{stake}/{stack}bb/{scenarioId}.json
 //
-// Data format (standard scenario):
+// GTOWizard JSON format:
 //   {
-//     "raise": { "13bb": { "AA": 1.0, "AKs": 0.8, ... } },
-//     "call":  { "2.5bb": { "AA": 0.0, "AKs": 0.2, ... } },
-//     "ev": {
-//       "main":          { "AA": 12.87, ... },
-//       "raise_13bb":    { "AA": 12.87, ... },
-//       "call_2.5bb":    { "AA": 6.35, ... }
-//     }
-//   }
-//
-// Data format (sqz vs 4b — variant scenario):
-//   {
-//     "rfi_4b":  { "raise": {...}, "call": {...}, "ev": {...} },
-//     "cc_fold": { "call": {...}, "ev": {...} },
-//     "cc_call": { "call": {...}, "ev": {...} }
+//     "meta": { "gametype": "...", "depth": 100, ... },
+//     "processed": {
+//       "raise": { "2.5bb": { "AA": 1.0, "AKs": 0.8, ... }, "100bb": {...} },
+//       "call":  { "2.5bb": { ... } },
+//       "ev": { ... }
+//     },
+//     "raw": { ... }
 //   }
 // ─────────────────────────────────────────────────────────────────────────────
 
 const modules = import.meta.glob(
-  '/scraper/out/processed/**/*.json',
+  '/scraper/gtowizard/out/**/*.json',
   { eager: true }
 )
 
-// registry key: `${stake}|${pfrSize}|${stack}|${id}`
+// registry key: `${stake}|${stack}|${id}`
 const registry = {}
 
 for (const [path, mod] of Object.entries(modules)) {
-  // path: /scraper/out/processed/{stake}/{pfrSize}/{stack}/{id}.json
+  // path: /scraper/gtowizard/out/{stake}/{stack}bb/{id}.json
   const parts = path.split('/')
-  // parts: ['', 'scraper', 'out', 'processed', stake, pfrSize, stack, 'id.json']
-  const [stake, pfrSize, stack, file] = parts.slice(4)
+  // parts: ['', 'scraper', 'gtowizard', 'out', stake, stackbb, 'id.json']
+  const stake = parts[4]
+  const stackbb = parts[5]  // e.g. '100bb'
+  const file = parts[6]
   if (!file) continue
+  const stack = stackbb  // keep as '100bb'
   const id = file.replace('.json', '')
-  registry[`${stake}|${pfrSize}|${stack}|${id}`] = mod.default ?? mod
+  registry[`${stake}|${stack}|${id}`] = mod.default ?? mod
 }
+
+// Debug: log registry keys
+console.log('Registry keys:', Object.keys(registry).filter(k => k.includes('utg_vs_3b')))
+console.log('Total files loaded:', Object.keys(registry).length)
 
 /**
  * Look up processed range data for a specific combination.
  *
  * @param {string} stake   - e.g. 'nl100'
- * @param {string} pfrSize - e.g. '2.5bb'
+ * @param {string} pfrSize - e.g. '2.5bb' (used to extract from JSON)
  * @param {string} stack   - e.g. '100bb'
  * @param {string} id      - scenario id, e.g. 'rfi_btn'
  * @returns {object|null}  - processed JSON data, or null if not yet scraped
  */
 export function getRange(stake, pfrSize, stack, id) {
-  return registry[`${stake}|${pfrSize}|${stack}|${id}`] ?? null
+  const data = registry[`${stake}|${stack}|${id}`]
+  if (!data) return null
+
+  // GTOWizard format: data.processed contains the range data
+  const processed = data.processed
+  if (!processed) return null
+
+  // Display frequencies (conditional) - for grid cell coloring
+  // Shows "what to do when I have this hand" e.g., 76s = 100% call
+  const raise = processed.raise ?? {}
+  const call = processed.call ?? {}
+  const fold = processed.fold ?? {}
+
+  // Combo frequencies (absolute) - for statistics
+  // Used for counting combos in each action category
+  const combos = processed.combos ?? { raise: {}, call: {}, fold: {} }
+
+  // Use inRange from processed data if available (more accurate - includes hands that fold 100%)
+  // Otherwise fall back to collecting from raise/call actions
+  let inRange = processed.inRange
+  if (!inRange) {
+    const inRangeSet = new Set()
+    for (const hands of Object.values(raise)) {
+      for (const hand of Object.keys(hands)) {
+        inRangeSet.add(hand)
+      }
+    }
+    for (const hands of Object.values(call)) {
+      for (const hand of Object.keys(hands)) {
+        inRangeSet.add(hand)
+      }
+    }
+    inRange = [...inRangeSet]
+  }
+
+  return {
+    raise,       // Display frequencies (conditional) for grid
+    call,        // Display frequencies (conditional) for grid
+    fold,        // Display frequencies (conditional) for grid
+    combos,      // Combo frequencies (absolute) for statistics
+    ev: processed.ev ?? {},
+    inRange      // Hands in the opening range
+  }
 }

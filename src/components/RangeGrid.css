@@ -73,6 +73,10 @@
   /* pairs on the diagonal — no extra style needed, colored by frequency */
 }
 
+.grid-cell.not-in-range .cell-label {
+  color: rgba(255, 255, 255, 0.35);
+}
+
 /* Responsive tweaks */
 @media (max-width: 480px) {
   .range-grid {

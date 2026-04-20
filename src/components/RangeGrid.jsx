@@ -5,15 +5,15 @@ import DecisionModal from './DecisionModal.jsx'
 import './RangeGrid.css'
 
 // Colors
-const COLOR_RAISE  = '#3a8f92'
-const COLOR_RAISE2 = '#1b5e46'
-const COLOR_CALL   = '#cb8c2c'
-const COLOR_FOLD   = '#c94d3a'
+const COLOR_RAISE  = '#EE3B3B'
+const COLOR_RAISE2 = '#3E0F0F'
+const COLOR_CALL   = '#22c55e'
+const COLOR_FOLD   = '#3E7BB6'
 
 
 /**
  * Build a CSS background for a cell.
- * Left-to-right gradient, least to most aggressive: fold → call → raise → raise2.
+ * Left-to-right gradient, most to least aggressive: raise2 → raise → call → fold.
  */
 function cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq) {
   const hasRaise  = raiseFreq  > 0.001
@@ -24,10 +24,10 @@ function cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq) {
   if (!hasRaise && !hasRaise2 && !hasCall) return COLOR_FOLD
 
   const segments = []
-  if (hasFold)   segments.push({ color: COLOR_FOLD,   freq: foldFreq })
-  if (hasCall)   segments.push({ color: COLOR_CALL,   freq: callFreq })
-  if (hasRaise)  segments.push({ color: COLOR_RAISE,  freq: raiseFreq })
   if (hasRaise2) segments.push({ color: COLOR_RAISE2, freq: raise2Freq })
+  if (hasRaise)  segments.push({ color: COLOR_RAISE,  freq: raiseFreq })
+  if (hasCall)   segments.push({ color: COLOR_CALL,   freq: callFreq })
+  if (hasFold)   segments.push({ color: COLOR_FOLD,   freq: foldFreq })
 
   if (segments.length === 1) return segments[0].color
 
@@ -51,12 +51,15 @@ function rollDecision(raiseFreq, raise2Freq, callFreq) {
   return 'Fold'
 }
 
-export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseTo, callLabel = 'Call' }) {
-  const [tooltip, setTooltip] = useState({ visible: false, hand: '', raiseFreq: 0, raise2Freq: 0, callFreq: 0, foldFreq: 0, x: 0, y: 0 })
+// Color for hands not in range (grayed out)
+const COLOR_NOT_IN_RANGE = '#2a2e38'
+
+export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseTo, callLabel = 'Call', inRangeSet = null }) {
+  const [tooltip, setTooltip] = useState({ visible: false, hand: '', raiseFreq: 0, raise2Freq: 0, callFreq: 0, foldFreq: 0, isInRange: true, x: 0, y: 0 })
   const [modal, setModal] = useState(null)
   const containerRef = useRef(null)
 
-  const handleMouseEnter = useCallback((e, hand, raiseFreq, raise2Freq, callFreq, foldFreq) => {
+  const handleMouseEnter = useCallback((e, hand, raiseFreq, raise2Freq, callFreq, foldFreq, isInRange) => {
     const rect = e.currentTarget.getBoundingClientRect()
     setTooltip({
       visible: true,
@@ -65,6 +68,7 @@ export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseT
       raise2Freq,
       callFreq,
       foldFreq,
+      isInRange,
       x: rect.right,
       y: rect.top + rect.height / 2,
     })
@@ -107,17 +111,22 @@ export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseT
             {/* Cells */}
             {RANKS.map((colRank, col) => {
               const hand = getHandNotation(row, col)
-              const { raiseFreq, raise2Freq, callFreq, foldFreq } = getCellData(hand, raiseData, callData, raise2Data)
-              const bg = cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq)
+              const { raiseFreq, raise2Freq, callFreq, foldFreq, isInRange } = getCellData(hand, raiseData, callData, raise2Data, inRangeSet)
+
+              // "Not in range" hands show as gray, otherwise use action colors
+              const bg = isInRange
+                ? cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq)
+                : COLOR_NOT_IN_RANGE
+
               const isActive = raiseFreq > 0.001 || raise2Freq > 0.001 || callFreq > 0.001
               const isPair = row === col
 
               return (
                 <div
                   key={col}
-                  className={`grid-cell${isActive ? ' active' : ''}${isPair ? ' pair-cell' : ''}`}
+                  className={`grid-cell${isActive ? ' active' : ''}${isPair ? ' pair-cell' : ''}${!isInRange ? ' not-in-range' : ''}`}
                   style={{ background: bg }}
-                  onMouseEnter={e => handleMouseEnter(e, hand, raiseFreq, raise2Freq, callFreq, foldFreq)}
+                  onMouseEnter={e => handleMouseEnter(e, hand, raiseFreq, raise2Freq, callFreq, foldFreq, isInRange)}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                   onClick={() => handleClick(hand, raiseFreq, raise2Freq, callFreq, foldFreq)}
@@ -138,6 +147,7 @@ export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseT
         foldFreq={tooltip.foldFreq}
         raiseTo={raiseTo}
         callLabel={callLabel}
+        isInRange={tooltip.isInRange}
         x={tooltip.x}
         y={tooltip.y}
         visible={tooltip.visible}

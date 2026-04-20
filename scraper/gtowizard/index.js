@@ -12,9 +12,12 @@
 //   --pfr-size <size>     2bb | 2.5bb | 3bb             (default: 2.5bb)
 //   --stack <depth>       Stack depth in bb             (default: 100)
 //   --scenario <id>       Scrape a single scenario id
+//   --filter <pattern>    Only scrape scenarios matching pattern (e.g., "sqz" for squeeze spots)
+//   --squeeze-only        Only scrape squeeze/cold-call scenarios (60 total)
 //   --list                List all available scenarios
 //   --inspect             Print API response for a spot and exit
 //   --dry-run             Fetch without writing files
+//   --skip-existing       Skip scenarios that already have output files
 //   --out-dir <dir>       Output directory              (default: scraper/gtowizard/out)
 //
 // Examples:
@@ -35,6 +38,20 @@ import { writeFile, mkdir, readFile } from 'fs/promises'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { existsSync } from 'fs'
+
+// ── Rate limiting ────────────────────────────────────────────────────────────
+const RATE_LIMIT_MS = 500  // 500ms between requests (2 req/sec)
+let lastRequestTime = 0
+
+async function rateLimit() {
+  const now = Date.now()
+  const elapsed = now - lastRequestTime
+  if (elapsed < RATE_LIMIT_MS) {
+    const delay = RATE_LIMIT_MS - elapsed
+    await new Promise(resolve => setTimeout(resolve, delay))
+  }
+  lastRequestTime = Date.now()
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -71,13 +88,15 @@ function parseArgs(argv) {
 }
 
 // ── Gametype mapping ────────────────────────────────────────────────────────
-// Extend GAMETYPES for different stakes
+// Format: Cash6mGeneral_6mNL{stake}R{size*10}
+// e.g., 2.5bb → R25, 2bb → R20, 2.25bb → R225, 3bb → R30
 const GAMETYPE_MAP = {
-  nl25:  { '2.5bb': 'Cash6mGeneral_6mNL25R25' },
-  nl50:  { '2.5bb': 'Cash6mGeneral_6mNL50R25' },
-  nl100: { '2.5bb': 'Cash6mGeneral_6mNL100R25', '2bb': 'Cash6mGeneral_6mNL100R20', '3bb': 'Cash6mGeneral_6mNL100R30' },
-  nl200: { '2.5bb': 'Cash6mGeneral_6mNL200R25' },
-  nl500: { '2.5bb': 'Cash6mGeneral_6mNL500R25' },
+  nl25:  { '2bb': 'Cash6mGeneral_6mNL25R20', '2.25bb': 'Cash6mGeneral_6mNL25R225', '2.5bb': 'Cash6mGeneral_6mNL25R25', '3bb': 'Cash6mGeneral_6mNL25R30' },
+  nl50:  { '2bb': 'Cash6mGeneral_6mNL50R20', '2.25bb': 'Cash6mGeneral_6mNL50R225', '2.5bb': 'Cash6mGeneral_6mNL50R25', '3bb': 'Cash6mGeneral_6mNL50R30' },
+  nl100: { '2bb': 'Cash6mGeneral_6mNL100R20', '2.25bb': 'Cash6mGeneral_6mNL100R225', '2.5bb': 'Cash6mGeneral_6mNL100R25', '3bb': 'Cash6mGeneral_6mNL100R30' },
+  nl200: { '2bb': 'Cash6mGeneral_6mNL200R20', '2.25bb': 'Cash6mGeneral_6mNL200R225', '2.5bb': 'Cash6mGeneral_6mNL200R25', '3bb': 'Cash6mGeneral_6mNL200R30' },
+  nl500: { '2bb': 'Cash6mGeneral_6mNL500R20', '2.25bb': 'Cash6mGeneral_6mNL500R225', '2.5bb': 'Cash6mGeneral_6mNL500R25', '3bb': 'Cash6mGeneral_6mNL500R30' },
+  nl1k:  { '2bb': 'Cash6mGeneral_6mNL1000R20', '2.25bb': 'Cash6mGeneral_6mNL1000R225', '2.5bb': 'Cash6mGeneral_6mNL1000R25', '3bb': 'Cash6mGeneral_6mNL1000R30' },
 }
 
 function getGametypeString(stake, pfrSize) {
@@ -101,6 +120,7 @@ async function scrapeScenario(gametype, depth, spot, outDir, dryRun) {
   console.log(`  Actions: ${spot.actions}`)
 
   try {
+    await rateLimit()  // Respect rate limits
     const raw = await getSpotSolution({
       gametype,
       depth,
@@ -210,6 +230,7 @@ async function main() {
     console.log(`\nInspecting: ${scenarioId}`)
     console.log(`Actions: ${spot.actions}`)
 
+    await rateLimit()
     const raw = await getSpotSolution({
       gametype,
       depth,
@@ -233,22 +254,55 @@ async function main() {
     return
   }
 
-  // ── Full scrape mode ──
-  const spotIds = Object.keys(spots).sort()
+  // ── Full scrape mode (with optional filter) ──
+  let spotIds = Object.keys(spots).sort()
+
+  if (args['squeeze-only']) {
+    // Squeeze decision spots: 3 positions like bb_vs_utg_hj (not containing 3b/4b/5b/sqz)
+    const squeezeDecision = spotIds.filter(id =>
+      /^[a-z]+_vs_[a-z]+_[a-z]+$/.test(id) &&
+      !id.includes('sqz') && !id.includes('3b') && !id.includes('4b') && !id.includes('5b')
+    )
+    // vs Squeeze spots: contains _vs_sqz_
+    const vsSqueeze = spotIds.filter(id => id.includes('_vs_sqz_'))
+    spotIds = [...squeezeDecision, ...vsSqueeze].sort()
+    console.log(`\n--squeeze-only: ${spotIds.length} scenarios (${squeezeDecision.length} squeeze + ${vsSqueeze.length} vs squeeze)`)
+  } else if (args.filter) {
+    const pattern = args.filter.toLowerCase()
+    spotIds = spotIds.filter(id => id.includes(pattern))
+    console.log(`\nFilter: "${args.filter}" → ${spotIds.length} scenarios`)
+  }
+
   console.log(`\nScraping ${spotIds.length} scenarios...`)
 
   let success = 0
   let failed = 0
 
-  for (const id of spotIds) {
+  const skipExisting = !!args['skip-existing']
+  let skipped = 0
+
+  for (let i = 0; i < spotIds.length; i++) {
+    const id = spotIds[i]
     const spot = { ...spots[id], id }
+
+    // Skip if file already exists
+    if (skipExisting) {
+      const outputPath = join(outDir, `${id}.json`)
+      if (existsSync(outputPath)) {
+        console.log(`[${i + 1}/${spotIds.length}] ⏭ ${id} (already exists)`)
+        skipped++
+        continue
+      }
+    }
+
+    console.log(`[${i + 1}/${spotIds.length}]`)
     const result = await scrapeScenario(gametype, depth, spot, outDir, dryRun)
     if (result.success) success++
     else failed++
   }
 
   console.log(`\n════════════════════════════════════════════════════════════════`)
-  console.log(`Done! Success: ${success}, Failed: ${failed}`)
+  console.log(`Done! Success: ${success}, Failed: ${failed}, Skipped: ${skipped}`)
 }
 
 main().catch(err => {

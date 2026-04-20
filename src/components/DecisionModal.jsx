@@ -10,7 +10,7 @@ export default function DecisionModal({ hand, raiseFreq, raise2Freq = 0, callFre
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
 
-  const pct = v => `${Math.round(v * 100)}%`
+  const pct = v => `${(v * 100).toFixed(1)}%`
   const isMixed = [raiseFreq, raise2Freq, callFreq, foldFreq].filter(f => f > 0.001).length >= 2
 
   const sizes = raiseTo ? [raiseTo].flat() : []
@@ -20,7 +20,7 @@ export default function DecisionModal({ hand, raiseFreq, raise2Freq = 0, callFre
   const decisionColor = decision === 'Raise'  ? 'var(--color-raise)'
     : decision === 'Raise2' ? 'var(--color-raise2)'
     : decision === 'Call'   ? 'var(--color-call)'
-    : '#c94d3a'
+    : 'var(--color-fold-dot)'
 
   const decisionLabel = decision === 'Call' ? callLabel.toUpperCase()
     : decision === 'Fold' ? 'FOLD'
@@ -66,7 +66,7 @@ export default function DecisionModal({ hand, raiseFreq, raise2Freq = 0, callFre
             )}
             {foldFreq > 0.001 && (
               <div className="decision-freq-row">
-                <span className="decision-dot" style={{ background: '#c94d3a' }} />
+                <span className="decision-dot" style={{ background: 'var(--color-fold-dot)' }} />
                 <span>Fold</span>
                 <span className="decision-freq-val">{pct(foldFreq)}</span>
               </div>

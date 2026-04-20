@@ -18,10 +18,10 @@
   --tooltip-bg:       #1e2435;
   --tooltip-border:   #2e3550;
 
-  --color-raise:      #3a8f92;
-  --color-raise2:     #1b5e46;
-  --color-call:       #cb8c2c;
-  --color-fold-dot:   #666a7a;
+  --color-raise:      #EE3B3B;
+  --color-raise2:     #3E0F0F;
+  --color-call:       #22c55e;
+  --color-fold-dot:   #3E7BB6;
 
   --divider:          #252c3e;
   --left-panel-w:     380px;
@@ -160,13 +160,15 @@ body {
 .stats-block {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .stat-item {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  padding: 6px 10px;
+  border-radius: 6px;
 }
 
 .stat-label {
@@ -187,13 +189,36 @@ body {
 .stat-combos {
   font-size: 0.68rem;
   font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
 }
 
-.stat-combos.raise-value { color: var(--color-raise); }
-.stat-combos.call-value  { color: var(--color-call); }
+/* Action-colored stat items with white text */
+.stat-item.stat-raise,
+.stat-item.stat-raise2,
+.stat-item.stat-call,
+.stat-item.stat-fold {
+  color: #fff;
+}
 
-.stat-value.raise-value { color: var(--color-raise); }
-.stat-value.call-value  { color: var(--color-call); }
+.stat-item.stat-raise .stat-label,
+.stat-item.stat-raise .stat-value,
+.stat-item.stat-raise .stat-combos,
+.stat-item.stat-raise2 .stat-label,
+.stat-item.stat-raise2 .stat-value,
+.stat-item.stat-raise2 .stat-combos,
+.stat-item.stat-call .stat-label,
+.stat-item.stat-call .stat-value,
+.stat-item.stat-call .stat-combos,
+.stat-item.stat-fold .stat-label,
+.stat-item.stat-fold .stat-value,
+.stat-item.stat-fold .stat-combos {
+  color: #fff;
+}
+
+.stat-item.stat-raise  { background: var(--color-raise); }
+.stat-item.stat-raise2 { background: var(--color-raise2); }
+.stat-item.stat-call   { background: var(--color-call); }
+.stat-item.stat-fold   { background: var(--color-fold-dot); }
 
 /* ─── Legend ─────────────────────────────────────────────────── */
 
@@ -215,7 +240,7 @@ body {
 
 .legend-swatch.raise { background: var(--color-raise); }
 .legend-swatch.call  { background: var(--color-call); }
-.legend-swatch.fold  { background: #c94d3a; }
+.legend-swatch.fold  { background: var(--color-fold-dot); }
 
 /* ─── Right Panel (grid) ─────────────────────────────────────── */
 .right-panel {

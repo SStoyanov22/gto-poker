@@ -167,15 +167,25 @@ export function getHandNotation(row, col) {
 /**
  * Given a hand notation and parsed raise/call maps, return action frequencies.
  * raiseFreq + callFreq <= 1.0; foldFreq = 1 - raiseFreq - callFreq
+ *
+ * @param {Set|null} inRangeSet - Optional set of hands that are "in range" for this spot.
+ *   If provided and hand is not in set, returns isInRange: false (hand was never in range).
+ *   If null, all hands are treated as "in range" and fold is calculated normally.
  */
-export function getCellData(handNotation, parsedRaise, parsedCall, parsedRaise2 = {}) {
+export function getCellData(handNotation, parsedRaise, parsedCall, parsedRaise2 = {}, inRangeSet = null) {
   const raiseFreq  = parsedRaise[handNotation]  ?? 0
   const raise2Freq = parsedRaise2[handNotation] ?? 0
   const callFreq   = parsedCall[handNotation]   ?? 0
   const combined   = Math.min(1, raiseFreq + raise2Freq + callFreq)
-  const foldFreq   = Math.max(0, 1 - combined)
 
-  return { raiseFreq, raise2Freq, callFreq, foldFreq }
+  // Check if hand is "in range" (has any action data)
+  const isInRange = inRangeSet ? inRangeSet.has(handNotation) : (combined > 0)
+
+  // Only calculate fold frequency for hands that are in range
+  // "Not in range" hands should show as gray, not fold
+  const foldFreq = isInRange ? Math.max(0, 1 - combined) : 0
+
+  return { raiseFreq, raise2Freq, callFreq, foldFreq, isInRange }
 }
 
 /**

@@ -38,6 +38,16 @@ const STACK_SIZES = {
       CO: { UTG: '8.5', HJ: '8.5' },
       HJ: { UTG: '8' },
     },
+    // Squeeze sizes (squeezer|opener|coldCaller -> size)
+    squeeze: {
+      'CO|UTG|HJ': '11',
+      'BTN|UTG|HJ': '11', 'BTN|UTG|CO': '11', 'BTN|HJ|CO': '11',
+      'SB|UTG|HJ': '14', 'SB|UTG|CO': '14', 'SB|UTG|BTN': '14',
+      'SB|HJ|CO': '14', 'SB|HJ|BTN': '14', 'SB|CO|BTN': '14',
+      'BB|UTG|HJ': '15', 'BB|UTG|CO': '15', 'BB|UTG|BTN': '15', 'BB|UTG|SB': '15',
+      'BB|HJ|CO': '15', 'BB|HJ|BTN': '15', 'BB|HJ|SB': '15',
+      'BB|CO|BTN': '15', 'BB|CO|SB': '15', 'BB|BTN|SB': '15',
+    },
     fourBet: {
       UTG: { HJ: '20', CO: '21.5', BTN: '22.5', SB: '25', BB: '27.5' },
       HJ: { CO: '21.5', BTN: '22.5', SB: '25', BB: '27.5' },
@@ -167,6 +177,15 @@ function getOpenSBSize() {
   return stackSizes.openSB || '3.5'
 }
 
+/**
+ * Get the squeeze size based on squeezer, opener, coldCaller and stack depth
+ */
+function getSqueezeSize(squeezer, opener, coldCaller) {
+  const stackSizes = STACK_SIZES[currentStack] || STACK_SIZES[100]
+  const key = `${squeezer}|${opener}|${coldCaller}`
+  return stackSizes.squeeze?.[key] || '14'  // Default to 14bb if not found
+}
+
 // ── Path builders ────────────────────────────────────────────────────────────
 
 /**
@@ -253,13 +272,24 @@ export function squeezeActions(squeezer, opener, coldCaller, sizes = DEFAULT_SIZ
 
 /**
  * Build action string for vs squeeze spot (opener or cold-caller facing squeeze)
+ *
+ * After the squeeze, action goes back around the table:
+ * - If hero is the opener: opener acts next after squeeze
+ * - If hero is the cold caller: opener acts first, then cold caller
  */
 export function vsSqueezeActions(hero, squeezer, opener, coldCaller, sizes = DEFAULT_SIZES) {
   let base = squeezeActions(squeezer, opener, coldCaller, sizes)
-  // Use position-aware squeeze size (similar to 3-bet, but may be larger due to dead money)
-  const squeezeSize = getThreeBetSize(squeezer, opener) // Use 3-bet size as baseline
+  // Use proper squeeze size (larger than 3-bet due to dead money from cold caller)
+  const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
   base += `-R${squeezeSize}`
-  for (let i = POS[squeezer] + 1; i < POS[hero]; i++) base += '-F'
+
+  // After squeeze, action goes to opener first, then cold caller
+  // If hero is the cold caller, opener must fold first
+  if (hero === coldCaller) {
+    base += '-F'  // Opener folds
+  }
+  // If hero is the opener, no additional folds needed - it's their turn
+
   return base
 }
 
@@ -270,6 +300,101 @@ export function srpActions(caller, opener, sizes = DEFAULT_SIZES) {
   let actions = vsOpenActions(caller, opener, sizes)
   actions += '-C'
   return actions
+}
+
+/**
+ * Build action string for overcall spot (open + cold call + hero decides)
+ * @param {string} hero - Hero's position (deciding to overcall)
+ * @param {string} opener - Original raiser
+ * @param {string} coldCaller - Player who cold-called
+ */
+export function overcallActions(hero, opener, coldCaller, sizes = DEFAULT_SIZES) {
+  const actions = []
+  for (let i = 0; i < POS[opener]; i++) actions.push('F')
+  const openSize = opener === 'SB' ? getOpenSBSize() : sizes.open
+  actions.push(`R${openSize}`)
+  for (let i = POS[opener] + 1; i < POS[coldCaller]; i++) actions.push('F')
+  actions.push('C')
+  for (let i = POS[coldCaller] + 1; i < POS[hero]; i++) actions.push('F')
+  return actions.join('-')
+}
+
+/**
+ * Build action string for cold call 3-bet spot (open + 3-bet + hero decides to cold call)
+ * @param {string} hero - Hero's position (deciding to cold call 3-bet)
+ * @param {string} opener - Original raiser
+ * @param {string} threeBettor - 3-bettor
+ */
+export function coldCall3betActions(hero, opener, threeBettor, sizes = DEFAULT_SIZES) {
+  const actions = []
+  for (let i = 0; i < POS[opener]; i++) actions.push('F')
+  const openSize = opener === 'SB' ? getOpenSBSize() : sizes.open
+  actions.push(`R${openSize}`)
+  for (let i = POS[opener] + 1; i < POS[threeBettor]; i++) actions.push('F')
+  const threeBetSize = getThreeBetSize(threeBettor, opener)
+  actions.push(`R${threeBetSize}`)
+  for (let i = POS[threeBettor] + 1; i < POS[hero]; i++) actions.push('F')
+  return actions.join('-')
+}
+
+/**
+ * Build action string for vs 3-bet with cold caller (opener facing 3-bet, someone else cold called)
+ * Action: Open -> Cold Call -> 3-bet -> folds to opener
+ * @param {string} opener - Original raiser facing 3-bet
+ * @param {string} coldCaller - Player who cold-called the open
+ * @param {string} threeBettor - 3-bettor
+ */
+export function vs3betWithCallerActions(opener, coldCaller, threeBettor, sizes = DEFAULT_SIZES) {
+  const actions = []
+  for (let i = 0; i < POS[opener]; i++) actions.push('F')
+  const openSize = opener === 'SB' ? getOpenSBSize() : sizes.open
+  actions.push(`R${openSize}`)
+  for (let i = POS[opener] + 1; i < POS[coldCaller]; i++) actions.push('F')
+  actions.push('C')
+  for (let i = POS[coldCaller] + 1; i < POS[threeBettor]; i++) actions.push('F')
+  const threeBetSize = getThreeBetSize(threeBettor, opener)
+  actions.push(`R${threeBetSize}`)
+  // Folds back to opener
+  for (let i = POS[threeBettor] + 1; i < 6; i++) actions.push('F')
+  return actions.join('-')
+}
+
+/**
+ * Build action string for multiway overcall (open + 2 cold calls + hero decides)
+ * @param {string} hero - Hero's position
+ * @param {string} opener - Original raiser
+ * @param {string} caller1 - First cold caller
+ * @param {string} caller2 - Second cold caller
+ */
+export function multiwayOvercallActions(hero, opener, caller1, caller2, sizes = DEFAULT_SIZES) {
+  const actions = []
+  for (let i = 0; i < POS[opener]; i++) actions.push('F')
+  const openSize = opener === 'SB' ? getOpenSBSize() : sizes.open
+  actions.push(`R${openSize}`)
+  for (let i = POS[opener] + 1; i < POS[caller1]; i++) actions.push('F')
+  actions.push('C')
+  for (let i = POS[caller1] + 1; i < POS[caller2]; i++) actions.push('F')
+  actions.push('C')
+  for (let i = POS[caller2] + 1; i < POS[hero]; i++) actions.push('F')
+  return actions.join('-')
+}
+
+/**
+ * Build action string for squeeze vs 4-bet (squeezer facing 4-bet from opener)
+ * @param {string} squeezer - Player who squeezed
+ * @param {string} opener - Original raiser who 4-bets
+ * @param {string} coldCaller - Player who cold-called the open
+ */
+export function squeezeVs4betActions(squeezer, opener, coldCaller, sizes = DEFAULT_SIZES) {
+  let base = squeezeActions(squeezer, opener, coldCaller, sizes)
+  const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
+  base += `-R${squeezeSize}`
+  // Cold caller folds, opener 4-bets
+  base += '-F'
+  // Use a 4-bet size (approximate - squeeze pot 4-bet)
+  const fourBetSize = getFourBetSize(opener, squeezer) || '28'
+  base += `-R${fourBetSize}`
+  return base
 }
 
 // ── Spot definitions ────────────────────────────────────────────────────────
@@ -342,6 +467,164 @@ export function generatePreflopSpots(sizes = DEFAULT_SIZES) {
       description: `${opener} vs ${threeBettor} 5-bet`,
       actions: vs5betActions(opener, threeBettor, sizes),
       position: opener,
+    }
+  }
+
+  // ── Squeeze spots (hero squeezes after open + cold call) ──
+  // Format: {squeezer}_vs_{opener}_{coldCaller}
+  const squeezeCombos = [
+    // CO squeezes
+    ['CO', 'UTG', 'HJ'],
+    // BTN squeezes
+    ['BTN', 'UTG', 'HJ'], ['BTN', 'UTG', 'CO'], ['BTN', 'HJ', 'CO'],
+    // SB squeezes
+    ['SB', 'UTG', 'HJ'], ['SB', 'UTG', 'CO'], ['SB', 'UTG', 'BTN'],
+    ['SB', 'HJ', 'CO'], ['SB', 'HJ', 'BTN'], ['SB', 'CO', 'BTN'],
+    // BB squeezes
+    ['BB', 'UTG', 'HJ'], ['BB', 'UTG', 'CO'], ['BB', 'UTG', 'BTN'], ['BB', 'UTG', 'SB'],
+    ['BB', 'HJ', 'CO'], ['BB', 'HJ', 'BTN'], ['BB', 'HJ', 'SB'],
+    ['BB', 'CO', 'BTN'], ['BB', 'CO', 'SB'], ['BB', 'BTN', 'SB'],
+  ]
+
+  for (const [squeezer, opener, coldCaller] of squeezeCombos) {
+    spots[`${squeezer.toLowerCase()}_vs_${opener.toLowerCase()}_${coldCaller.toLowerCase()}`] = {
+      description: `${squeezer} squeeze vs ${opener}+${coldCaller}`,
+      actions: squeezeActions(squeezer, opener, coldCaller, sizes),
+      position: squeezer,
+    }
+  }
+
+  // ── vs Squeeze spots (opener facing squeeze) ──
+  // Format: {opener}_vs_sqz_{coldCaller}_{squeezer}
+  for (const [squeezer, opener, coldCaller] of squeezeCombos) {
+    spots[`${opener.toLowerCase()}_vs_sqz_${coldCaller.toLowerCase()}_${squeezer.toLowerCase()}`] = {
+      description: `${opener} vs ${coldCaller}+${squeezer} squeeze`,
+      actions: vsSqueezeActions(opener, squeezer, opener, coldCaller, sizes),
+      position: opener,
+    }
+  }
+
+  // ── vs Squeeze spots (cold caller facing squeeze) ──
+  // Format: {coldCaller}_vs_sqz_{opener}_{squeezer}
+  for (const [squeezer, opener, coldCaller] of squeezeCombos) {
+    spots[`${coldCaller.toLowerCase()}_vs_sqz_${opener.toLowerCase()}_${squeezer.toLowerCase()}`] = {
+      description: `${coldCaller} (cold caller) vs ${opener}+${squeezer} squeeze`,
+      actions: vsSqueezeActions(coldCaller, squeezer, opener, coldCaller, sizes),
+      position: coldCaller,
+      coldCaller: true,
+    }
+  }
+
+  // ── Overcall spots (open + cold call + hero decides to overcall) ──
+  // Format: {hero}_oc_{opener}_{coldCaller}
+  const overcallCombos = [
+    // CO overcalls
+    ['CO', 'UTG', 'HJ'],
+    // BTN overcalls
+    ['BTN', 'UTG', 'HJ'], ['BTN', 'UTG', 'CO'], ['BTN', 'HJ', 'CO'],
+    // SB overcalls
+    ['SB', 'UTG', 'HJ'], ['SB', 'UTG', 'CO'], ['SB', 'UTG', 'BTN'],
+    ['SB', 'HJ', 'CO'], ['SB', 'HJ', 'BTN'], ['SB', 'CO', 'BTN'],
+    // BB overcalls
+    ['BB', 'UTG', 'HJ'], ['BB', 'UTG', 'CO'], ['BB', 'UTG', 'BTN'], ['BB', 'UTG', 'SB'],
+    ['BB', 'HJ', 'CO'], ['BB', 'HJ', 'BTN'], ['BB', 'HJ', 'SB'],
+    ['BB', 'CO', 'BTN'], ['BB', 'CO', 'SB'], ['BB', 'BTN', 'SB'],
+  ]
+
+  for (const [hero, opener, coldCaller] of overcallCombos) {
+    spots[`${hero.toLowerCase()}_oc_${opener.toLowerCase()}_${coldCaller.toLowerCase()}`] = {
+      description: `${hero} overcall vs ${opener}+${coldCaller}`,
+      actions: overcallActions(hero, opener, coldCaller, sizes),
+      position: hero,
+      category: 'overcall',
+    }
+  }
+
+  // ── Cold call 3-bet spots (open + 3-bet + hero cold calls) ──
+  // Format: {hero}_cc3b_{opener}_{threeBettor}
+  const coldCall3bCombos = [
+    // SB cold calls 3-bet
+    ['SB', 'UTG', 'BTN'], ['SB', 'UTG', 'CO'], ['SB', 'UTG', 'HJ'],
+    ['SB', 'HJ', 'BTN'], ['SB', 'HJ', 'CO'],
+    ['SB', 'CO', 'BTN'],
+    // BB cold calls 3-bet
+    ['BB', 'UTG', 'BTN'], ['BB', 'UTG', 'CO'], ['BB', 'UTG', 'HJ'],
+    ['BB', 'UTG', 'SB'],
+    ['BB', 'HJ', 'BTN'], ['BB', 'HJ', 'CO'], ['BB', 'HJ', 'SB'],
+    ['BB', 'CO', 'BTN'], ['BB', 'CO', 'SB'],
+    ['BB', 'BTN', 'SB'],
+  ]
+
+  for (const [hero, opener, threeBettor] of coldCall3bCombos) {
+    spots[`${hero.toLowerCase()}_cc3b_${opener.toLowerCase()}_${threeBettor.toLowerCase()}`] = {
+      description: `${hero} cold call ${threeBettor} 3-bet vs ${opener}`,
+      actions: coldCall3betActions(hero, opener, threeBettor, sizes),
+      position: hero,
+      category: 'cold_call_3b',
+    }
+  }
+
+  // ── vs 3-bet with cold caller (opener facing 3-bet after someone cold called) ──
+  // Format: {opener}_vs_3b_cc_{coldCaller}_{threeBettor}
+  // This happens when: opener raises, someone calls, later position 3-bets
+  const vs3bWithCallerCombos = [
+    // UTG opens, gets cold called, faces 3-bet
+    ['UTG', 'HJ', 'CO'], ['UTG', 'HJ', 'BTN'], ['UTG', 'HJ', 'SB'], ['UTG', 'HJ', 'BB'],
+    ['UTG', 'CO', 'BTN'], ['UTG', 'CO', 'SB'], ['UTG', 'CO', 'BB'],
+    ['UTG', 'BTN', 'SB'], ['UTG', 'BTN', 'BB'],
+    ['UTG', 'SB', 'BB'],
+    // HJ opens, gets cold called, faces 3-bet
+    ['HJ', 'CO', 'BTN'], ['HJ', 'CO', 'SB'], ['HJ', 'CO', 'BB'],
+    ['HJ', 'BTN', 'SB'], ['HJ', 'BTN', 'BB'],
+    ['HJ', 'SB', 'BB'],
+    // CO opens, gets cold called, faces 3-bet
+    ['CO', 'BTN', 'SB'], ['CO', 'BTN', 'BB'],
+    ['CO', 'SB', 'BB'],
+    // BTN opens, gets cold called, faces 3-bet
+    ['BTN', 'SB', 'BB'],
+  ]
+
+  for (const [opener, coldCaller, threeBettor] of vs3bWithCallerCombos) {
+    spots[`${opener.toLowerCase()}_vs_3b_cc_${coldCaller.toLowerCase()}_${threeBettor.toLowerCase()}`] = {
+      description: `${opener} vs ${threeBettor} 3-bet (${coldCaller} cold called)`,
+      actions: vs3betWithCallerActions(opener, coldCaller, threeBettor, sizes),
+      position: opener,
+      category: 'vs_3b_with_caller',
+    }
+  }
+
+  // ── Multiway overcall spots (open + 2 cold calls + hero decides) ──
+  // Format: {hero}_mw_{opener}_{caller1}_{caller2}
+  const multiwayOvercallCombos = [
+    // BTN multiway
+    ['BTN', 'UTG', 'HJ', 'CO'],
+    // SB multiway
+    ['SB', 'UTG', 'HJ', 'CO'], ['SB', 'UTG', 'HJ', 'BTN'], ['SB', 'UTG', 'CO', 'BTN'],
+    ['SB', 'HJ', 'CO', 'BTN'],
+    // BB multiway
+    ['BB', 'UTG', 'HJ', 'CO'], ['BB', 'UTG', 'HJ', 'BTN'], ['BB', 'UTG', 'HJ', 'SB'],
+    ['BB', 'UTG', 'CO', 'BTN'], ['BB', 'UTG', 'CO', 'SB'], ['BB', 'UTG', 'BTN', 'SB'],
+    ['BB', 'HJ', 'CO', 'BTN'], ['BB', 'HJ', 'CO', 'SB'], ['BB', 'HJ', 'BTN', 'SB'],
+    ['BB', 'CO', 'BTN', 'SB'],
+  ]
+
+  for (const [hero, opener, caller1, caller2] of multiwayOvercallCombos) {
+    spots[`${hero.toLowerCase()}_mw_${opener.toLowerCase()}_${caller1.toLowerCase()}_${caller2.toLowerCase()}`] = {
+      description: `${hero} multiway vs ${opener}+${caller1}+${caller2}`,
+      actions: multiwayOvercallActions(hero, opener, caller1, caller2, sizes),
+      position: hero,
+      category: 'multiway',
+    }
+  }
+
+  // ── Squeeze vs 4-bet (squeezer facing 4-bet from opener) ──
+  // Format: {squeezer}_sqz_vs_4b_{opener}_{coldCaller}
+  for (const [squeezer, opener, coldCaller] of squeezeCombos) {
+    spots[`${squeezer.toLowerCase()}_sqz_vs_4b_${opener.toLowerCase()}_${coldCaller.toLowerCase()}`] = {
+      description: `${squeezer} squeeze vs ${opener} 4-bet (${coldCaller} folded)`,
+      actions: squeezeVs4betActions(squeezer, opener, coldCaller, sizes),
+      position: squeezer,
+      category: 'squeeze_vs_4b',
     }
   }
 

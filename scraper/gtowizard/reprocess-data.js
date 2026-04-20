@@ -13,87 +13,9 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { processSpotSolution } from '../lib/gtowizard.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// ── Corrected Hand-type index mapping ────────────────────────────────────────────
-// GTO Wizard uses 2→A rank ordering with:
-//   row < col  → offsuit (higher rank at col)
-//   row > col  → suited  (higher rank at row)
-//   row == col → pair
-const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-
-const HAND_TYPES = [];
-for (let row = 0; row < 13; row++) {
-  for (let col = 0; col < 13; col++) {
-    if (row === col) {
-      HAND_TYPES.push(RANKS[row] + RANKS[row]);
-    } else if (row < col) {
-      // Offsuit: higher rank is at col
-      HAND_TYPES.push(RANKS[col] + RANKS[row] + 'o');
-    } else {
-      // Suited: higher rank is at row
-      HAND_TYPES.push(RANKS[row] + RANKS[col] + 's');
-    }
-  }
-}
-
-// ── Processing functions ─────────────────────────────────────────────────────────
-
-function arrayToHandMap(arr, threshold = 0.0001) {
-  const out = {};
-  for (let i = 0; i < 169; i++) {
-    const v = arr[i];
-    if (v != null && Math.abs(v) > threshold) {
-      out[HAND_TYPES[i]] = parseFloat(v.toFixed(4));
-    }
-  }
-  return out;
-}
-
-function processSpotSolution(data) {
-  const raise = {};
-  const call = {};
-  const ev = {};
-
-  for (const sol of (data.action_solutions ?? [])) {
-    const action = sol.action;
-    if (action.type === 'FOLD') continue;
-
-    const rawSize = parseFloat(action.betsize);
-    const sizeBb = rawSize.toString() + 'bb';
-
-    const freqMap = arrayToHandMap(sol.strategy);
-    if (Object.keys(freqMap).length === 0) continue;
-
-    if (action.type === 'CALL') {
-      call[sizeBb] = freqMap;
-      if (sol.evs) {
-        const evMap = arrayToHandMap(sol.evs);
-        if (Object.keys(evMap).length) ev[`call_${sizeBb}`] = evMap;
-      }
-    } else if (action.type === 'RAISE') {
-      raise[sizeBb] = freqMap;
-      if (sol.evs) {
-        const evMap = arrayToHandMap(sol.evs);
-        if (Object.keys(evMap).length) ev[`raise_${sizeBb}`] = evMap;
-      }
-    }
-  }
-
-  // Overall GTO EV from players_info
-  const activePi = (data.players_info ?? []).find(pi => pi.player?.is_active === false && pi.evs);
-  if (activePi?.evs) {
-    const mainEv = arrayToHandMap(activePi.evs);
-    if (Object.keys(mainEv).length) ev.main = mainEv;
-  }
-
-  const out = {};
-  if (Object.keys(raise).length) out.raise = raise;
-  if (Object.keys(call).length) out.call = call;
-  if (Object.keys(ev).length) out.ev = ev;
-  return out;
-}
 
 // ── File discovery ───────────────────────────────────────────────────────────────
 

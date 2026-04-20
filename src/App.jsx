@@ -123,18 +123,29 @@ export default function App() {
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedPfrSizeId])
 
   // ── Load range data from processed JSON registry ──────────────────────────
-  const { raiseData, raise2Data, callData, raiseTo, stats } = useMemo(() => {
+  const { raiseData, raise2Data, callData, raiseTo, stats, inRangeSet } = useMemo(() => {
     const raw = getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
+
+    // Debug: show which file is being loaded and computed stats
+    const filePath = `/scraper/gtowizard/out/${selectedStakeId}/${selectedStackSizeId}/${activeScenario.id}.json`
+    console.log(`Loading: ${filePath}`, raw ? '✓' : '✗ not found')
+    if (raw) {
+      console.log('Raise sizes:', Object.keys(raw.raise || {}))
+      console.log('Call sizes:', Object.keys(raw.call || {}))
+      console.log('Call data sample:', Object.entries(raw.call?.['8bb'] || {}).slice(0, 10))
+      console.log('inRange hands:', raw.inRange?.length || 0)
+    }
 
     // Handle sqz vs 4b variant key (rfi_4b / cc_fold / cc_call)
     const data = (activeScenario.section === 'sqz vs 4b')
       ? raw?.[sqzVs4bType] ?? {}
       : raw ?? {}
 
-    // call: merge all size maps into one frequency map
+    // Display frequencies (conditional) - for grid cell coloring
+    // These show "what to do when I have this hand" (e.g., 76s = 100% call)
     const callData = mergeFreqMaps(Object.values(data.call ?? {}))
 
-    // raise: sort sizes, smallest → raiseData (teal), largest → raise2Data (dark green)
+    // raise: sort sizes, smallest → raiseData, largest → raise2Data
     const raiseEntries = Object.entries(data.raise ?? {})
       .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
 
@@ -151,26 +162,66 @@ export default function App() {
       raiseTo   = raiseEntries[0][0]
     }
 
-    // Stats
-    const mergedRaise  = mergeFreqMaps([raiseData, raise2Data])
-    const raiseCombos  = countCombos(mergedRaise)
-    const callCombos   = countCombos(callData)
-    const totalCombos  = raiseCombos + callCombos
+    // Combo frequencies (absolute) - for statistics
+    const combos = data.combos ?? { raise: {}, call: {}, fold: {} }
+
+    const comboRaiseEntries = Object.entries(combos.raise ?? {})
+      .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+
+    let comboRaise1 = {}
+    let comboRaise2 = {}
+    if (comboRaiseEntries.length >= 2) {
+      comboRaise2 = comboRaiseEntries[comboRaiseEntries.length - 1][1]
+      comboRaise1 = mergeFreqMaps(comboRaiseEntries.slice(0, -1).map(e => e[1]))
+    } else if (comboRaiseEntries.length === 1) {
+      comboRaise1 = comboRaiseEntries[0][1]
+    }
+
+    const comboCall = mergeFreqMaps(Object.values(combos.call ?? {}))
+    const comboFold = combos.fold ?? {}
+
+    // Stats using combo frequencies (absolute)
+    const raise1Combos = countCombos(comboRaise1)
+    const raise2Combos = countCombos(comboRaise2)
+    const callCombos   = countCombos(comboCall)
+    const foldCombos   = countCombos(comboFold)
+
+    const totalActionCombos = raise1Combos + raise2Combos + callCombos
+
+    // Debug: show computed combos
+    console.log('Computed combos:', { raise1: raise1Combos, raise2: raise2Combos, call: callCombos, fold: foldCombos, total: totalActionCombos })
+
+    // Create set of hands that are "in range" for this spot
+    const inRangeSet = raw?.inRange ? new Set(raw.inRange) : null
+
+    // Get raise size labels
+    const sizes = raiseTo ? [raiseTo].flat() : []
+    const raise1Size = sizes.length >= 1 ? sizes[0] : null
+    const raise2Size = sizes.length >= 2 ? sizes[sizes.length - 1] : null
 
     return {
       raiseData,
       raise2Data,
       callData,
       raiseTo,
+      inRangeSet,
       stats: {
-        totalCombos: Math.round(totalCombos  * 10) / 10,
-        raiseCombos: Math.round(raiseCombos  * 10) / 10,
-        callCombos:  Math.round(callCombos   * 10) / 10,
-        totalPct:    ((totalCombos  / TOTAL_COMBOS) * 100).toFixed(1),
-        raisePct:    ((raiseCombos  / TOTAL_COMBOS) * 100).toFixed(1),
-        callPct:     ((callCombos   / TOTAL_COMBOS) * 100).toFixed(1),
-        hasCall:     callCombos > 0,
-        hasData:     !!raw,
+        totalCombos:  Math.round(totalActionCombos * 10) / 10,
+        raise1Combos: Math.round(raise1Combos * 10) / 10,
+        raise2Combos: Math.round(raise2Combos * 10) / 10,
+        callCombos:   Math.round(callCombos * 10) / 10,
+        foldCombos:   Math.round(foldCombos * 10) / 10,
+        totalPct:     ((totalActionCombos / TOTAL_COMBOS) * 100).toFixed(1),
+        raise1Pct:    ((raise1Combos / TOTAL_COMBOS) * 100).toFixed(1),
+        raise2Pct:    ((raise2Combos / TOTAL_COMBOS) * 100).toFixed(1),
+        callPct:      ((callCombos / TOTAL_COMBOS) * 100).toFixed(1),
+        foldPct:      ((foldCombos / TOTAL_COMBOS) * 100).toFixed(1),
+        hasCall:      callCombos > 0,
+        hasRaise2:    raise2Combos > 0,
+        hasFold:      foldCombos > 0.1,
+        hasData:      !!raw,
+        raise1Size,
+        raise2Size,
       },
     }
   }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId, sqzVs4bType])
@@ -226,6 +277,7 @@ export default function App() {
             callData={callData}
             raiseTo={raiseTo}
             callLabel={activeScenario.callLabel ?? 'Call'}
+            inRangeSet={inRangeSet}
           />
 
           <div className="grid-info-overlay">
@@ -239,55 +291,47 @@ export default function App() {
                 <div className="stat-item">
                   <span className="stat-label">Total range</span>
                   <span className="stat-value">{stats.totalPct}%</span>
+                  <span className="stat-combos">{stats.totalCombos} combos</span>
                 </div>
-                <div className="stat-item">
-                  <span className="stat-label">Combos</span>
-                  <span className="stat-value">{stats.totalCombos}</span>
-                </div>
-                {stats.hasCall ? (
-                  <>
-                    <div className="stat-item">
-                      <span className="stat-label">Raise</span>
-                      <span className="stat-value raise-value">{stats.raisePct}%</span>
-                      <span className="stat-combos raise-value">{stats.raiseCombos} combos</span>
-                    </div>
-                    <div className="stat-item">
-                      <span className="stat-label">{activeScenario.callLabel ?? 'Call'}</span>
-                      <span className="stat-value call-value">{stats.callPct}%</span>
-                      <span className="stat-combos call-value">{stats.callCombos} combos</span>
-                    </div>
-                  </>
-                ) : (
-                  <div className="stat-item">
-                    <span className="stat-label">Raise</span>
-                    <span className="stat-value raise-value">{stats.raisePct}%</span>
-                    <span className="stat-combos raise-value">{stats.raiseCombos} combos</span>
+
+                {/* Raise 1 (smaller size) */}
+                {stats.raise1Combos > 0 && (
+                  <div className="stat-item stat-raise">
+                    <span className="stat-label">Raise{stats.raise1Size ? ` ${stats.raise1Size}` : ''}</span>
+                    <span className="stat-value">{stats.raise1Pct}%</span>
+                    <span className="stat-combos">{stats.raise1Combos} combos</span>
                   </div>
                 )}
-                {raiseTo && (
-                  <div className="stat-item">
-                    <span className="stat-label">Raise to</span>
-                    {[raiseTo].flat().map(size => (
-                      <span key={size} className="stat-value raise-value">{size}</span>
-                    ))}
+
+                {/* Raise 2 (larger size / all-in) */}
+                {stats.hasRaise2 && (
+                  <div className="stat-item stat-raise2">
+                    <span className="stat-label">Raise{stats.raise2Size ? ` ${stats.raise2Size}` : ' (all-in)'}</span>
+                    <span className="stat-value">{stats.raise2Pct}%</span>
+                    <span className="stat-combos">{stats.raise2Combos} combos</span>
+                  </div>
+                )}
+
+                {/* Call */}
+                {stats.hasCall && (
+                  <div className="stat-item stat-call">
+                    <span className="stat-label">{activeScenario.callLabel ?? 'Call'}</span>
+                    <span className="stat-value">{stats.callPct}%</span>
+                    <span className="stat-combos">{stats.callCombos} combos</span>
+                  </div>
+                )}
+
+                {/* Fold */}
+                {stats.hasFold && (
+                  <div className="stat-item stat-fold">
+                    <span className="stat-label">Fold</span>
+                    <span className="stat-value">{stats.foldPct}%</span>
+                    <span className="stat-combos">{stats.foldCombos} combos</span>
                   </div>
                 )}
               </div>
             )}
 
-            <div className="legend">
-              <div className="legend-item">
-                <span className="legend-swatch raise" />Raise
-              </div>
-              {stats.hasCall && (
-                <div className="legend-item">
-                  <span className="legend-swatch call" />{activeScenario.callLabel ?? 'Call'}
-                </div>
-              )}
-              <div className="legend-item">
-                <span className="legend-swatch fold" />Fold
-              </div>
-            </div>
           </div>
         </main>
 

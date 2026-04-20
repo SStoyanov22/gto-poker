@@ -27,8 +27,8 @@ const HAND_TYPES = [] // length 169, index → hand notation
 for (let row = 0; row < 13; row++) {
   for (let col = 0; col < 13; col++) {
     if (row === col)      HAND_TYPES.push(RANKS[row] + RANKS[row])
-    else if (row < col)   HAND_TYPES.push(RANKS[col] + RANKS[row] + 'o')
-    else                  HAND_TYPES.push(RANKS[row] + RANKS[col] + 's')
+    else if (row < col)   HAND_TYPES.push(RANKS[col] + RANKS[row] + 's')  // suited (row < col in 2→A)
+    else                  HAND_TYPES.push(RANKS[row] + RANKS[col] + 'o')  // offsuit (row > col in 2→A)
   }
 }
 
@@ -66,7 +66,11 @@ async function get(path, params) {
     const body = await res.text()
     throw new Error(`API ${res.status}: ${body}`)
   }
-  return res.json()
+  const text = await res.text()
+  if (!text) {
+    throw new Error(`API returned empty response for ${url}`)
+  }
+  return JSON.parse(text)
 }
 
 // ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -148,51 +152,126 @@ export function arrayToHandMap(arr, threshold = 0.0001) {
  *     ev:    { main: {...}, raise_24bb: {...}, call_12bb: {...} }
  *   }
  *
+ * Uses simple_hand_counters from API response which provides properly labeled
+ * hand data with action frequencies. Falls back to 169-element arrays if
+ * simple_hand_counters is not available.
+ *
  * All-in actions use their actual betsize (e.g. '100bb' at 100bb depth).
  */
 export function processSpotSolution(data) {
   const raise = {}
   const call  = {}
+  const fold  = {}
   const ev    = {}
+  const inRange = []
 
+  // Find action codes and their sizes from action_solutions
+  const actionSizes = {}
+  let foldCode = null
   for (const sol of (data.action_solutions ?? [])) {
     const action = sol.action
-    if (action.type === 'FOLD') continue
-
-    // Format: "24bb", "100bb", etc.
-    const rawSize = parseFloat(action.betsize)
-    const sizeBb  = rawSize.toString() + 'bb'
-
-    const freqMap = arrayToHandMap(sol.strategy)
-    if (Object.keys(freqMap).length === 0) continue
-
-    if (action.type === 'CALL') {
-      call[sizeBb] = freqMap
-      if (sol.evs) {
-        const evMap = arrayToHandMap(sol.evs)
-        if (Object.keys(evMap).length) ev[`call_${sizeBb}`] = evMap
-      }
-    } else if (action.type === 'RAISE') {
-      raise[sizeBb] = freqMap
-      if (sol.evs) {
-        const evMap = arrayToHandMap(sol.evs)
-        if (Object.keys(evMap).length) ev[`raise_${sizeBb}`] = evMap
-      }
+    if (action.type === 'FOLD') {
+      foldCode = action.code
+      continue
     }
+    const rawSize = parseFloat(action.betsize)
+    const sizeBb = rawSize.toString() + 'bb'
+    actionSizes[action.code] = { type: action.type, sizeBb }
   }
 
-  // Overall GTO EV from players_info (range of the decision-maker)
-  // players_info[0] is the active player at this node
-  const activePi = (data.players_info ?? []).find(pi => pi.player?.is_active === false && pi.evs)
-  if (activePi?.evs) {
-    const mainEv = arrayToHandMap(activePi.evs)
-    if (Object.keys(mainEv).length) ev.main = mainEv
+  // Try to use simple_hand_counters (properly labeled data)
+  // Look for the hero player (is_hero: true) who has the strategy data
+  const heroPlayer = (data.players_info ?? []).find(pi => pi.player?.is_hero === true)
+  const handCounters = heroPlayer?.simple_hand_counters
+
+  if (handCounters && Object.keys(handCounters).length > 0) {
+    // Use properly labeled hand data
+    for (const [handName, handData] of Object.entries(handCounters)) {
+      // Skip non-hand entries like "best_hands", "good_hands", etc.
+      if (!handData.actions_total_frequencies) continue
+
+      // total_frequency is how often this hand is in the range (e.g., 0.0375 for 33 in UTG range)
+      // actions_total_frequencies gives freq WITHIN the range (e.g., 1.0 = 100% call when in range)
+      // Actual freq = total_frequency × action_freq
+      const rangeFreq = handData.total_frequency ?? 0
+      if (rangeFreq < 0.0001) continue  // Hand not in range
+
+      // Track all hands in range
+      inRange.push(handName)
+
+      for (const [actionCode, actionFreq] of Object.entries(handData.actions_total_frequencies)) {
+        if (actionFreq < 0.0001) continue
+
+        // Handle fold action
+        if (actionCode === foldCode || actionCode === 'F') {
+          const freq = rangeFreq * actionFreq
+          fold[handName] = parseFloat(freq.toFixed(4))
+          continue
+        }
+
+        const actionInfo = actionSizes[actionCode]
+        if (!actionInfo) continue
+
+        const { type, sizeBb } = actionInfo
+        // Actual frequency = how often hand is in range × how often we take this action
+        const freq = rangeFreq * actionFreq
+
+        if (type === 'CALL') {
+          if (!call[sizeBb]) call[sizeBb] = {}
+          call[sizeBb][handName] = parseFloat(freq.toFixed(4))
+        } else if (type === 'RAISE') {
+          if (!raise[sizeBb]) raise[sizeBb] = {}
+          raise[sizeBb][handName] = parseFloat(freq.toFixed(4))
+        }
+      }
+
+      // Extract EV if available (only for hands in range)
+      if (handData.hand_ev != null && Math.abs(handData.hand_ev) > 0.0001) {
+        if (!ev.main) ev.main = {}
+        ev.main[handName] = parseFloat(handData.hand_ev.toFixed(4))
+      }
+    }
+  } else {
+    // Fallback to 169-element arrays (may have incorrect mapping)
+    console.warn('simple_hand_counters not available, falling back to 169-element arrays')
+    for (const sol of (data.action_solutions ?? [])) {
+      const action = sol.action
+      if (action.type === 'FOLD') continue
+
+      const rawSize = parseFloat(action.betsize)
+      const sizeBb = rawSize.toString() + 'bb'
+
+      const freqMap = arrayToHandMap(sol.strategy)
+      if (Object.keys(freqMap).length === 0) continue
+
+      if (action.type === 'CALL') {
+        call[sizeBb] = freqMap
+        if (sol.evs) {
+          const evMap = arrayToHandMap(sol.evs)
+          if (Object.keys(evMap).length) ev[`call_${sizeBb}`] = evMap
+        }
+      } else if (action.type === 'RAISE') {
+        raise[sizeBb] = freqMap
+        if (sol.evs) {
+          const evMap = arrayToHandMap(sol.evs)
+          if (Object.keys(evMap).length) ev[`raise_${sizeBb}`] = evMap
+        }
+      }
+    }
+
+    // Overall GTO EV from players_info
+    if (heroPlayer?.evs) {
+      const mainEv = arrayToHandMap(heroPlayer.evs)
+      if (Object.keys(mainEv).length) ev.main = mainEv
+    }
   }
 
   const out = {}
   if (Object.keys(raise).length) out.raise = raise
   if (Object.keys(call).length)  out.call  = call
+  if (Object.keys(fold).length)  out.fold  = fold
   if (Object.keys(ev).length)    out.ev    = ev
+  if (inRange.length)            out.inRange = inRange
   return out
 }
 
