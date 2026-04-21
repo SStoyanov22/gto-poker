@@ -276,19 +276,27 @@ export function squeezeActions(squeezer, opener, coldCaller, sizes = DEFAULT_SIZ
  * After the squeeze, action goes back around the table:
  * - If hero is the opener: opener acts next after squeeze
  * - If hero is the cold caller: opener acts first, then cold caller
+ *
+ * @param {boolean} rfiCalls - If true and hero is cold caller, RFI calls (not folds)
  */
-export function vsSqueezeActions(hero, squeezer, opener, coldCaller, sizes = DEFAULT_SIZES) {
+export function vsSqueezeActions(hero, squeezer, opener, coldCaller, sizes = DEFAULT_SIZES, rfiCalls = false) {
   let base = squeezeActions(squeezer, opener, coldCaller, sizes)
   // Use proper squeeze size (larger than 3-bet due to dead money from cold caller)
   const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
   base += `-R${squeezeSize}`
 
-  // After squeeze, action goes to opener first, then cold caller
-  // If hero is the cold caller, opener must fold first
-  if (hero === coldCaller) {
-    base += '-F'  // Opener folds
+  // After squeeze, positions after squeezer fold before action returns to opener
+  // e.g., BTN squeezes → SB folds, BB folds → then UTG (opener) acts
+  for (let i = POS[squeezer] + 1; i < 6; i++) {
+    base += '-F'
   }
-  // If hero is the opener, no additional folds needed - it's their turn
+
+  // After squeeze, action goes to opener first, then cold caller
+  if (hero === coldCaller) {
+    // Cold caller acts after opener's decision
+    base += rfiCalls ? '-C' : '-F'  // Opener calls or folds
+  }
+  // If hero is the opener, no additional actions needed - it's their turn
 
   return base
 }
@@ -380,6 +388,27 @@ export function multiwayOvercallActions(hero, opener, caller1, caller2, sizes = 
 }
 
 /**
+ * Get the 4-bet size for squeeze pots (larger than standard 3-bet pots due to dead money)
+ * Sizes vary based on squeeze size:
+ * - BB squeeze (15bb) → 4-bet ~31.5bb
+ * - SB squeeze (14bb) → 4-bet ~31.5bb
+ * - BTN squeeze (11bb) → 4-bet ~25bb (smaller squeeze = smaller 4-bet)
+ * - CO squeeze (11bb) → 4-bet ~25bb
+ */
+function getSqueezeFourBetSize(opener, squeezer) {
+  // Squeeze pot 4-bet sizes are larger than standard 4-bets
+  // BB/SB squeeze = 14-15bb, 4-bet = 31.5bb (~2.1x)
+  // BTN/CO squeeze = 11bb, 4-bet = 25bb (~2.3x)
+  const squeezeFourBet = {
+    UTG: { BB: '31.5', SB: '31.5', BTN: '25', CO: '25' },
+    HJ: { BB: '31.5', SB: '31.5', BTN: '25', CO: '25' },
+    CO: { BB: '31.5', SB: '31.5', BTN: '25' },
+    BTN: { BB: '31.5', SB: '31.5' },
+  }
+  return squeezeFourBet[opener]?.[squeezer] || '25'
+}
+
+/**
  * Build action string for squeeze vs 4-bet (squeezer facing 4-bet from opener)
  * @param {string} squeezer - Player who squeezed
  * @param {string} opener - Original raiser who 4-bets
@@ -389,11 +418,20 @@ export function squeezeVs4betActions(squeezer, opener, coldCaller, sizes = DEFAU
   let base = squeezeActions(squeezer, opener, coldCaller, sizes)
   const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
   base += `-R${squeezeSize}`
-  // Cold caller folds, opener 4-bets
-  base += '-F'
-  // Use a 4-bet size (approximate - squeeze pot 4-bet)
-  const fourBetSize = getFourBetSize(opener, squeezer) || '28'
+
+  // After squeeze, positions after squeezer fold before action goes to opener
+  // e.g., BTN squeezes → SB folds, BB folds → UTG 4-bets
+  for (let i = POS[squeezer] + 1; i < 6; i++) {
+    base += '-F'
+  }
+
+  // Opener 4-bets
+  const fourBetSize = getSqueezeFourBetSize(opener, squeezer)
   base += `-R${fourBetSize}`
+
+  // Cold caller folds after opener 4-bets
+  base += '-F'
+
   return base
 }
 
@@ -504,14 +542,26 @@ export function generatePreflopSpots(sizes = DEFAULT_SIZES) {
     }
   }
 
-  // ── vs Squeeze spots (cold caller facing squeeze) ──
+  // ── vs Squeeze spots (cold caller facing squeeze, RFI calls) ──
   // Format: {coldCaller}_vs_sqz_{opener}_{squeezer}
   for (const [squeezer, opener, coldCaller] of squeezeCombos) {
     spots[`${coldCaller.toLowerCase()}_vs_sqz_${opener.toLowerCase()}_${squeezer.toLowerCase()}`] = {
-      description: `${coldCaller} (cold caller) vs ${opener}+${squeezer} squeeze`,
-      actions: vsSqueezeActions(coldCaller, squeezer, opener, coldCaller, sizes),
+      description: `${coldCaller} (cold caller) vs ${opener}+${squeezer} squeeze (RFI calls)`,
+      actions: vsSqueezeActions(coldCaller, squeezer, opener, coldCaller, sizes, true),  // rfiCalls=true
       position: coldCaller,
       coldCaller: true,
+    }
+  }
+
+  // ── vs Squeeze spots (cold caller facing squeeze, RFI folds) ──
+  // Format: {coldCaller}_vs_sqz_{opener}_{squeezer}_rfi_fold
+  for (const [squeezer, opener, coldCaller] of squeezeCombos) {
+    spots[`${coldCaller.toLowerCase()}_vs_sqz_${opener.toLowerCase()}_${squeezer.toLowerCase()}_rfi_fold`] = {
+      description: `${coldCaller} (cold caller) vs ${opener}+${squeezer} squeeze (RFI folds)`,
+      actions: vsSqueezeActions(coldCaller, squeezer, opener, coldCaller, sizes, false),  // rfiCalls=false
+      position: coldCaller,
+      coldCaller: true,
+      rfiFolds: true,
     }
   }
 

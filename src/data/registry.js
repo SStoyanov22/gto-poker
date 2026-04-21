@@ -39,9 +39,8 @@ for (const [path, mod] of Object.entries(modules)) {
   registry[`${stake}|${stack}|${id}`] = mod.default ?? mod
 }
 
-// Debug: log registry keys
-console.log('Registry keys:', Object.keys(registry).filter(k => k.includes('utg_vs_3b')))
-console.log('Total files loaded:', Object.keys(registry).length)
+// Debug: uncomment to see loaded files
+// console.log('Total files loaded:', Object.keys(registry).length)
 
 /**
  * Look up processed range data for a specific combination.
@@ -53,8 +52,13 @@ console.log('Total files loaded:', Object.keys(registry).length)
  * @returns {object|null}  - processed JSON data, or null if not yet scraped
  */
 export function getRange(stake, pfrSize, stack, id) {
-  const data = registry[`${stake}|${stack}|${id}`]
-  if (!data) return null
+  const key = `${stake}|${stack}|${id}`
+  const data = registry[key]
+  if (!data) {
+    console.log(`📊 Range: ${key} → NOT FOUND`)
+    return null
+  }
+  console.log(`📊 Range: ${key} → loaded (${data.processed?.inRange?.length || 0} hands in range)`)
 
   // GTOWizard format: data.processed contains the range data
   const processed = data.processed

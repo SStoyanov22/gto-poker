@@ -123,73 +123,45 @@ export default function App() {
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedPfrSizeId])
 
   // ── Load range data from processed JSON registry ──────────────────────────
-  const { raiseData, raise2Data, callData, raiseTo, stats, inRangeSet } = useMemo(() => {
+  const { raiseData, raise2Data, callData, foldData, raiseTo, stats, inRangeSet } = useMemo(() => {
     const raw = getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
-
-    // Debug: show which file is being loaded and computed stats
-    const filePath = `/scraper/gtowizard/out/${selectedStakeId}/${selectedStackSizeId}/${activeScenario.id}.json`
-    console.log(`Loading: ${filePath}`, raw ? '✓' : '✗ not found')
-    if (raw) {
-      console.log('Raise sizes:', Object.keys(raw.raise || {}))
-      console.log('Call sizes:', Object.keys(raw.call || {}))
-      console.log('Call data sample:', Object.entries(raw.call?.['8bb'] || {}).slice(0, 10))
-      console.log('inRange hands:', raw.inRange?.length || 0)
-    }
 
     // Handle sqz vs 4b variant key (rfi_4b / cc_fold / cc_call)
     const data = (activeScenario.section === 'sqz vs 4b')
       ? raw?.[sqzVs4bType] ?? {}
       : raw ?? {}
 
-    // Display frequencies (conditional) - for grid cell coloring
-    // These show "what to do when I have this hand" (e.g., 76s = 100% call)
-    const callData = mergeFreqMaps(Object.values(data.call ?? {}))
+    // Use combo frequencies (absolute) for BOTH grid display AND statistics
+    // Combo freq = rangeFreq × actionFreq, so they sum to rangeFreq (not 1.0)
+    // This lets us show "not in range" portion as gray
+    const combos = data.combos ?? { raise: {}, call: {}, fold: {} }
 
-    // raise: sort sizes, smallest → raiseData, largest → raise2Data
-    const raiseEntries = Object.entries(data.raise ?? {})
+    const comboRaiseEntries = Object.entries(combos.raise ?? {})
       .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
 
     let raiseData  = {}
     let raise2Data = {}
     let raiseTo    = null
 
-    if (raiseEntries.length >= 2) {
-      raise2Data = raiseEntries[raiseEntries.length - 1][1]
-      raiseData  = mergeFreqMaps(raiseEntries.slice(0, -1).map(e => e[1]))
-      raiseTo    = raiseEntries.map(e => e[0])
-    } else if (raiseEntries.length === 1) {
-      raiseData = raiseEntries[0][1]
-      raiseTo   = raiseEntries[0][0]
-    }
-
-    // Combo frequencies (absolute) - for statistics
-    const combos = data.combos ?? { raise: {}, call: {}, fold: {} }
-
-    const comboRaiseEntries = Object.entries(combos.raise ?? {})
-      .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
-
-    let comboRaise1 = {}
-    let comboRaise2 = {}
     if (comboRaiseEntries.length >= 2) {
-      comboRaise2 = comboRaiseEntries[comboRaiseEntries.length - 1][1]
-      comboRaise1 = mergeFreqMaps(comboRaiseEntries.slice(0, -1).map(e => e[1]))
+      raise2Data = comboRaiseEntries[comboRaiseEntries.length - 1][1]
+      raiseData  = mergeFreqMaps(comboRaiseEntries.slice(0, -1).map(e => e[1]))
+      raiseTo    = comboRaiseEntries.map(e => e[0])
     } else if (comboRaiseEntries.length === 1) {
-      comboRaise1 = comboRaiseEntries[0][1]
+      raiseData = comboRaiseEntries[0][1]
+      raiseTo   = comboRaiseEntries[0][0]
     }
 
-    const comboCall = mergeFreqMaps(Object.values(combos.call ?? {}))
-    const comboFold = combos.fold ?? {}
+    const callData = mergeFreqMaps(Object.values(combos.call ?? {}))
+    const foldData = combos.fold ?? {}
 
     // Stats using combo frequencies (absolute)
-    const raise1Combos = countCombos(comboRaise1)
-    const raise2Combos = countCombos(comboRaise2)
-    const callCombos   = countCombos(comboCall)
-    const foldCombos   = countCombos(comboFold)
+    const raise1Combos = countCombos(raiseData)
+    const raise2Combos = countCombos(raise2Data)
+    const callCombos   = countCombos(callData)
+    const foldCombos   = countCombos(foldData)
 
     const totalActionCombos = raise1Combos + raise2Combos + callCombos
-
-    // Debug: show computed combos
-    console.log('Computed combos:', { raise1: raise1Combos, raise2: raise2Combos, call: callCombos, fold: foldCombos, total: totalActionCombos })
 
     // Create set of hands that are "in range" for this spot
     const inRangeSet = raw?.inRange ? new Set(raw.inRange) : null
@@ -203,6 +175,7 @@ export default function App() {
       raiseData,
       raise2Data,
       callData,
+      foldData,
       raiseTo,
       inRangeSet,
       stats: {
@@ -275,6 +248,7 @@ export default function App() {
             raiseData={raiseData}
             raise2Data={raise2Data}
             callData={callData}
+            foldData={foldData}
             raiseTo={raiseTo}
             callLabel={activeScenario.callLabel ?? 'Call'}
             inRangeSet={inRangeSet}

@@ -1,33 +1,36 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { RANKS, getHandNotation, getCellData } from '../utils/rangeUtils.js'
+import { RANKS, getHandNotation, getCellData, handCombos } from '../utils/rangeUtils.js'
 import HandTooltip from './HandTooltip.jsx'
 import DecisionModal from './DecisionModal.jsx'
 import './RangeGrid.css'
 
 // Colors
-const COLOR_RAISE  = '#EE3B3B'
-const COLOR_RAISE2 = '#3E0F0F'
-const COLOR_CALL   = '#22c55e'
-const COLOR_FOLD   = '#3E7BB6'
+const COLOR_RAISE        = '#EE3B3B'
+const COLOR_RAISE2       = '#3E0F0F'
+const COLOR_CALL         = '#22c55e'
+const COLOR_FOLD         = '#3E7BB6'
+const COLOR_NOT_IN_RANGE = '#2a2e38'
 
 
 /**
  * Build a CSS background for a cell.
- * Left-to-right gradient, most to least aggressive: raise2 → raise → call → fold.
+ * Left-to-right gradient, most to least aggressive: raise2 → raise → call → fold → not in range.
  */
-function cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq) {
-  const hasRaise  = raiseFreq  > 0.001
-  const hasRaise2 = raise2Freq > 0.001
-  const hasCall   = callFreq   > 0.001
-  const hasFold   = foldFreq   > 0.001
+function cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq, notInRangeFreq) {
+  const hasRaise      = raiseFreq      > 0.001
+  const hasRaise2     = raise2Freq     > 0.001
+  const hasCall       = callFreq       > 0.001
+  const hasFold       = foldFreq       > 0.001
+  const hasNotInRange = notInRangeFreq > 0.001
 
-  if (!hasRaise && !hasRaise2 && !hasCall) return COLOR_FOLD
+  if (!hasRaise && !hasRaise2 && !hasCall && !hasFold) return COLOR_NOT_IN_RANGE
 
   const segments = []
-  if (hasRaise2) segments.push({ color: COLOR_RAISE2, freq: raise2Freq })
-  if (hasRaise)  segments.push({ color: COLOR_RAISE,  freq: raiseFreq })
-  if (hasCall)   segments.push({ color: COLOR_CALL,   freq: callFreq })
-  if (hasFold)   segments.push({ color: COLOR_FOLD,   freq: foldFreq })
+  if (hasRaise2)     segments.push({ color: COLOR_RAISE2,       freq: raise2Freq })
+  if (hasRaise)      segments.push({ color: COLOR_RAISE,        freq: raiseFreq })
+  if (hasCall)       segments.push({ color: COLOR_CALL,         freq: callFreq })
+  if (hasFold)       segments.push({ color: COLOR_FOLD,         freq: foldFreq })
+  if (hasNotInRange) segments.push({ color: COLOR_NOT_IN_RANGE, freq: notInRangeFreq })
 
   if (segments.length === 1) return segments[0].color
 
@@ -51,10 +54,7 @@ function rollDecision(raiseFreq, raise2Freq, callFreq) {
   return 'Fold'
 }
 
-// Color for hands not in range (grayed out)
-const COLOR_NOT_IN_RANGE = '#2a2e38'
-
-export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseTo, callLabel = 'Call', inRangeSet = null }) {
+export default function RangeGrid({ raiseData, raise2Data = {}, callData, foldData = {}, raiseTo, callLabel = 'Call', inRangeSet = null }) {
   const [tooltip, setTooltip] = useState({ visible: false, hand: '', raiseFreq: 0, raise2Freq: 0, callFreq: 0, foldFreq: 0, isInRange: true, x: 0, y: 0 })
   const [modal, setModal] = useState(null)
   const containerRef = useRef(null)
@@ -111,15 +111,18 @@ export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseT
             {/* Cells */}
             {RANKS.map((colRank, col) => {
               const hand = getHandNotation(row, col)
-              const { raiseFreq, raise2Freq, callFreq, foldFreq, isInRange } = getCellData(hand, raiseData, callData, raise2Data, inRangeSet)
+              const { raiseFreq, raise2Freq, callFreq, foldFreq, notInRangeFreq, isInRange } = getCellData(hand, raiseData, callData, raise2Data, foldData, inRangeSet)
 
-              // "Not in range" hands show as gray, otherwise use action colors
-              const bg = isInRange
-                ? cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq)
-                : COLOR_NOT_IN_RANGE
+              // Build gradient with all action segments + not in range
+              const bg = cellBackground(raiseFreq, raise2Freq, callFreq, foldFreq, notInRangeFreq)
 
               const isActive = raiseFreq > 0.001 || raise2Freq > 0.001 || callFreq > 0.001
               const isPair = row === col
+
+              // Calculate combo count (base combos × frequency in range)
+              const baseCombos = handCombos(hand)
+              const totalFreq = raiseFreq + raise2Freq + callFreq + foldFreq
+              const combos = totalFreq > 0.001 ? (baseCombos * totalFreq).toFixed(1) : null
 
               return (
                 <div
@@ -132,6 +135,7 @@ export default function RangeGrid({ raiseData, raise2Data = {}, callData, raiseT
                   onClick={() => handleClick(hand, raiseFreq, raise2Freq, callFreq, foldFreq)}
                 >
                   <span className="cell-label">{hand}</span>
+                  {combos && <span className="cell-combos">{combos}</span>}
                 </div>
               )
             })}

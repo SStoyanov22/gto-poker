@@ -1,20 +1,27 @@
 import React from 'react'
+import { handCombos } from '../utils/rangeUtils.js'
 import './HandTooltip.css'
 
 export default function HandTooltip({ hand, raiseFreq, raise2Freq = 0, callFreq, foldFreq, raiseTo, callLabel = 'Call', isInRange = true, x, y, visible }) {
   if (!visible || !hand) return null
 
   const pct = v => `${(v * 100).toFixed(1)}%`
+  const baseCombos = handCombos(hand)
+  const combos = v => (baseCombos * v).toFixed(1)
+
   const sizes = raiseTo ? [raiseTo].flat() : []
   const raise1To = sizes.length >= 2 ? sizes[0]            : sizes[0] ?? null
   const raise2To = sizes.length >= 2 ? sizes[sizes.length - 1] : null
+
+  const totalFreq = raiseFreq + raise2Freq + callFreq + foldFreq
+  const totalCombos = (baseCombos * totalFreq).toFixed(1)
 
   return (
     <div
       className="hand-tooltip"
       style={{ left: x, top: y }}
     >
-      <div className="tooltip-hand">{hand}</div>
+      <div className="tooltip-hand">{hand} <span className="tooltip-total-combos">({totalCombos} combos)</span></div>
       {!isInRange ? (
         <div className="tooltip-not-in-range">Not in range</div>
       ) : (
@@ -24,6 +31,7 @@ export default function HandTooltip({ hand, raiseFreq, raise2Freq = 0, callFreq,
               <span className="tooltip-dot raise-dot" />
               <span className="tooltip-label">Raise{raise1To ? ` to ${raise1To}` : ''}</span>
               <span className="tooltip-value">{pct(raiseFreq)}</span>
+              <span className="tooltip-combos">{combos(raiseFreq)}</span>
             </div>
           )}
           {raise2Freq > 0 && (
@@ -31,6 +39,7 @@ export default function HandTooltip({ hand, raiseFreq, raise2Freq = 0, callFreq,
               <span className="tooltip-dot raise2-dot" />
               <span className="tooltip-label">Raise{raise2To ? ` to ${raise2To}` : ''}</span>
               <span className="tooltip-value">{pct(raise2Freq)}</span>
+              <span className="tooltip-combos">{combos(raise2Freq)}</span>
             </div>
           )}
           {callFreq > 0 && (
@@ -38,6 +47,7 @@ export default function HandTooltip({ hand, raiseFreq, raise2Freq = 0, callFreq,
               <span className="tooltip-dot call-dot" />
               <span className="tooltip-label">{callLabel}</span>
               <span className="tooltip-value">{pct(callFreq)}</span>
+              <span className="tooltip-combos">{combos(callFreq)}</span>
             </div>
           )}
           {foldFreq > 0 && (
@@ -45,6 +55,7 @@ export default function HandTooltip({ hand, raiseFreq, raise2Freq = 0, callFreq,
               <span className="tooltip-dot fold-dot" />
               <span className="tooltip-label">Fold</span>
               <span className="tooltip-value">{pct(foldFreq)}</span>
+              <span className="tooltip-combos">{combos(foldFreq)}</span>
             </div>
           )}
         </div>
