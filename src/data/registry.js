@@ -18,26 +18,23 @@
 //   }
 // ─────────────────────────────────────────────────────────────────────────────
 
-const modules = import.meta.glob(
-  '/scraper/gtowizard/out/**/*.json',
-  { eager: true }
-)
+// Lazy-load JSON files to avoid heap overflow during build
+const modules = import.meta.glob('/scraper/gtowizard/out/**/*.json')
 
-// registry key: `${stake}|${stack}|${id}`
-const registry = {}
-
-for (const [path, mod] of Object.entries(modules)) {
-  // path: /scraper/gtowizard/out/{stake}/{stack}bb/{id}.json
+// Build a map of key -> loader function
+const loaders = {}
+for (const [path, loader] of Object.entries(modules)) {
   const parts = path.split('/')
-  // parts: ['', 'scraper', 'gtowizard', 'out', stake, stackbb, 'id.json']
   const stake = parts[4]
-  const stackbb = parts[5]  // e.g. '100bb'
+  const stackbb = parts[5]
   const file = parts[6]
   if (!file) continue
-  const stack = stackbb  // keep as '100bb'
   const id = file.replace('.json', '')
-  registry[`${stake}|${stack}|${id}`] = mod.default ?? mod
+  loaders[`${stake}|${stackbb}|${id}`] = loader
 }
+
+// Cache loaded data
+const cache = {}
 
 // Debug: uncomment to see loaded files
 // console.log('Total files loaded:', Object.keys(registry).length)
@@ -49,15 +46,25 @@ for (const [path, mod] of Object.entries(modules)) {
  * @param {string} pfrSize - e.g. '2.5bb' (used to extract from JSON)
  * @param {string} stack   - e.g. '100bb'
  * @param {string} id      - scenario id, e.g. 'rfi_btn'
- * @returns {object|null}  - processed JSON data, or null if not yet scraped
+ * @returns {Promise<object|null>}  - processed JSON data, or null if not yet scraped
  */
-export function getRange(stake, pfrSize, stack, id) {
+export async function getRange(stake, pfrSize, stack, id) {
   const key = `${stake}|${stack}|${id}`
-  const data = registry[key]
-  if (!data) {
+
+  // Return cached data if available
+  if (cache[key]) {
+    return cache[key]
+  }
+
+  const loader = loaders[key]
+  if (!loader) {
     console.log(`📊 Range: ${key} → NOT FOUND`)
     return null
   }
+
+  // Load and cache
+  const mod = await loader()
+  const data = mod.default ?? mod
   console.log(`📊 Range: ${key} → loaded (${data.processed?.inRange?.length || 0} hands in range)`)
 
   // GTOWizard format: data.processed contains the range data
@@ -97,7 +104,7 @@ export function getRange(stake, pfrSize, stack, id) {
     inRange = [...inRangeSet]
   }
 
-  return {
+  const result = {
     raise,       // Display frequencies (conditional) for grid
     call,        // Display frequencies (conditional) for grid
     fold,        // Display frequencies (conditional) for grid
@@ -105,4 +112,7 @@ export function getRange(stake, pfrSize, stack, id) {
     ev: processed.ev ?? {},
     inRange      // Hands in the opening range
   }
+
+  cache[key] = result
+  return result
 }

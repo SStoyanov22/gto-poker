@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import './App.css'
 import { gameTypes, PFR_SIZES } from './config/gameTypes.js'
 import { getRange } from './data/registry.js'
@@ -123,79 +123,102 @@ export default function App() {
     return `Tournament, ${selectedStackSizeId}, ${selectedPfrSizeId}`
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedPfrSizeId])
 
-  // ── Load range data from processed JSON registry ──────────────────────────
-  const { raiseData, raise2Data, callData, foldData, raiseTo, stats, inRangeSet } = useMemo(() => {
-    const raw = getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
+  // ── Load range data from processed JSON registry (async) ──────────────────
+  const [rangeData, setRangeData] = useState({
+    raiseData: {},
+    raise2Data: {},
+    callData: {},
+    foldData: {},
+    raiseTo: null,
+    inRangeSet: null,
+    stats: {
+      totalCombos: 0, raise1Combos: 0, raise2Combos: 0, callCombos: 0, foldCombos: 0,
+      totalPct: '0.0', raise1Pct: '0.0', raise2Pct: '0.0', callPct: '0.0', foldPct: '0.0',
+      hasCall: false, hasRaise2: false, hasFold: false, hasData: false,
+      raise1Size: null, raise2Size: null,
+    },
+  })
 
-    const data = raw ?? {}
+  useEffect(() => {
+    let cancelled = false
 
-    // Use combo frequencies (absolute) for BOTH grid display AND statistics
-    // Combo freq = rangeFreq × actionFreq, so they sum to rangeFreq (not 1.0)
-    // This lets us show "not in range" portion as gray
-    const combos = data.combos ?? { raise: {}, call: {}, fold: {} }
+    async function loadRange() {
+      const raw = await getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
+      if (cancelled) return
 
-    const comboRaiseEntries = Object.entries(combos.raise ?? {})
-      .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+      const data = raw ?? {}
 
-    let raiseData  = {}
-    let raise2Data = {}
-    let raiseTo    = null
+      // Use combo frequencies (absolute) for BOTH grid display AND statistics
+      const combos = data.combos ?? { raise: {}, call: {}, fold: {} }
 
-    if (comboRaiseEntries.length >= 2) {
-      raise2Data = comboRaiseEntries[comboRaiseEntries.length - 1][1]
-      raiseData  = mergeFreqMaps(comboRaiseEntries.slice(0, -1).map(e => e[1]))
-      raiseTo    = comboRaiseEntries.map(e => e[0])
-    } else if (comboRaiseEntries.length === 1) {
-      raiseData = comboRaiseEntries[0][1]
-      raiseTo   = comboRaiseEntries[0][0]
+      const comboRaiseEntries = Object.entries(combos.raise ?? {})
+        .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+
+      let raiseData  = {}
+      let raise2Data = {}
+      let raiseTo    = null
+
+      if (comboRaiseEntries.length >= 2) {
+        raise2Data = comboRaiseEntries[comboRaiseEntries.length - 1][1]
+        raiseData  = mergeFreqMaps(comboRaiseEntries.slice(0, -1).map(e => e[1]))
+        raiseTo    = comboRaiseEntries.map(e => e[0])
+      } else if (comboRaiseEntries.length === 1) {
+        raiseData = comboRaiseEntries[0][1]
+        raiseTo   = comboRaiseEntries[0][0]
+      }
+
+      const callData = mergeFreqMaps(Object.values(combos.call ?? {}))
+      const foldData = combos.fold ?? {}
+
+      // Stats using combo frequencies (absolute)
+      const raise1Combos = countCombos(raiseData)
+      const raise2Combos = countCombos(raise2Data)
+      const callCombos   = countCombos(callData)
+      const foldCombos   = countCombos(foldData)
+
+      const totalActionCombos = raise1Combos + raise2Combos + callCombos
+
+      // Create set of hands that are "in range" for this spot
+      const inRangeSet = raw?.inRange ? new Set(raw.inRange) : null
+
+      // Get raise size labels
+      const sizes = raiseTo ? [raiseTo].flat() : []
+      const raise1Size = sizes.length >= 1 ? sizes[0] : null
+      const raise2Size = sizes.length >= 2 ? sizes[sizes.length - 1] : null
+
+      setRangeData({
+        raiseData,
+        raise2Data,
+        callData,
+        foldData,
+        raiseTo,
+        inRangeSet,
+        stats: {
+          totalCombos:  Math.round(totalActionCombos * 10) / 10,
+          raise1Combos: Math.round(raise1Combos * 10) / 10,
+          raise2Combos: Math.round(raise2Combos * 10) / 10,
+          callCombos:   Math.round(callCombos * 10) / 10,
+          foldCombos:   Math.round(foldCombos * 10) / 10,
+          totalPct:     ((totalActionCombos / TOTAL_COMBOS) * 100).toFixed(1),
+          raise1Pct:    ((raise1Combos / TOTAL_COMBOS) * 100).toFixed(1),
+          raise2Pct:    ((raise2Combos / TOTAL_COMBOS) * 100).toFixed(1),
+          callPct:      ((callCombos / TOTAL_COMBOS) * 100).toFixed(1),
+          foldPct:      ((foldCombos / TOTAL_COMBOS) * 100).toFixed(1),
+          hasCall:      callCombos > 0,
+          hasRaise2:    raise2Combos > 0,
+          hasFold:      foldCombos > 0.1,
+          hasData:      !!raw,
+          raise1Size,
+          raise2Size,
+        },
+      })
     }
 
-    const callData = mergeFreqMaps(Object.values(combos.call ?? {}))
-    const foldData = combos.fold ?? {}
-
-    // Stats using combo frequencies (absolute)
-    const raise1Combos = countCombos(raiseData)
-    const raise2Combos = countCombos(raise2Data)
-    const callCombos   = countCombos(callData)
-    const foldCombos   = countCombos(foldData)
-
-    const totalActionCombos = raise1Combos + raise2Combos + callCombos
-
-    // Create set of hands that are "in range" for this spot
-    const inRangeSet = raw?.inRange ? new Set(raw.inRange) : null
-
-    // Get raise size labels
-    const sizes = raiseTo ? [raiseTo].flat() : []
-    const raise1Size = sizes.length >= 1 ? sizes[0] : null
-    const raise2Size = sizes.length >= 2 ? sizes[sizes.length - 1] : null
-
-    return {
-      raiseData,
-      raise2Data,
-      callData,
-      foldData,
-      raiseTo,
-      inRangeSet,
-      stats: {
-        totalCombos:  Math.round(totalActionCombos * 10) / 10,
-        raise1Combos: Math.round(raise1Combos * 10) / 10,
-        raise2Combos: Math.round(raise2Combos * 10) / 10,
-        callCombos:   Math.round(callCombos * 10) / 10,
-        foldCombos:   Math.round(foldCombos * 10) / 10,
-        totalPct:     ((totalActionCombos / TOTAL_COMBOS) * 100).toFixed(1),
-        raise1Pct:    ((raise1Combos / TOTAL_COMBOS) * 100).toFixed(1),
-        raise2Pct:    ((raise2Combos / TOTAL_COMBOS) * 100).toFixed(1),
-        callPct:      ((callCombos / TOTAL_COMBOS) * 100).toFixed(1),
-        foldPct:      ((foldCombos / TOTAL_COMBOS) * 100).toFixed(1),
-        hasCall:      callCombos > 0,
-        hasRaise2:    raise2Combos > 0,
-        hasFold:      foldCombos > 0.1,
-        hasData:      !!raw,
-        raise1Size,
-        raise2Size,
-      },
-    }
+    loadRange()
+    return () => { cancelled = true }
   }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId])
+
+  const { raiseData, raise2Data, callData, foldData, raiseTo, inRangeSet, stats } = rangeData
 
   return (
     <div className="app">
