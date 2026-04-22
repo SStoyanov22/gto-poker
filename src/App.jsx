@@ -55,7 +55,6 @@ export default function App() {
   const [selectedPfrSizeId,   setSelectedPfrSizeId]   = useState('2.5bb')
   const [vs4bIsAllin,         setVs4bIsAllin]         = useState(false)
   const [vsSqueezeRfiFolds,   setVsSqueezeRfiFolds]   = useState(false)
-  const [sqzVs4bType,         setSqzVs4bType]         = useState('rfi_4b') // 'rfi_4b' | 'cc_fold' | 'cc_call'
 
   const handleGameTypeChange = (gameTypeId) => {
     const gt         = gameTypes.find(g => g.id === gameTypeId)
@@ -126,10 +125,7 @@ export default function App() {
   const { raiseData, raise2Data, callData, foldData, raiseTo, stats, inRangeSet } = useMemo(() => {
     const raw = getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
 
-    // Handle sqz vs 4b variant key (rfi_4b / cc_fold / cc_call)
-    const data = (activeScenario.section === 'sqz vs 4b')
-      ? raw?.[sqzVs4bType] ?? {}
-      : raw ?? {}
+    const data = raw ?? {}
 
     // Use combo frequencies (absolute) for BOTH grid display AND statistics
     // Combo freq = rangeFreq × actionFreq, so they sum to rangeFreq (not 1.0)
@@ -197,7 +193,7 @@ export default function App() {
         raise2Size,
       },
     }
-  }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId, sqzVs4bType])
+  }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId])
 
   return (
     <div className="app">
@@ -227,8 +223,6 @@ export default function App() {
             onVs4bAllinChange={setVs4bIsAllin}
             vsSqueezeRfiFolds={vsSqueezeRfiFolds}
             onVsSqueezeRfiFoldsChange={setVsSqueezeRfiFolds}
-            sqzVs4bType={sqzVs4bType}
-            onSqzVs4bTypeChange={setSqzVs4bType}
             onGameTypeChange={handleGameTypeChange}
             onStakeChange={handleStakeChange}
             onStackSizeChange={handleStackSizeChange}
@@ -236,7 +230,6 @@ export default function App() {
               setSelectedScenarioId(id)
               setVs4bIsAllin(false)
               setVsSqueezeRfiFolds(false)
-              setSqzVs4bType('rfi_4b')
             }}
             onPfrSizeChange={setSelectedPfrSizeId}
           />

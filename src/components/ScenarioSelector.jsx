@@ -13,7 +13,6 @@ export default function ScenarioSelector({
   selectedPfrSizeId,
   vs4bIsAllin,
   vsSqueezeRfiFolds,
-  sqzVs4bType,
   onGameTypeChange,
   onStakeChange,
   onStackSizeChange,
@@ -21,7 +20,6 @@ export default function ScenarioSelector({
   onPfrSizeChange,
   onVs4bAllinChange,
   onVsSqueezeRfiFoldsChange,
-  onSqzVs4bTypeChange,
 }) {
   const currentGameType  = gameTypes.find(g => g.id === selectedGameTypeId)
   const hasStakes        = !!currentGameType.stakes
@@ -159,17 +157,7 @@ export default function ScenarioSelector({
           <React.Fragment key={sec.name ?? '__default__'}>
             {si > 0 && <div className="scenario-section-divider" />}
             <div className="scenario-section">
-              {sec.name === 'sqz vs 4b' && (
-                <div className="vs4b-allin-row">
-                  <span className="vs4b-allin-label">4-bettor</span>
-                  <div className="tab-group">
-                    <button className={`tab-btn${sqzVs4bType === 'rfi_4b'  ? ' active' : ''}`} onClick={() => onSqzVs4bTypeChange('rfi_4b')}>RFI</button>
-                    <button className={`tab-btn${sqzVs4bType === 'cc_fold' ? ' active' : ''}`} onClick={() => onSqzVs4bTypeChange('cc_fold')}>CC (fold)</button>
-                    <button className={`tab-btn${sqzVs4bType === 'cc_call' ? ' active' : ''}`} onClick={() => onSqzVs4bTypeChange('cc_call')}>CC (call)</button>
-                  </div>
-                </div>
-              )}
-              {sec.name === 'vs sqz' && selectedScenario?.coldCaller && (
+{sec.name === 'vs sqz' && selectedScenario?.coldCaller && (
                 <div className="vs4b-allin-row">
                   <span className="vs4b-allin-label">RFI</span>
                   <div className="tab-group">

@@ -70,9 +70,14 @@ export function getRange(stake, pfrSize, stack, id) {
   const call = processed.call ?? {}
   const fold = processed.fold ?? {}
 
-  // Combo frequencies (absolute) - for statistics
-  // Used for counting combos in each action category
-  const combos = processed.combos ?? { raise: {}, call: {}, fold: {} }
+  // Combo frequencies (absolute) - for statistics and grid display
+  // New files store absolute freqs directly in raise/call/fold.
+  // Old files store conditional in raise/call/fold and absolute in combos.
+  const combos = processed.combos ?? {
+    raise: processed.raise ?? {},
+    call:  processed.call  ?? {},
+    fold:  processed.fold  ?? {},
+  }
 
   // Use inRange from processed data if available (more accurate - includes hands that fold 100%)
   // Otherwise fall back to collecting from raise/call actions

@@ -409,6 +409,65 @@ function getSqueezeFourBetSize(opener, squeezer) {
 }
 
 /**
+ * Get the 4-bet size when the cold caller 4-bets (squeezer faces it)
+ * Sizes discovered from GTO Wizard API at 100bb:
+ *   BB squeeze UTG+HJ → HJ 4-bets: R34
+ *   BB squeeze others → CC 4-bets: R31.5
+ *   SB squeeze UTG+HJ → HJ 4-bets: R31.5
+ *   SB/BTN/CO squeeze others → CC 4-bets: R31.5 (estimated)
+ */
+function getColdCaller4betSize(squeezer, opener, coldCaller) {
+  if (squeezer === 'BB' && opener === 'UTG' && coldCaller === 'HJ') return '34'
+  return '31.5'
+}
+
+// CC 4-bet sizes that are confirmed to exist in GTO Wizard as squeezer-response nodes.
+// Entries NOT listed here → stop at CC's decision node (no CC 4-bet appended).
+// Confirmed working: BB squeeze with SB cold-caller (R31.5), BB sqz UTG+HJ (R34),
+// all SB squeeze cases (R31.5).
+const CC_4BET_NODE_EXISTS = new Set([
+  'BB|BTN|SB', 'BB|CO|SB', 'BB|HJ|SB', 'BB|UTG|SB',  // BB sqz, SB cold-caller
+  'BB|UTG|HJ',                                          // BB sqz UTG+HJ (R34)
+  // All SB squeeze combos are included via the else branch (non-BB squeezer)
+])
+
+/**
+ * Build action string for squeeze vs CC 4-bet, RFI folds variant.
+ *
+ * When the CC 4-bet response node is known to exist in GTO Wizard, navigate past
+ * the CC 4-bet to reach the squeezer's decision. Otherwise stop at CC's decision.
+ */
+export function squeezeVsCc4betRfiFoldsActions(squeezer, opener, coldCaller, sizes = DEFAULT_SIZES) {
+  let base = squeezeActions(squeezer, opener, coldCaller, sizes)
+  const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
+  base += `-R${squeezeSize}`
+  for (let i = POS[squeezer] + 1; i < 6; i++) base += '-F'
+  base += '-F'  // Opener folds
+  const key = `${squeezer}|${opener}|${coldCaller}`
+  if (squeezer !== 'BB' || CC_4BET_NODE_EXISTS.has(key)) {
+    base += `-R${getColdCaller4betSize(squeezer, opener, coldCaller)}`
+  }
+  return base
+}
+
+/**
+ * Build action string for squeeze vs CC 4-bet, RFI calls variant.
+ * Same logic as above.
+ */
+export function squeezeVsCc4betRfiCallsActions(squeezer, opener, coldCaller, sizes = DEFAULT_SIZES) {
+  let base = squeezeActions(squeezer, opener, coldCaller, sizes)
+  const squeezeSize = getSqueezeSize(squeezer, opener, coldCaller)
+  base += `-R${squeezeSize}`
+  for (let i = POS[squeezer] + 1; i < 6; i++) base += '-F'
+  base += '-C'  // Opener calls
+  const key = `${squeezer}|${opener}|${coldCaller}`
+  if (squeezer !== 'BB' || CC_4BET_NODE_EXISTS.has(key)) {
+    base += `-R${getColdCaller4betSize(squeezer, opener, coldCaller)}`
+  }
+  return base
+}
+
+/**
  * Build action string for squeeze vs 4-bet (squeezer facing 4-bet from opener)
  * @param {string} squeezer - Player who squeezed
  * @param {string} opener - Original raiser who 4-bets
@@ -667,12 +726,27 @@ export function generatePreflopSpots(sizes = DEFAULT_SIZES) {
     }
   }
 
-  // ── Squeeze vs 4-bet (squeezer facing 4-bet from opener) ──
-  // Format: {squeezer}_sqz_vs_4b_{opener}_{coldCaller}
+  // ── Squeeze vs 4-bet ──
+  // {s}_sqz_vs_{o}_4b_{cc}_fold  = opener 4-bets, CC folds
+  // {s}_sqz_vs_{o}_fold_{cc}_4b  = opener folds, CC 4-bets
+  // {s}_sqz_vs_{o}_call_{cc}_4b  = opener calls, CC 4-bets
   for (const [squeezer, opener, coldCaller] of squeezeCombos) {
-    spots[`${squeezer.toLowerCase()}_sqz_vs_4b_${opener.toLowerCase()}_${coldCaller.toLowerCase()}`] = {
-      description: `${squeezer} squeeze vs ${opener} 4-bet (${coldCaller} folded)`,
+    const s = squeezer.toLowerCase(), o = opener.toLowerCase(), cc = coldCaller.toLowerCase()
+    spots[`${s}_sqz_vs_${o}_4b_${cc}_fold`] = {
+      description: `${squeezer} squeeze vs ${opener} 4-bet (${coldCaller} folds)`,
       actions: squeezeVs4betActions(squeezer, opener, coldCaller, sizes),
+      position: squeezer,
+      category: 'squeeze_vs_4b',
+    }
+    spots[`${s}_sqz_vs_${o}_fold_${cc}_4b`] = {
+      description: `${squeezer} squeeze vs ${coldCaller} CC 4-bet (${opener} folds)`,
+      actions: squeezeVsCc4betRfiFoldsActions(squeezer, opener, coldCaller, sizes),
+      position: squeezer,
+      category: 'squeeze_vs_4b',
+    }
+    spots[`${s}_sqz_vs_${o}_call_${cc}_4b`] = {
+      description: `${squeezer} squeeze vs ${coldCaller} CC 4-bet (${opener} calls)`,
+      actions: squeezeVsCc4betRfiCallsActions(squeezer, opener, coldCaller, sizes),
       position: squeezer,
       category: 'squeeze_vs_4b',
     }
