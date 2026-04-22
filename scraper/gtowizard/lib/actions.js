@@ -136,6 +136,19 @@ const STACK_SIZES = {
     fourBet: {}, // Discover from scrape
     fiveBet: {}, // Discover from scrape
   },
+  // 125bb stack - sizes discovered from GTO Wizard API
+  125: {
+    openSB: '3.5',
+    threeBet: {
+      BB: { UTG: '8', HJ: '8.5', CO: '8.5', BTN: '12', SB: '10.5' },
+      SB: { UTG: '12.5', HJ: '12.5', CO: '12.5', BTN: '14' },
+      BTN: { UTG: '8.5', HJ: '8.5', CO: '8.5' },
+      CO: { UTG: '8.5', HJ: '8.5' },
+      HJ: { UTG: '8' },
+    },
+    fourBet: {}, // Discover from scrape
+    fiveBet: {}, // Discover from scrape
+  },
 }
 
 // Current stack depth (set by scraper)
