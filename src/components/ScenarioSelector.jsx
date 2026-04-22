@@ -103,19 +103,32 @@ export default function ScenarioSelector({
         </div>
       )}
 
-      {/* Row 3: Stack size */}
+      {/* Row 3: Stack size (grouped by depth) */}
       <div className="selector-row">
         <span className="selector-row-label">Stack</span>
-        <div className="tab-group">
-          {stackSizes.map(ss => (
-            <button
-              key={ss.id}
-              className={`tab-btn${selectedStackSizeId === ss.id ? ' active' : ''}`}
-              onClick={() => onStackSizeChange(ss.id)}
-            >
-              {ss.label}
-            </button>
-          ))}
+        <div className="stack-groups">
+          {/* Group stacks by range: 10-90, 100-190, 200+ */}
+          {[
+            { label: null, filter: ss => parseInt(ss.id) >= 10 && parseInt(ss.id) < 100 },
+            { label: null, filter: ss => parseInt(ss.id) >= 100 && parseInt(ss.id) < 200 },
+            { label: null, filter: ss => parseInt(ss.id) >= 200 },
+          ].map((group, gi) => {
+            const filtered = stackSizes.filter(group.filter)
+            if (filtered.length === 0) return null
+            return (
+              <div key={gi} className="tab-group">
+                {filtered.map(ss => (
+                  <button
+                    key={ss.id}
+                    className={`tab-btn${selectedStackSizeId === ss.id ? ' active' : ''}`}
+                    onClick={() => onStackSizeChange(ss.id)}
+                  >
+                    {ss.label}
+                  </button>
+                ))}
+              </div>
+            )
+          })}
         </div>
       </div>
 

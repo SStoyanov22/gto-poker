@@ -42,7 +42,9 @@ function scenarioName(def) {
 
 const defaultGameType  = gameTypes[0]
 const defaultStake     = defaultGameType.stakes?.find(s => s.id === 'nl100') ?? defaultGameType.stakes?.[0] ?? null
-const defaultStackSize = (defaultStake ?? defaultGameType).stackSizes[0]
+const defaultStackSizes = (defaultStake ?? defaultGameType).stackSizes
+const defaultStackId = (defaultStake ?? defaultGameType).defaultStack ?? '100bb'
+const defaultStackSize = defaultStackSizes.find(s => s.id === defaultStackId) ?? defaultStackSizes[0]
 const defaultScenario  = defaultStackSize.scenarios[0]
 
 // ── App ───────────────────────────────────────────────────────────────────────

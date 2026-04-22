@@ -140,14 +140,36 @@ const STACK_SIZES = {
   125: {
     openSB: '3.5',
     threeBet: {
-      BB: { UTG: '8', HJ: '8.5', CO: '8.5', BTN: '12', SB: '10.5' },
-      SB: { UTG: '12.5', HJ: '12.5', CO: '12.5', BTN: '14' },
+      BB: { UTG: '14.5', HJ: '14', CO: '14', BTN: '14', SB: '10.5' },
+      SB: { UTG: '12.5', HJ: '12.5', CO: '12.5', BTN: '12' },
       BTN: { UTG: '8.5', HJ: '8.5', CO: '8.5' },
       CO: { UTG: '8.5', HJ: '8.5' },
       HJ: { UTG: '8' },
     },
-    fourBet: {}, // Discover from scrape
-    fiveBet: {}, // Discover from scrape
+    squeeze: {
+      'CO|UTG|HJ': '11',
+      'BTN|UTG|HJ': '11', 'BTN|UTG|CO': '11', 'BTN|HJ|CO': '11',
+      'SB|UTG|HJ': '15', 'SB|UTG|CO': '15', 'SB|UTG|BTN': '15',
+      'SB|HJ|CO': '15', 'SB|HJ|BTN': '15', 'SB|CO|BTN': '15',
+      'BB|UTG|HJ': '15', 'BB|UTG|CO': '15', 'BB|UTG|BTN': '15', 'BB|UTG|SB': '15',
+      'BB|HJ|CO': '15', 'BB|HJ|BTN': '15', 'BB|HJ|SB': '15',
+      'BB|CO|BTN': '15', 'BB|CO|SB': '15', 'BB|BTN|SB': '15',
+    },
+    fourBet: {
+      UTG: { HJ: '25', CO: '26.5', BTN: '26.5', SB: '31.5', BB: '36.5' },
+      HJ: { CO: '26.5', BTN: '26.5', SB: '31.5', BB: '35' },
+      CO: { BTN: '26.5', SB: '31.5', BB: '35' },
+      BTN: { SB: '30', BB: '35' },
+      SB: { BB: '24' },
+    },
+    fiveBet: {
+      // Non-all-in 5-bet sizes. Where only all-in is available, vs_5b node may not exist
+      BB: { SB: '50.5' }, // vs UTG/HJ/CO/BTN = all-in only
+      SB: { BTN: '66' },  // vs UTG/HJ/CO = all-in only
+      BTN: { UTG: '55.5', HJ: '55.5', CO: '55.5' },
+      CO: { UTG: '55.5', HJ: '55.5' },
+      HJ: { UTG: '52.5' },
+    },
   },
 }
 

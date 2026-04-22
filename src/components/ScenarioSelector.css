@@ -21,9 +21,17 @@
   flex-shrink: 0;
 }
 
+/* ── Stack size groups ─────────────────────────────────────── */
+.stack-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 /* ── Tab group (game type / stack size) ────────────────────── */
 .tab-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   background: var(--bg-page);
   border: 1px solid var(--divider);
