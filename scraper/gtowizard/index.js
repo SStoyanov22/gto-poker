@@ -19,6 +19,7 @@
 //   --dry-run             Fetch without writing files
 //   --skip-existing       Skip scenarios that already have output files
 //   --out-dir <dir>       Output directory              (default: scraper/gtowizard/out)
+//   --max-requests <n>    Stop after N API requests     (default: unlimited)
 //
 // Examples:
 //   # List all scenarios
@@ -40,17 +41,60 @@ import { fileURLToPath } from 'url'
 import { existsSync } from 'fs'
 
 // ── Rate limiting ────────────────────────────────────────────────────────────
-const RATE_LIMIT_MS = 500  // 500ms between requests (2 req/sec)
+// GTO Wizard API limit: 1500 requests per hour
+// Safe rate: 1400/hour = ~2.6 seconds between requests
+const HOURLY_LIMIT = 1400  // Stay under 1500 limit with buffer
+const RATE_LIMIT_MS = Math.ceil(3600000 / HOURLY_LIMIT)  // ~2571ms between requests
 let lastRequestTime = 0
+let requestCount = 0
+let windowStart = Date.now()
+let totalRequests = 0
+let maxRequests = Infinity
 
 async function rateLimit() {
   const now = Date.now()
+
+  // Reset counter every hour
+  if (now - windowStart > 3600000) {
+    windowStart = now
+    requestCount = 0
+  }
+
+  // Check if we're approaching the limit
+  if (requestCount >= HOURLY_LIMIT - 10) {
+    const timeLeft = 3600000 - (now - windowStart)
+    const mins = Math.ceil(timeLeft / 60000)
+    console.log(`\n⚠️  Approaching hourly limit (${requestCount}/${HOURLY_LIMIT}). Waiting ${mins} minutes...`)
+    await new Promise(resolve => setTimeout(resolve, timeLeft + 5000))
+    windowStart = Date.now()
+    requestCount = 0
+  }
+
+  // Enforce minimum delay between requests
   const elapsed = now - lastRequestTime
   if (elapsed < RATE_LIMIT_MS) {
     const delay = RATE_LIMIT_MS - elapsed
     await new Promise(resolve => setTimeout(resolve, delay))
   }
+
   lastRequestTime = Date.now()
+  requestCount++
+  totalRequests++
+
+  // Show progress every 100 requests
+  if (requestCount % 100 === 0) {
+    const timeLeft = 3600000 - (Date.now() - windowStart)
+    const mins = Math.floor(timeLeft / 60000)
+    console.log(`  📊 API requests: ${requestCount}/${HOURLY_LIMIT} this hour (${mins}m remaining)`)
+  }
+}
+
+function setMaxRequests(max) {
+  maxRequests = max
+}
+
+function hasReachedMaxRequests() {
+  return totalRequests >= maxRequests
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -198,6 +242,11 @@ async function main() {
   const outDir = args['out-dir'] || join(__dirname, 'out', stake, `${depth}bb`)
   const dryRun = !!args['dry-run']
 
+  // Set max requests if specified
+  if (args['max-requests']) {
+    setMaxRequests(parseInt(args['max-requests'], 10))
+  }
+
   const gametype = getGametypeString(stake, pfrSize)
   if (!gametype) {
     console.error(`Error: Unknown stake/pfr-size combo: ${stake}/${pfrSize}`)
@@ -207,15 +256,16 @@ async function main() {
     process.exit(1)
   }
 
-  console.log(`\n╔══════════════════════════════════════════════════════════════╗`)
-  console.log(`║  GTO Wizard Preflop Scraper                                  ║`)
-  console.log(`╠══════════════════════════════════════════════════════════════╣`)
-  console.log(`║  Stake:     ${stake.padEnd(48)}║`)
-  console.log(`║  PFR Size:  ${pfrSize.padEnd(48)}║`)
-  console.log(`║  Stack:     ${(depth + 'bb').padEnd(48)}║`)
-  console.log(`║  Gametype:  ${gametype.padEnd(48)}║`)
-  console.log(`║  Output:    ${outDir.slice(-48).padEnd(48)}║`)
-  console.log(`╚══════════════════════════════════════════════════════════════╝`)
+  console.log(`\n╔════════════════════════════════════════════════════════════════════╗`)
+  console.log(`║  GTO Wizard Preflop Scraper                                       ║`)
+  console.log(`╠════════════════════════════════════════════════════════════════════╣`)
+  console.log(`║  Stake:     ${stake.padEnd(55)}║`)
+  console.log(`║  PFR Size:  ${pfrSize.padEnd(55)}║`)
+  console.log(`║  Stack:     ${(depth + 'bb').padEnd(55)}║`)
+  console.log(`║  Gametype:  ${gametype.padEnd(55)}║`)
+  console.log(`║  Output:    ${outDir.slice(-55).padEnd(55)}║`)
+  console.log(`║  Rate:      ${(`~${RATE_LIMIT_MS}ms between requests (${HOURLY_LIMIT}/hour max)`).padEnd(55)}║`)
+  console.log(`╚════════════════════════════════════════════════════════════════════╝`)
 
   // ── Inspect mode ──
   if (args.inspect) {
@@ -284,6 +334,12 @@ async function main() {
   for (let i = 0; i < spotIds.length; i++) {
     const id = spotIds[i]
     const spot = { ...spots[id], id }
+
+    // Check max requests limit
+    if (hasReachedMaxRequests()) {
+      console.log(`\n⏹️  Reached max requests limit (${totalRequests}). Stopping.`)
+      break
+    }
 
     // Skip if file already exists
     if (skipExisting) {

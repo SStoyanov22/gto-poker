@@ -22,13 +22,18 @@ export const gameTypes = [
         id: 'nl100',
         label: 'NL100',
         stackSizes: [
-          makeStack('100bb', '100bb'),
-          makeStack('150bb', '150bb'),
-          makeStack('200bb', '200bb'),
-          makeStack('70bb',  '70bb'),
-          makeStack('50bb',  '50bb'),
+          // Row 1: Short stacks (10-90bb)
           makeStack('40bb',  '40bb'),
+          makeStack('50bb',  '50bb'),
+          makeStack('70bb',  '70bb'),
+          // Row 2: Standard stacks (100-190bb)
+          makeStack('100bb', '100bb'),
+          makeStack('125bb', '125bb'),
+          makeStack('150bb', '150bb'),
+          // Row 3: Deep stacks (200bb+)
+          makeStack('200bb', '200bb'),
         ],
+        defaultStack: '100bb',
       },
     ],
   },

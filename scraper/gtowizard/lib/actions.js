@@ -120,18 +120,56 @@ const STACK_SIZES = {
     },
     fiveBet: {}, // Discover from scrape
   },
-  // 150bb stack
+  // 150bb stack - sizes discovered from GTO Wizard API
   150: {
     openSB: '3.5',
     threeBet: {
-      BB: { UTG: '16', HJ: '16', CO: '16', BTN: '16', SB: '13' },
-      SB: { UTG: '15', HJ: '15', CO: '15', BTN: '16' },
-      BTN: { UTG: '11', HJ: '11', CO: '13.5' },
-      CO: { UTG: '11', HJ: '11' },
+      BB: { UTG: '9', HJ: '9', CO: '9.5', BTN: '12', SB: '10' },
+      SB: { UTG: '14', HJ: '14', CO: '14', BTN: '16' },
+      BTN: { UTG: '9.5', HJ: '9.5', CO: '9.5' },
+      CO: { UTG: '9', HJ: '9' },
       HJ: { UTG: '9' },
+    },
+    squeeze: {
+      // Will be discovered during scrape
     },
     fourBet: {}, // Discover from scrape
     fiveBet: {}, // Discover from scrape
+  },
+  // 125bb stack - sizes discovered from GTO Wizard API
+  125: {
+    openSB: '3.5',
+    threeBet: {
+      BB: { UTG: '14.5', HJ: '14', CO: '14', BTN: '14', SB: '10.5' },
+      SB: { UTG: '12.5', HJ: '12.5', CO: '12.5', BTN: '12' },
+      BTN: { UTG: '8.5', HJ: '8.5', CO: '8.5' },
+      CO: { UTG: '8.5', HJ: '8.5' },
+      HJ: { UTG: '8' },
+    },
+    squeeze: {
+      'CO|UTG|HJ': '11',
+      'BTN|UTG|HJ': '11', 'BTN|UTG|CO': '11', 'BTN|HJ|CO': '11',
+      'SB|UTG|HJ': '15', 'SB|UTG|CO': '15', 'SB|UTG|BTN': '15',
+      'SB|HJ|CO': '15', 'SB|HJ|BTN': '15', 'SB|CO|BTN': '15',
+      'BB|UTG|HJ': '15', 'BB|UTG|CO': '15', 'BB|UTG|BTN': '15', 'BB|UTG|SB': '15',
+      'BB|HJ|CO': '15', 'BB|HJ|BTN': '15', 'BB|HJ|SB': '15',
+      'BB|CO|BTN': '15', 'BB|CO|SB': '15', 'BB|BTN|SB': '15',
+    },
+    fourBet: {
+      UTG: { HJ: '25', CO: '26.5', BTN: '26.5', SB: '31.5', BB: '36.5' },
+      HJ: { CO: '26.5', BTN: '26.5', SB: '31.5', BB: '35' },
+      CO: { BTN: '26.5', SB: '31.5', BB: '35' },
+      BTN: { SB: '30', BB: '35' },
+      SB: { BB: '24' },
+    },
+    fiveBet: {
+      // Non-all-in 5-bet sizes. Where only all-in is available, vs_5b node may not exist
+      BB: { SB: '50.5' }, // vs UTG/HJ/CO/BTN = all-in only
+      SB: { BTN: '66' },  // vs UTG/HJ/CO = all-in only
+      BTN: { UTG: '55.5', HJ: '55.5', CO: '55.5' },
+      CO: { UTG: '55.5', HJ: '55.5' },
+      HJ: { UTG: '52.5' },
+    },
   },
 }
 
@@ -389,23 +427,20 @@ export function multiwayOvercallActions(hero, opener, caller1, caller2, sizes = 
 
 /**
  * Get the 4-bet size for squeeze pots (larger than standard 3-bet pots due to dead money)
- * Sizes vary based on squeeze size:
- * - BB squeeze (15bb) → 4-bet ~31.5bb
- * - SB squeeze (14bb) → 4-bet ~31.5bb
- * - BTN squeeze (11bb) → 4-bet ~25bb (smaller squeeze = smaller 4-bet)
- * - CO squeeze (11bb) → 4-bet ~25bb
+ * Sizes discovered from GTO Wizard API at 100bb:
+ * - BB squeeze (15bb) → 4-bet 31.5bb
+ * - SB squeeze (14bb) → 4-bet 31.5bb
+ * - BTN squeeze (11bb) → 4-bet 27.5bb
+ * - CO squeeze (11bb) → 4-bet 27.5bb
  */
 function getSqueezeFourBetSize(opener, squeezer) {
-  // Squeeze pot 4-bet sizes are larger than standard 4-bets
-  // BB/SB squeeze = 14-15bb, 4-bet = 31.5bb (~2.1x)
-  // BTN/CO squeeze = 11bb, 4-bet = 25bb (~2.3x)
   const squeezeFourBet = {
-    UTG: { BB: '31.5', SB: '31.5', BTN: '25', CO: '25' },
-    HJ: { BB: '31.5', SB: '31.5', BTN: '25', CO: '25' },
-    CO: { BB: '31.5', SB: '31.5', BTN: '25' },
+    UTG: { BB: '31.5', SB: '31.5', BTN: '27.5', CO: '27.5' },
+    HJ: { BB: '31.5', SB: '31.5', BTN: '27.5', CO: '27.5' },
+    CO: { BB: '31.5', SB: '31.5', BTN: '27.5' },
     BTN: { BB: '31.5', SB: '31.5' },
   }
-  return squeezeFourBet[opener]?.[squeezer] || '25'
+  return squeezeFourBet[opener]?.[squeezer] || '27.5'
 }
 
 /**
