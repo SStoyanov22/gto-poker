@@ -18,39 +18,42 @@
 //   }
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Lazy-load JSON files to avoid heap overflow during build
-const cashModules = import.meta.glob('/scraper/gtowizard/out/**/*.json')
-const mttModules  = import.meta.glob('/scraper/gtowizard-mtt/out/**/*.json')
+// Each JSON file is registered as a static asset URL (not a module).
+// `?url` makes Vite emit the file as-is to dist/assets/ and inject the
+// hashed URL string here — no per-file JS chunk, no transform overhead.
+// `eager: true` resolves the URLs at build time so we have a synchronous
+// path → URL map; the actual fetch is still on-demand at request time.
+const cashUrls = import.meta.glob('/scraper/gtowizard/out/**/*.json',
+  { eager: true, query: '?url', import: 'default' })
+const mttUrls  = import.meta.glob('/scraper/gtowizard-mtt/out/**/*.json',
+  { eager: true, query: '?url', import: 'default' })
 
-// Build a map of key -> loader function
-// Cash key: <stake>|<stackbb>|<id>           e.g. 'nl100|100bb|rfi_btn'
-// MTT key:  mtt|<stackbb>|<id>               e.g. 'mtt|40bb|bb_vs_btn'
-const loaders = {}
+// Build a map of key -> URL
+// Cash key: <stake>|<stackbb>|<id>   e.g. 'nl100|100bb|rfi_btn'
+// MTT key:  mtt|<stackbb>|<id>        e.g. 'mtt|40bb|bb_vs_btn'
+const urls = {}
 
-// Cash: /scraper/gtowizard/out/<stake>/<stackbb>/<file>.json
-for (const [path, loader] of Object.entries(cashModules)) {
+for (const [path, url] of Object.entries(cashUrls)) {
   const parts = path.split('/')
   const stake = parts[4]
   const stackbb = parts[5]
   const file = parts[6]
   if (!file) continue
   const id = file.replace('.json', '')
-  loaders[`${stake}|${stackbb}|${id}`] = loader
+  urls[`${stake}|${stackbb}|${id}`] = url
 }
 
-// MTT: /scraper/gtowizard-mtt/out/<stackbb>/{rfi|vs_rfi/<opener>|vs_3b/<opener>}/<file>.json
-for (const [path, loader] of Object.entries(mttModules)) {
+for (const [path, url] of Object.entries(mttUrls)) {
   const parts = path.split('/')
-  // ['', 'scraper', 'gtowizard-mtt', 'out', '<stackbb>', '<kind>', ...]
   const stackbb = parts[4]
-  if (!stackbb || !stackbb.endsWith('bb')) continue  // skip discovered-sizes.json etc
+  if (!stackbb || !stackbb.endsWith('bb')) continue
   const file = parts[parts.length - 1]
   if (!file?.endsWith('.json')) continue
   const id = file.replace('.json', '')
-  loaders[`mtt|${stackbb}|${id}`] = loader
+  urls[`mtt|${stackbb}|${id}`] = url
 }
 
-// Cache loaded data
+// Cache loaded JSON
 const cache = {}
 
 // Debug: uncomment to see loaded files
@@ -68,20 +71,17 @@ const cache = {}
 export async function getRange(stake, pfrSize, stack, id) {
   const key = `${stake}|${stack}|${id}`
 
-  // Return cached data if available
   if (cache[key]) {
     return cache[key]
   }
 
-  const loader = loaders[key]
-  if (!loader) {
+  const url = urls[key]
+  if (!url) {
     console.log(`📊 Range: ${key} → NOT FOUND`)
     return null
   }
 
-  // Load and cache
-  const mod = await loader()
-  const data = mod.default ?? mod
+  const data = await fetch(url).then(r => r.json())
   console.log(`📊 Range: ${key} → loaded (${data.processed?.inRange?.length || 0} hands in range)`)
 
   // GTOWizard format: data.processed contains the range data
