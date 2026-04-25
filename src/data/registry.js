@@ -19,11 +19,16 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Lazy-load JSON files to avoid heap overflow during build
-const modules = import.meta.glob('/scraper/gtowizard/out/**/*.json')
+const cashModules = import.meta.glob('/scraper/gtowizard/out/**/*.json')
+const mttModules  = import.meta.glob('/scraper/gtowizard-mtt/out/**/*.json')
 
 // Build a map of key -> loader function
+// Cash key: <stake>|<stackbb>|<id>           e.g. 'nl100|100bb|rfi_btn'
+// MTT key:  mtt|<stackbb>|<id>               e.g. 'mtt|40bb|bb_vs_btn'
 const loaders = {}
-for (const [path, loader] of Object.entries(modules)) {
+
+// Cash: /scraper/gtowizard/out/<stake>/<stackbb>/<file>.json
+for (const [path, loader] of Object.entries(cashModules)) {
   const parts = path.split('/')
   const stake = parts[4]
   const stackbb = parts[5]
@@ -31,6 +36,18 @@ for (const [path, loader] of Object.entries(modules)) {
   if (!file) continue
   const id = file.replace('.json', '')
   loaders[`${stake}|${stackbb}|${id}`] = loader
+}
+
+// MTT: /scraper/gtowizard-mtt/out/<stackbb>/{rfi|vs_rfi/<opener>|vs_3b/<opener>}/<file>.json
+for (const [path, loader] of Object.entries(mttModules)) {
+  const parts = path.split('/')
+  // ['', 'scraper', 'gtowizard-mtt', 'out', '<stackbb>', '<kind>', ...]
+  const stackbb = parts[4]
+  if (!stackbb || !stackbb.endsWith('bb')) continue  // skip discovered-sizes.json etc
+  const file = parts[parts.length - 1]
+  if (!file?.endsWith('.json')) continue
+  const id = file.replace('.json', '')
+  loaders[`mtt|${stackbb}|${id}`] = loader
 }
 
 // Cache loaded data

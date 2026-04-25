@@ -6,12 +6,15 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import SCENARIO_DEFS from './scenarios.js'
+import MTT_SCENARIO_DEFS from './mttScenarios.js'
 
 export const PFR_SIZES = ['2bb', '2.25bb', '2.5bb', '3bb']
 
-function makeStack(id, label) {
-  return { id, label, scenarios: SCENARIO_DEFS }
+function makeStack(id, label, scenarios = SCENARIO_DEFS) {
+  return { id, label, scenarios }
 }
+
+const mttStack = (bb) => makeStack(`${bb}bb`, `${bb}bb`, MTT_SCENARIO_DEFS)
 
 export const gameTypes = [
   {
@@ -36,5 +39,17 @@ export const gameTypes = [
         defaultStack: '100bb',
       },
     ],
+  },
+  {
+    id: 'mtt_8max',
+    label: 'MTT 8-max',
+    // No `stakes` layer — MTT solutions are stack-only (no NL100/200 distinction).
+    // 90bb omitted: account doesn't have GTOWizard solutions at that depth.
+    stackSizes: [
+      mttStack(10), mttStack(20), mttStack(22), mttStack(25), mttStack(26), mttStack(28),
+      mttStack(30), mttStack(32), mttStack(35), mttStack(38), mttStack(40), mttStack(45),
+      mttStack(50), mttStack(55), mttStack(60), mttStack(70), mttStack(80), mttStack(100),
+    ],
+    defaultStack: '40bb',
   },
 ]

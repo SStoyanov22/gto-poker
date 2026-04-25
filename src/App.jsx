@@ -120,7 +120,7 @@ export default function App() {
       const stake = gt.stakes.find(s => s.id === selectedStakeId)
       return `6-max, ${stake.label}, ${selectedPfrSizeId}`
     }
-    return `Tournament, ${selectedStackSizeId}, ${selectedPfrSizeId}`
+    return `${gt.label}, ${selectedStackSizeId}`
   }, [selectedGameTypeId, selectedStakeId, selectedStackSizeId, selectedPfrSizeId])
 
   // ── Load range data from processed JSON registry (async) ──────────────────
@@ -143,7 +143,10 @@ export default function App() {
     let cancelled = false
 
     async function loadRange() {
-      const raw = await getRange(selectedStakeId, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
+      // For game types without a `stakes` layer (MTT), synthesize 'mtt' as the lookup stake.
+      const gt = gameTypes.find(g => g.id === selectedGameTypeId)
+      const lookupStake = selectedStakeId ?? (gt.stakes ? null : 'mtt')
+      const raw = await getRange(lookupStake, selectedPfrSizeId, selectedStackSizeId, activeScenario.id)
       if (cancelled) return
 
       const data = raw ?? {}
@@ -216,7 +219,7 @@ export default function App() {
 
     loadRange()
     return () => { cancelled = true }
-  }, [activeScenario, selectedStakeId, selectedPfrSizeId, selectedStackSizeId])
+  }, [activeScenario, selectedGameTypeId, selectedStakeId, selectedPfrSizeId, selectedStackSizeId])
 
   const { raiseData, raise2Data, callData, foldData, raiseTo, inRangeSet, stats } = rangeData
 

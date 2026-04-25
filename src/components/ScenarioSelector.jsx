@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './ScenarioSelector.css'
 
-const POSITION_ORDER = ['BB', 'SB', 'BTN', 'CO', 'HJ', 'UTG']
+const POSITION_ORDER = ['BB', 'SB', 'BTN', 'CO', 'HJ', 'LJ', 'UTG1', 'UTG', 'RFI']
 
 export default function ScenarioSelector({
   gameTypes,
@@ -107,9 +107,11 @@ export default function ScenarioSelector({
       <div className="selector-row">
         <span className="selector-row-label">Stack</span>
         <div className="stack-groups">
-          {/* Group stacks by range: 10-90, 100-190, 200+ */}
+          {/* Group stacks by range: short (≤28), mid (30-60), 70-90, 100-190, 200+ */}
           {[
-            { label: null, filter: ss => parseInt(ss.id) >= 10 && parseInt(ss.id) < 100 },
+            { label: null, filter: ss => parseInt(ss.id) >= 10 && parseInt(ss.id) <= 28 },
+            { label: null, filter: ss => parseInt(ss.id) >= 30 && parseInt(ss.id) <= 60 },
+            { label: null, filter: ss => parseInt(ss.id) >= 70 && parseInt(ss.id) < 100 },
             { label: null, filter: ss => parseInt(ss.id) >= 100 && parseInt(ss.id) < 200 },
             { label: null, filter: ss => parseInt(ss.id) >= 200 },
           ].map((group, gi) => {
@@ -132,21 +134,23 @@ export default function ScenarioSelector({
         </div>
       </div>
 
-      {/* Row 4: PFR size */}
-      <div className="selector-row">
-        <span className="selector-row-label">Size</span>
-        <div className="tab-group">
-          {pfrSizes.map(size => (
-            <button
-              key={size}
-              className={`tab-btn${selectedPfrSizeId === size ? ' active' : ''}`}
-              onClick={() => onPfrSizeChange(size)}
-            >
-              {size}
-            </button>
-          ))}
+      {/* Row 4: PFR size — only for game types with PFR-size variants (cash) */}
+      {hasStakes && (
+        <div className="selector-row">
+          <span className="selector-row-label">Size</span>
+          <div className="tab-group">
+            {pfrSizes.map(size => (
+              <button
+                key={size}
+                className={`tab-btn${selectedPfrSizeId === size ? ' active' : ''}`}
+                onClick={() => onPfrSizeChange(size)}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Row 5: Section filter */}
       <div className="selector-row">

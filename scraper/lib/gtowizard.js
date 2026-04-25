@@ -88,11 +88,11 @@ async function get(path, params) {
  * @param {string} [opts.riverActions]
  * @returns {Promise<object>}  { history_actions, future_actions }
  */
-export async function getHistory({ gametype, depth, preflopActions = '', flopActions = '', turnActions = '', riverActions = '' }) {
+export async function getHistory({ gametype, depth, stacks = '', preflopActions = '', flopActions = '', turnActions = '', riverActions = '' }) {
   return get('/v1/poker/history/', {
     gametype,
     depth,
-    stacks: '',
+    stacks,
     preflop_actions: preflopActions,
     flop_actions:    flopActions,
     turn_actions:    turnActions,
@@ -114,11 +114,11 @@ export async function getHistory({ gametype, depth, preflopActions = '', flopAct
  * @param {string} [opts.board]          e.g. 'AhKd2c' for postflop
  * @returns {Promise<object>}  { action_solutions, players_info, game, ... }
  */
-export async function getSpotSolution({ gametype, depth, preflopActions = '', flopActions = '', turnActions = '', riverActions = '', board = '' }) {
+export async function getSpotSolution({ gametype, depth, stacks = '', preflopActions = '', flopActions = '', turnActions = '', riverActions = '', board = '' }) {
   return get('/v4/solutions/spot-solution/', {
     gametype,
     depth,
-    stacks: '',
+    stacks,
     preflop_actions: preflopActions,
     flop_actions:    flopActions,
     turn_actions:    turnActions,
