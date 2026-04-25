@@ -207,6 +207,9 @@ export function stacksParam(depthBb) {
 
 /**
  * Stack sizes the user wants scraped, in scrape-priority order (deepest first).
- * 90bb omitted: account doesn't have GTOWizard solutions at that depth (403).
+ * 18bb and 90bb omitted: account doesn't have GTOWizard solutions at those depths (403).
  */
-export const STACK_SIZES = [200, 160, 130, 100, 80, 70, 60, 55, 50, 45, 40, 38, 35, 32, 30, 28, 26, 25, 22, 20, 10]
+export const STACK_SIZES = [
+  200, 160, 130, 100, 80, 70, 60, 55, 50, 45, 40, 38, 35, 32, 30, 28, 26, 25, 22, 20,
+  19, 17, 16, 15, 14, 13, 12, 11, 10,
+]

@@ -423,6 +423,12 @@ async function scrapeStack(stack, outDir, opts) {
     const ttl = tokenMinsLeft()
     const ttlStr = ttl > 0 ? ` (token: ${ttl.toFixed(1)}m)` : ' (token: stale)'
     process.stdout.write(`  [${stack}bb ${i + 1}/${ids.length}] ${id.padEnd(28)}${ttlStr} `)
+    // Spot may have been pruned mid-run (e.g., vs-4b removed when 3-bet turned out to be RAI)
+    if (!spot) {
+      console.log('⏭  pruned (3-bet is all-in, no 4-bet possible)')
+      skip++
+      continue
+    }
     const r = await scrapeSpot(stack, id, spot, outDir, opts)
     if (r.skipped) { skip++; console.log('⏭  exists'); consecutive403 = 0 }
     else if (r.success) { ok++; console.log('✓'); consecutive403 = 0 }

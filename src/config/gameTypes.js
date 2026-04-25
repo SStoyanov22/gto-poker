@@ -46,7 +46,9 @@ export const gameTypes = [
     // No `stakes` layer — MTT solutions are stack-only (no NL100/200 distinction).
     // 90bb omitted: account doesn't have GTOWizard solutions at that depth.
     stackSizes: [
-      mttStack(10), mttStack(20), mttStack(22), mttStack(25), mttStack(26), mttStack(28),
+      mttStack(10), mttStack(11), mttStack(12), mttStack(13), mttStack(14), mttStack(15),
+      mttStack(16), mttStack(17), mttStack(19),
+      mttStack(20), mttStack(22), mttStack(25), mttStack(26), mttStack(28),
       mttStack(30), mttStack(32), mttStack(35), mttStack(38), mttStack(40), mttStack(45),
       mttStack(50), mttStack(55), mttStack(60), mttStack(70), mttStack(80), mttStack(100),
       mttStack(130), mttStack(160), mttStack(200),
