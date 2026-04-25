@@ -30,6 +30,7 @@ import {
   setStackDepth,
   setOpenSize,
   setThreeBetSize,
+  setFourBetSize,
   getSizeTables,
   hasOpenSize,
   STACK_SIZES,
@@ -158,6 +159,7 @@ function spotSubdir(spot) {
   if (spot.kind === 'rfi') return 'rfi'
   if (spot.kind === 'vs_rfi') return `vs_rfi/${spot.opener.toLowerCase()}`
   if (spot.kind === 'vs_3b') return `vs_3b/${spot.opener.toLowerCase()}`
+  if (spot.kind === 'vs_4b') return `vs_4b/${spot.threeBettor.toLowerCase()}`
   return 'other'
 }
 
@@ -294,6 +296,17 @@ async function scrapeSpot(stack, spotId, spot, outDir, opts) {
         setThreeBetSize(stack, spot.opener, spot.position, 'RAI')
       }
     }
+    // Pull 4-bet sizes out of vs-3B responses to feed into vs-4B requests.
+    if (spot.kind === 'vs_3b') {
+      const sols = raw.action_solutions ?? []
+      const nonAllin = sols.find(s => s.action?.type === 'RAISE' && !s.action.allin)
+      const allin = sols.find(s => s.action?.type === 'RAISE' && s.action.allin)
+      if (nonAllin) {
+        setFourBetSize(stack, spot.opener, spot.threeBettor, nonAllin.action.betsize)
+      } else if (allin) {
+        setFourBetSize(stack, spot.opener, spot.threeBettor, 'RAI')
+      }
+    }
 
     await writeJson(outPath, {
       meta: {
@@ -334,10 +347,10 @@ async function bootstrapSizesFromExisting(stack, outDir) {
       }
     } catch {}
   }
-  // Also scan vs-RFI files for 3-bet sizes (prefer non-allin, fall back to RAI)
+  const { readdir } = await import('fs/promises')
+  // Scan vs-RFI files for 3-bet sizes (prefer non-allin, fall back to RAI)
   const vsRfiDir = join(outDir, `${stack}bb`, 'vs_rfi')
   if (existsSync(vsRfiDir)) {
-    const { readdir } = await import('fs/promises')
     for (const opener of positions) {
       const subDir = join(vsRfiDir, opener.toLowerCase())
       if (!existsSync(subDir)) continue
@@ -359,6 +372,30 @@ async function bootstrapSizesFromExisting(stack, outDir) {
       } catch {}
     }
   }
+  // Scan vs-3B files for 4-bet sizes
+  const vs3bDir = join(outDir, `${stack}bb`, 'vs_3b')
+  if (existsSync(vs3bDir)) {
+    for (const opener of positions) {
+      const subDir = join(vs3bDir, opener.toLowerCase())
+      if (!existsSync(subDir)) continue
+      try {
+        for (const f of await readdir(subDir)) {
+          if (!f.endsWith('.json')) continue
+          const data = JSON.parse(await readFile(join(subDir, f), 'utf-8'))
+          const threeBettor = data.meta?.threeBettor
+          if (!threeBettor) continue
+          const sols = data.raw?.action_solutions ?? []
+          const nonAllin = sols.find(s => s.action?.type === 'RAISE' && !s.action.allin)
+          const allin = sols.find(s => s.action?.type === 'RAISE' && s.action.allin)
+          if (nonAllin) {
+            setFourBetSize(stack, opener, threeBettor, nonAllin.action.betsize)
+          } else if (allin) {
+            setFourBetSize(stack, opener, threeBettor, 'RAI')
+          }
+        }
+      } catch {}
+    }
+  }
 }
 
 async function scrapeStack(stack, outDir, opts) {
@@ -371,7 +408,7 @@ async function scrapeStack(stack, outDir, opts) {
   const initial = generateMttSpots()
   let ids = Object.keys(initial)
   if (opts.filter) ids = ids.filter(id => id.includes(opts.filter))
-  const order = { rfi: 0, vs_rfi: 1, vs_3b: 2 }
+  const order = { rfi: 0, vs_rfi: 1, vs_3b: 2, vs_4b: 3 }
   ids.sort((a, b) => (order[initial[a].kind] - order[initial[b].kind]) || a.localeCompare(b))
 
   let ok = 0, fail = 0, skip = 0

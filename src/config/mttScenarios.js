@@ -53,4 +53,19 @@ for (let oi = 0; oi < POSITIONS.length; oi++) {
   }
 }
 
+// vs 4B: 3-bettor faces 4-bet from opener
+for (let oi = 0; oi < POSITIONS.length; oi++) {
+  const opener = POSITIONS[oi]
+  if (opener === 'BB') continue
+  for (let ti = oi + 1; ti < POSITIONS.length; ti++) {
+    const threeBettor = POSITIONS[ti]
+    scenarios.push({
+      id: `${threeBettor.toLowerCase()}_vs_4b_${opener.toLowerCase()}`,
+      label: `vs ${POS_LABEL[opener]} 4b`,
+      group: threeBettor,
+      section: 'vs 4b',
+    })
+  }
+}
+
 export default scenarios
