@@ -1,0 +1,7645 @@
+{
+  "meta": {
+    "gametype": "MTTGeneral_8m",
+    "stack": 22,
+    "spotId": "sb_vs_4b_hj",
+    "kind": "vs_4b",
+    "position": "SB",
+    "opener": "HJ",
+    "threeBettor": "SB",
+    "preflopActions": "F-F-F-R2-F-F-R6-F-RAI",
+    "description": "SB vs HJ 4-bet"
+  },
+  "processed": {
+    "call": {
+      "22bb": {
+        "44": 0.2258,
+        "55": 0.1492,
+        "66": 0.0424,
+        "77": 0.0673,
+        "A7s": 0.0015,
+        "A8s": 0.3969,
+        "A9o": 0,
+        "AA": 1,
+        "AJs": 0.0052,
+        "AKs": 0.7861,
+        "AQs": 0.0444,
+        "ATo": 0.2043,
+        "ATs": 0.626,
+        "KJs": 0.2093,
+        "KK": 1,
+        "KQo": 0.0009,
+        "KQs": 0.0036,
+        "KTs": 0.1861,
+        "QJs": 0.2881,
+        "QQ": 0.535,
+        "QTs": 0.0022,
+        "T9s": 0.0203
+      }
+    },
+    "fold": {
+      "A5o": 0.1946,
+      "A6o": 0.0594,
+      "A7o": 0.2815,
+      "A8o": 0.2426,
+      "A9o": 0.3458,
+      "JTo": 0.0219,
+      "QJo": 0.0341,
+      "QTo": 0.1009
+    },
+    "ev": {
+      "main": {
+        "44": 2.0988,
+        "55": 2.635,
+        "66": 3.2307,
+        "77": 4.3803,
+        "A7s": 0.5237,
+        "A8s": 0.995,
+        "AA": 23.4763,
+        "AJs": 5.0559,
+        "AKs": 12.1972,
+        "AQs": 8.7792,
+        "ATo": 0.9192,
+        "ATs": 2.3699,
+        "KJs": 1.3931,
+        "KK": 17.783,
+        "KQo": 1.2179,
+        "KQs": 2.7769,
+        "KTs": 1.2944,
+        "QJs": 1.1693,
+        "QQ": 14.1966,
+        "QTs": 1.0902,
+        "T9s": 0.7116
+      }
+    },
+    "inRange": [
+      "44",
+      "55",
+      "66",
+      "77",
+      "A5o",
+      "A6o",
+      "A7o",
+      "A7s",
+      "A8o",
+      "A8s",
+      "A9o",
+      "AA",
+      "AJs",
+      "AKs",
+      "AQs",
+      "ATo",
+      "ATs",
+      "JTo",
+      "KJs",
+      "KK",
+      "KQo",
+      "KQs",
+      "KTs",
+      "QJo",
+      "QJs",
+      "QQ",
+      "QTo",
+      "QTs",
+      "T9s"
+    ]
+  },
+  "raw": {
+    "action_solutions": [
+      {
+        "action": {
+          "code": "F",
+          "position": "SB",
+          "type": "FOLD",
+          "betsize": "0",
+          "allin": false,
+          "is_hand_end": true,
+          "is_showdown": false,
+          "next_street": false,
+          "display_name": "FOLD",
+          "simple_group": "FOLD",
+          "advanced_group": "FOLD",
+          "betsize_by_pot": null,
+          "next_position": null
+        },
+        "total_frequency": 0.33245766,
+        "strategy": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.9973,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0.9947,
+          1,
+          0.0016,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0.9999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.002,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.1005,
+          1,
+          0,
+          0
+        ],
+        "evs": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total_ev": 7.664147,
+        "total_combos": 15.369185,
+        "equity_buckets": [],
+        "equity_buckets_advanced": [],
+        "hand_categories": [],
+        "draw_categories": [],
+        "tournament_evs_converter": null
+      },
+      {
+        "action": {
+          "code": "C",
+          "position": "SB",
+          "type": "CALL",
+          "betsize": "22.000",
+          "allin": true,
+          "is_hand_end": true,
+          "is_showdown": true,
+          "next_street": false,
+          "display_name": "CALL",
+          "simple_group": "CALL",
+          "advanced_group": "CALL",
+          "betsize_by_pot": null,
+          "next_position": null
+        },
+        "total_frequency": 0.66754234,
+        "strategy": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0027,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0.0053,
+          0,
+          0.9984,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0.0001,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.998,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.8995,
+          0,
+          1,
+          1
+        ],
+        "evs": [
+          1.60165,
+          -4.50692,
+          -2.68131,
+          1.87499,
+          -4.42637,
+          -2.61843,
+          -3.79162,
+          -2.01331,
+          2.09876,
+          -4.12186,
+          -2.2951,
+          -3.48265,
+          -1.75168,
+          -2.98659,
+          -1.26009,
+          2.63503,
+          -4.65641,
+          -2.82088,
+          -4.01975,
+          -2.25028,
+          -3.52273,
+          -1.73187,
+          -2.77487,
+          -1.05964,
+          3.23067,
+          -4.92936,
+          -3.05262,
+          -4.28693,
+          -2.45574,
+          -3.75292,
+          -1.97901,
+          -2.96721,
+          -1.2581,
+          -2.32426,
+          -0.62535,
+          4.3803,
+          -4.36089,
+          -2.55107,
+          -4.33247,
+          -2.52105,
+          -3.81115,
+          -2.01626,
+          -3.02632,
+          -1.32001,
+          -2.37122,
+          -0.64892,
+          -1.72483,
+          -0.08986,
+          6.00611,
+          -4.13212,
+          -2.32555,
+          -3.96051,
+          -2.17218,
+          -4.03998,
+          -2.23181,
+          -3.28573,
+          -1.53933,
+          -2.65277,
+          -0.94904,
+          -2.02025,
+          -0.31304,
+          -1.21448,
+          0.41819,
+          6.80444,
+          -1.7535,
+          -0.07825,
+          -1.57751,
+          0.10893,
+          -1.4294,
+          0.30119,
+          -1.16528,
+          0.51441,
+          -1.48548,
+          0.20051,
+          -1.16221,
+          0.52373,
+          -0.66408,
+          0.99505,
+          -0.34769,
+          1.26558,
+          23.47632,
+          3.74895,
+          5.05591,
+          11.33205,
+          12.19723,
+          7.70297,
+          8.7792,
+          0.91917,
+          2.36991,
+          -4.06919,
+          -2.21112,
+          -3.90346,
+          -2.10097,
+          -3.84104,
+          -2.03039,
+          -3.5509,
+          -1.77308,
+          -3.47052,
+          -1.70054,
+          -2.81004,
+          -1.06735,
+          -1.8273,
+          -0.13878,
+          -1.12393,
+          0.51023,
+          10.96433,
+          -0.55628,
+          1.03149,
+          -2.76627,
+          -0.97241,
+          -2.58442,
+          -0.81206,
+          -2.52009,
+          -0.76537,
+          -2.21839,
+          -0.47587,
+          -2.02927,
+          -0.30352,
+          -1.87441,
+          -0.17696,
+          -1.56428,
+          0.13605,
+          -0.86647,
+          0.77959,
+          -0.20849,
+          1.39307,
+          17.78304,
+          1.21787,
+          2.77686,
+          -0.30833,
+          1.29438,
+          -3.49269,
+          -1.66949,
+          -3.31475,
+          -1.50804,
+          -3.26911,
+          -1.46822,
+          -2.96588,
+          -1.19775,
+          -2.77006,
+          -1.03566,
+          -2.73241,
+          -0.9649,
+          -1.78992,
+          -0.10956,
+          -1.07561,
+          0.58674,
+          -0.44111,
+          1.16926,
+          14.19664,
+          -0.52205,
+          1.09018,
+          -4.27634,
+          -2.48792,
+          -4.10951,
+          -2.30211,
+          -4.06966,
+          -2.25751,
+          -3.89009,
+          -2.13472,
+          -3.24243,
+          -1.50782,
+          -2.52929,
+          -0.84039,
+          -1.59038,
+          0.05593,
+          -0.87117,
+          0.71161,
+          8.27863
+        ],
+        "total_ev": 7.664147,
+        "total_combos": 30.859816,
+        "equity_buckets": [],
+        "equity_buckets_advanced": [],
+        "hand_categories": [],
+        "draw_categories": [],
+        "tournament_evs_converter": null
+      }
+    ],
+    "players_info": [
+      {
+        "player": {
+          "relative_postflop_position": "IP",
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": false,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "0.000",
+          "chips_on_table": "22.000",
+          "bounty": null,
+          "profile": null,
+          "position": "HJ",
+          "bounty_in_bb": null,
+          "name": "HJ",
+          "seat": 3
+        },
+        "range": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.2552,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.4241,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.96920913,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.7055,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0556,
+          0,
+          0,
+          0,
+          0.0004,
+          0,
+          0.7218,
+          0,
+          0.169,
+          0,
+          0.0772,
+          0,
+          0.0475,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.9998,
+          0.954,
+          0.9996,
+          0.3091,
+          0.99930006,
+          0.2019,
+          0.667,
+          0.0001,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.9431,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.032,
+          0.9989,
+          0.2535,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.7635,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.7471
+        ],
+        "hand_evs": [],
+        "hand_eqs": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "hand_eqrs": [],
+        "total_ev": 22.373831471793835,
+        "total_eq": null,
+        "total_eqr": null,
+        "pot_share": 0,
+        "total_combos": 96.25565,
+        "simple_hand_counters": {
+          "22": {
+            "name": "22",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "33": {
+            "name": "33",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "44": {
+            "name": "44",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "55": {
+            "name": "55",
+            "total_combos_available": 6,
+            "total_combos": 1.5312,
+            "total_frequency": 0.2552,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "66": {
+            "name": "66",
+            "total_combos_available": 6,
+            "total_combos": 2.5446,
+            "total_frequency": 0.4241,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "77": {
+            "name": "77",
+            "total_combos_available": 6,
+            "total_combos": 5.81525478,
+            "total_frequency": 0.96920913,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "88": {
+            "name": "88",
+            "total_combos_available": 6,
+            "total_combos": 4.2330000000000005,
+            "total_frequency": 0.7055000000000001,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "99": {
+            "name": "99",
+            "total_combos_available": 6,
+            "total_combos": 0.3336,
+            "total_frequency": 0.055600000000000004,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "32o": {
+            "name": "32o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "32s": {
+            "name": "32s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "42o": {
+            "name": "42o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "42s": {
+            "name": "42s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "43o": {
+            "name": "43o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "43s": {
+            "name": "43s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "52o": {
+            "name": "52o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "52s": {
+            "name": "52s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "53o": {
+            "name": "53o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "53s": {
+            "name": "53s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "54o": {
+            "name": "54o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "54s": {
+            "name": "54s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "62o": {
+            "name": "62o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "62s": {
+            "name": "62s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "63o": {
+            "name": "63o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "63s": {
+            "name": "63s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "64o": {
+            "name": "64o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "64s": {
+            "name": "64s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "65o": {
+            "name": "65o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "65s": {
+            "name": "65s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "72o": {
+            "name": "72o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "72s": {
+            "name": "72s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "73o": {
+            "name": "73o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "73s": {
+            "name": "73s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "74o": {
+            "name": "74o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "74s": {
+            "name": "74s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "75o": {
+            "name": "75o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "75s": {
+            "name": "75s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "76o": {
+            "name": "76o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "76s": {
+            "name": "76s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "82o": {
+            "name": "82o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "82s": {
+            "name": "82s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "83o": {
+            "name": "83o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "83s": {
+            "name": "83s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "84o": {
+            "name": "84o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "84s": {
+            "name": "84s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "85o": {
+            "name": "85o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "85s": {
+            "name": "85s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "86o": {
+            "name": "86o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "86s": {
+            "name": "86s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "87o": {
+            "name": "87o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "87s": {
+            "name": "87s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "92o": {
+            "name": "92o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "92s": {
+            "name": "92s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "93o": {
+            "name": "93o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "93s": {
+            "name": "93s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "94o": {
+            "name": "94o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "94s": {
+            "name": "94s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "95o": {
+            "name": "95o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "95s": {
+            "name": "95s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "96o": {
+            "name": "96o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "96s": {
+            "name": "96s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "97o": {
+            "name": "97o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "97s": {
+            "name": "97s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "98o": {
+            "name": "98o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "98s": {
+            "name": "98s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A2o": {
+            "name": "A2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A2s": {
+            "name": "A2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A3o": {
+            "name": "A3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A3s": {
+            "name": "A3s",
+            "total_combos_available": 4,
+            "total_combos": 0.0016,
+            "total_frequency": 0.0004,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A4o": {
+            "name": "A4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A4s": {
+            "name": "A4s",
+            "total_combos_available": 4,
+            "total_combos": 2.8872,
+            "total_frequency": 0.7218,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A5o": {
+            "name": "A5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A5s": {
+            "name": "A5s",
+            "total_combos_available": 4,
+            "total_combos": 0.676,
+            "total_frequency": 0.169,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A6o": {
+            "name": "A6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A6s": {
+            "name": "A6s",
+            "total_combos_available": 4,
+            "total_combos": 0.3088,
+            "total_frequency": 0.0772,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A7o": {
+            "name": "A7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A7s": {
+            "name": "A7s",
+            "total_combos_available": 4,
+            "total_combos": 0.19,
+            "total_frequency": 0.0475,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A8o": {
+            "name": "A8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A8s": {
+            "name": "A8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A9o": {
+            "name": "A9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A9s": {
+            "name": "A9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AA": {
+            "name": "AA",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AJo": {
+            "name": "AJo",
+            "total_combos_available": 12,
+            "total_combos": 11.9976,
+            "total_frequency": 0.9998,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AJs": {
+            "name": "AJs",
+            "total_combos_available": 4,
+            "total_combos": 3.816,
+            "total_frequency": 0.954,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AKo": {
+            "name": "AKo",
+            "total_combos_available": 12,
+            "total_combos": 11.9952,
+            "total_frequency": 0.9996,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AKs": {
+            "name": "AKs",
+            "total_combos_available": 4,
+            "total_combos": 1.2364,
+            "total_frequency": 0.3091,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AQo": {
+            "name": "AQo",
+            "total_combos_available": 12,
+            "total_combos": 11.991600720000001,
+            "total_frequency": 0.99930006,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AQs": {
+            "name": "AQs",
+            "total_combos_available": 4,
+            "total_combos": 0.8076,
+            "total_frequency": 0.2019,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "ATo": {
+            "name": "ATo",
+            "total_combos_available": 12,
+            "total_combos": 8.004000000000001,
+            "total_frequency": 0.6670000000000001,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "ATs": {
+            "name": "ATs",
+            "total_combos_available": 4,
+            "total_combos": 0.0004,
+            "total_frequency": 0.0001,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J2o": {
+            "name": "J2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J2s": {
+            "name": "J2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J3o": {
+            "name": "J3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J3s": {
+            "name": "J3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J4o": {
+            "name": "J4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J4s": {
+            "name": "J4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J5o": {
+            "name": "J5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J5s": {
+            "name": "J5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J6o": {
+            "name": "J6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J6s": {
+            "name": "J6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J7o": {
+            "name": "J7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J7s": {
+            "name": "J7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J8o": {
+            "name": "J8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J8s": {
+            "name": "J8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J9o": {
+            "name": "J9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J9s": {
+            "name": "J9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JJ": {
+            "name": "JJ",
+            "total_combos_available": 6,
+            "total_combos": 5.6586,
+            "total_frequency": 0.9430999999999999,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JTo": {
+            "name": "JTo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JTs": {
+            "name": "JTs",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K2o": {
+            "name": "K2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K2s": {
+            "name": "K2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K3o": {
+            "name": "K3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K3s": {
+            "name": "K3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K4o": {
+            "name": "K4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K4s": {
+            "name": "K4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K5o": {
+            "name": "K5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K5s": {
+            "name": "K5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K6o": {
+            "name": "K6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K6s": {
+            "name": "K6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K7o": {
+            "name": "K7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K7s": {
+            "name": "K7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K8o": {
+            "name": "K8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K8s": {
+            "name": "K8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K9o": {
+            "name": "K9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K9s": {
+            "name": "K9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KJo": {
+            "name": "KJo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KJs": {
+            "name": "KJs",
+            "total_combos_available": 4,
+            "total_combos": 0.128,
+            "total_frequency": 0.032,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KK": {
+            "name": "KK",
+            "total_combos_available": 6,
+            "total_combos": 5.9934,
+            "total_frequency": 0.9989,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KQo": {
+            "name": "KQo",
+            "total_combos_available": 12,
+            "total_combos": 3.042,
+            "total_frequency": 0.2535,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KQs": {
+            "name": "KQs",
+            "total_combos_available": 4,
+            "total_combos": 4,
+            "total_frequency": 1,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KTo": {
+            "name": "KTo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KTs": {
+            "name": "KTs",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q2o": {
+            "name": "Q2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q2s": {
+            "name": "Q2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q3o": {
+            "name": "Q3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q3s": {
+            "name": "Q3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q4o": {
+            "name": "Q4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q4s": {
+            "name": "Q4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q5o": {
+            "name": "Q5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q5s": {
+            "name": "Q5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q6o": {
+            "name": "Q6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q6s": {
+            "name": "Q6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q7o": {
+            "name": "Q7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q7s": {
+            "name": "Q7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q8o": {
+            "name": "Q8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q8s": {
+            "name": "Q8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q9o": {
+            "name": "Q9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q9s": {
+            "name": "Q9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QJo": {
+            "name": "QJo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QJs": {
+            "name": "QJs",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QQ": {
+            "name": "QQ",
+            "total_combos_available": 6,
+            "total_combos": 4.5809999999999995,
+            "total_frequency": 0.7635,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QTo": {
+            "name": "QTo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QTs": {
+            "name": "QTs",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T2o": {
+            "name": "T2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T2s": {
+            "name": "T2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T3o": {
+            "name": "T3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T3s": {
+            "name": "T3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T4o": {
+            "name": "T4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T4s": {
+            "name": "T4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T5o": {
+            "name": "T5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T5s": {
+            "name": "T5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T6o": {
+            "name": "T6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T6s": {
+            "name": "T6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T7o": {
+            "name": "T7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T7s": {
+            "name": "T7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T8o": {
+            "name": "T8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T8s": {
+            "name": "T8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T9o": {
+            "name": "T9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T9s": {
+            "name": "T9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "TT": {
+            "name": "TT",
+            "total_combos_available": 6,
+            "total_combos": 4.4826,
+            "total_frequency": 0.7471,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {},
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          }
+        },
+        "equity_buckets_range": [],
+        "equity_buckets_advanced_range": [],
+        "equity_buckets": [
+          {
+            "name": "best_hands",
+            "index": 0,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "good_hands",
+            "index": 1,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "weak_hands",
+            "index": 2,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "trash_hands",
+            "index": 3,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "equity_buckets_advanced": [
+          {
+            "name": "hands_90_100",
+            "index": 0,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_80_90",
+            "index": 1,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_70_80",
+            "index": 2,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_60_70",
+            "index": 3,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_50_60",
+            "index": 4,
+            "display_order": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_25_50",
+            "index": 5,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_0_25",
+            "index": 6,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "hand_categories": [
+          {
+            "name": "no_made_hand",
+            "index": 0,
+            "display_order": 16,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "king_high",
+            "index": 1,
+            "display_order": 15,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "ace_high",
+            "index": 2,
+            "display_order": 14,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "low_pair",
+            "index": 3,
+            "display_order": 13,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "third_pair",
+            "index": 4,
+            "display_order": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "second_pair",
+            "index": 5,
+            "display_order": 11,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "underpair",
+            "index": 6,
+            "display_order": 10,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "top_pair",
+            "index": 7,
+            "display_order": 9,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "overpair",
+            "index": 8,
+            "display_order": 8,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "two_pair",
+            "index": 9,
+            "display_order": 7,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "trips",
+            "index": 10,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "set",
+            "index": 11,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "straight",
+            "index": 12,
+            "display_order": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "flush",
+            "index": 13,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "fullhouse",
+            "index": 14,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "quads",
+            "index": 15,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "straight_flush",
+            "index": 16,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "draw_categories": [
+          {
+            "name": "no_draw",
+            "index": 0,
+            "display_order": 15,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "onecard_bdfd",
+            "index": 16,
+            "display_order": 13,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "twocards_bdfd",
+            "index": 17,
+            "display_order": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "gutshot",
+            "index": 1,
+            "display_order": 7,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "oesd",
+            "index": 2,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "flush_draw",
+            "index": 3,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "nut_flush_draw",
+            "index": 12,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "combo_draw",
+            "index": 4,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "relative_postflop_position": "IP",
+        "eq_percentile": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "tournament_evs_converter": null
+      },
+      {
+        "player": {
+          "relative_postflop_position": "OOP",
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": false,
+          "is_hero": true,
+          "is_active": true,
+          "stack": "22.125",
+          "current_stack": "16.000",
+          "chips_on_table": "6",
+          "bounty": null,
+          "profile": null,
+          "position": "SB",
+          "bounty_in_bb": null,
+          "name": "SB",
+          "seat": 6
+        },
+        "range": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.2258,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.1492,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0424,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0673,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.1946,
+          0,
+          0.0594,
+          0,
+          0.2815,
+          0.0015,
+          0.2426,
+          0.3969,
+          0.3458,
+          0,
+          1,
+          0,
+          0.0052,
+          0,
+          0.7861,
+          0,
+          0.0444,
+          0.2043,
+          0.626,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0219,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.2093,
+          1,
+          0.0009,
+          0.0036,
+          0,
+          0.1861,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0341,
+          0.2881,
+          0.535,
+          0.1009,
+          0.0022,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0203,
+          0
+        ],
+        "hand_evs": [
+          1.60165,
+          0,
+          0,
+          1.87499,
+          0,
+          0,
+          0,
+          0,
+          2.09876,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2.63503,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3.23067,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4.3803,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -0.000242622,
+          6.00611,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.41819,
+          6.80444,
+          0,
+          -0.000414725,
+          0,
+          0.108755715,
+          0,
+          0.30119,
+          0,
+          0.51441,
+          0,
+          0.20051,
+          0,
+          0.52373,
+          0,
+          0.99505,
+          -0.000034769,
+          1.26558,
+          23.47632,
+          3.74895,
+          5.05591,
+          11.33205,
+          12.19723,
+          7.70297,
+          8.7792,
+          0.91917,
+          2.36991,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.51023,
+          10.96433,
+          0,
+          1.03149,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.1357779,
+          0,
+          0.77959,
+          0,
+          1.39307,
+          17.78304,
+          1.21787,
+          2.77686,
+          0,
+          1.29438,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.58674,
+          0,
+          1.16926,
+          14.19664,
+          0,
+          1.09018,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.050309036,
+          0,
+          0.71161,
+          8.27863
+        ],
+        "hand_eqs": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "hand_eqrs": [],
+        "total_ev": 7.626168528206162,
+        "total_eq": null,
+        "total_eqr": null,
+        "pot_share": 0,
+        "total_combos": 46.229,
+        "simple_hand_counters": {
+          "22": {
+            "name": "22",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "33": {
+            "name": "33",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "44": {
+            "name": "44",
+            "total_combos_available": 6,
+            "total_combos": 1.3548,
+            "total_frequency": 0.2258,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 1.3548
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 2.09876,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "55": {
+            "name": "55",
+            "total_combos_available": 6,
+            "total_combos": 0.8952,
+            "total_frequency": 0.1492,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.8952
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 2.63503,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "66": {
+            "name": "66",
+            "total_combos_available": 6,
+            "total_combos": 0.2544,
+            "total_frequency": 0.0424,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.2544
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 3.23067,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "77": {
+            "name": "77",
+            "total_combos_available": 6,
+            "total_combos": 0.4038,
+            "total_frequency": 0.0673,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.4038
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 4.380300000000001,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "88": {
+            "name": "88",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "99": {
+            "name": "99",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "32o": {
+            "name": "32o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "32s": {
+            "name": "32s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "42o": {
+            "name": "42o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "42s": {
+            "name": "42s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "43o": {
+            "name": "43o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "43s": {
+            "name": "43s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "52o": {
+            "name": "52o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "52s": {
+            "name": "52s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "53o": {
+            "name": "53o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "53s": {
+            "name": "53s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "54o": {
+            "name": "54o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "54s": {
+            "name": "54s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "62o": {
+            "name": "62o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "62s": {
+            "name": "62s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "63o": {
+            "name": "63o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "63s": {
+            "name": "63s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "64o": {
+            "name": "64o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "64s": {
+            "name": "64s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "65o": {
+            "name": "65o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "65s": {
+            "name": "65s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "72o": {
+            "name": "72o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "72s": {
+            "name": "72s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "73o": {
+            "name": "73o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "73s": {
+            "name": "73s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "74o": {
+            "name": "74o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "74s": {
+            "name": "74s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "75o": {
+            "name": "75o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "75s": {
+            "name": "75s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "76o": {
+            "name": "76o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "76s": {
+            "name": "76s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "82o": {
+            "name": "82o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "82s": {
+            "name": "82s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "83o": {
+            "name": "83o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "83s": {
+            "name": "83s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "84o": {
+            "name": "84o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "84s": {
+            "name": "84s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "85o": {
+            "name": "85o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "85s": {
+            "name": "85s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "86o": {
+            "name": "86o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "86s": {
+            "name": "86s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "87o": {
+            "name": "87o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "87s": {
+            "name": "87s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "92o": {
+            "name": "92o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "92s": {
+            "name": "92s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "93o": {
+            "name": "93o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "93s": {
+            "name": "93s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "94o": {
+            "name": "94o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "94s": {
+            "name": "94s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "95o": {
+            "name": "95o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "95s": {
+            "name": "95s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "96o": {
+            "name": "96o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "96s": {
+            "name": "96s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "97o": {
+            "name": "97o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "97s": {
+            "name": "97s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "98o": {
+            "name": "98o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "98s": {
+            "name": "98s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A2o": {
+            "name": "A2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A2s": {
+            "name": "A2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A3o": {
+            "name": "A3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A3s": {
+            "name": "A3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A4o": {
+            "name": "A4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A4s": {
+            "name": "A4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A5o": {
+            "name": "A5o",
+            "total_combos_available": 12,
+            "total_combos": 2.3352,
+            "total_frequency": 0.1946,
+            "actions_total_combos": {
+              "F": 2.3352,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A5s": {
+            "name": "A5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A6o": {
+            "name": "A6o",
+            "total_combos_available": 12,
+            "total_combos": 0.7128,
+            "total_frequency": 0.0594,
+            "actions_total_combos": {
+              "F": 0.7128,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A6s": {
+            "name": "A6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A7o": {
+            "name": "A7o",
+            "total_combos_available": 12,
+            "total_combos": 3.3779999999999997,
+            "total_frequency": 0.2815,
+            "actions_total_combos": {
+              "F": 3.3779999999999997,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A7s": {
+            "name": "A7s",
+            "total_combos_available": 4,
+            "total_combos": 0.006,
+            "total_frequency": 0.0015,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.006
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 0.52373,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A8o": {
+            "name": "A8o",
+            "total_combos_available": 12,
+            "total_combos": 2.9112,
+            "total_frequency": 0.2426,
+            "actions_total_combos": {
+              "F": 2.9112,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A8s": {
+            "name": "A8s",
+            "total_combos_available": 4,
+            "total_combos": 1.5876,
+            "total_frequency": 0.3969,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 1.5876
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 0.99505,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A9o": {
+            "name": "A9o",
+            "total_combos_available": 12,
+            "total_combos": 4.1495999999999995,
+            "total_frequency": 0.34579999999999994,
+            "actions_total_combos": {
+              "F": 4.14918504,
+              "C": 0.00041496
+            },
+            "actions_total_frequencies": {
+              "F": 0.9999000000000001,
+              "C": 0.00010000000000000002
+            },
+            "hand_ev": -0.000034769,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "A9s": {
+            "name": "A9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AA": {
+            "name": "AA",
+            "total_combos_available": 6,
+            "total_combos": 6,
+            "total_frequency": 1,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 6
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 23.47632,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AJo": {
+            "name": "AJo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AJs": {
+            "name": "AJs",
+            "total_combos_available": 4,
+            "total_combos": 0.0208,
+            "total_frequency": 0.0052,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.0208
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 5.05591,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AKo": {
+            "name": "AKo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AKs": {
+            "name": "AKs",
+            "total_combos_available": 4,
+            "total_combos": 3.1444,
+            "total_frequency": 0.7861,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 3.1444
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 12.19723,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AQo": {
+            "name": "AQo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "AQs": {
+            "name": "AQs",
+            "total_combos_available": 4,
+            "total_combos": 0.1776,
+            "total_frequency": 0.0444,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.1776
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 8.7792,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "ATo": {
+            "name": "ATo",
+            "total_combos_available": 12,
+            "total_combos": 2.4516,
+            "total_frequency": 0.2043,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 2.4516
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 0.9191699999999999,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "ATs": {
+            "name": "ATs",
+            "total_combos_available": 4,
+            "total_combos": 2.504,
+            "total_frequency": 0.626,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 2.504
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 2.36991,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J2o": {
+            "name": "J2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J2s": {
+            "name": "J2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J3o": {
+            "name": "J3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J3s": {
+            "name": "J3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J4o": {
+            "name": "J4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J4s": {
+            "name": "J4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J5o": {
+            "name": "J5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J5s": {
+            "name": "J5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J6o": {
+            "name": "J6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J6s": {
+            "name": "J6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J7o": {
+            "name": "J7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J7s": {
+            "name": "J7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J8o": {
+            "name": "J8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J8s": {
+            "name": "J8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J9o": {
+            "name": "J9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "J9s": {
+            "name": "J9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JJ": {
+            "name": "JJ",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JTo": {
+            "name": "JTo",
+            "total_combos_available": 12,
+            "total_combos": 0.2628,
+            "total_frequency": 0.0219,
+            "actions_total_combos": {
+              "F": 0.2628,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "JTs": {
+            "name": "JTs",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K2o": {
+            "name": "K2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K2s": {
+            "name": "K2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K3o": {
+            "name": "K3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K3s": {
+            "name": "K3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K4o": {
+            "name": "K4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K4s": {
+            "name": "K4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K5o": {
+            "name": "K5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K5s": {
+            "name": "K5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K6o": {
+            "name": "K6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K6s": {
+            "name": "K6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K7o": {
+            "name": "K7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K7s": {
+            "name": "K7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K8o": {
+            "name": "K8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K8s": {
+            "name": "K8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K9o": {
+            "name": "K9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "K9s": {
+            "name": "K9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KJo": {
+            "name": "KJo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KJs": {
+            "name": "KJs",
+            "total_combos_available": 4,
+            "total_combos": 0.8372,
+            "total_frequency": 0.2093,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.8372
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 1.39307,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KK": {
+            "name": "KK",
+            "total_combos_available": 6,
+            "total_combos": 6,
+            "total_frequency": 1,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 6
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 17.78304,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KQo": {
+            "name": "KQo",
+            "total_combos_available": 12,
+            "total_combos": 0.0108,
+            "total_frequency": 0.0009000000000000001,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.0108
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 1.21787,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KQs": {
+            "name": "KQs",
+            "total_combos_available": 4,
+            "total_combos": 0.0144,
+            "total_frequency": 0.0036,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.0144
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 2.77686,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KTo": {
+            "name": "KTo",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "KTs": {
+            "name": "KTs",
+            "total_combos_available": 4,
+            "total_combos": 0.7444,
+            "total_frequency": 0.1861,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.7444
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 1.29438,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q2o": {
+            "name": "Q2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q2s": {
+            "name": "Q2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q3o": {
+            "name": "Q3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q3s": {
+            "name": "Q3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q4o": {
+            "name": "Q4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q4s": {
+            "name": "Q4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q5o": {
+            "name": "Q5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q5s": {
+            "name": "Q5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q6o": {
+            "name": "Q6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q6s": {
+            "name": "Q6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q7o": {
+            "name": "Q7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q7s": {
+            "name": "Q7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q8o": {
+            "name": "Q8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q8s": {
+            "name": "Q8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q9o": {
+            "name": "Q9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "Q9s": {
+            "name": "Q9s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QJo": {
+            "name": "QJo",
+            "total_combos_available": 12,
+            "total_combos": 0.4092,
+            "total_frequency": 0.0341,
+            "actions_total_combos": {
+              "F": 0.4092,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QJs": {
+            "name": "QJs",
+            "total_combos_available": 4,
+            "total_combos": 1.1524,
+            "total_frequency": 0.2881,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 1.1524
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 1.16926,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QQ": {
+            "name": "QQ",
+            "total_combos_available": 6,
+            "total_combos": 3.21,
+            "total_frequency": 0.535,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 3.21
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 14.19664,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QTo": {
+            "name": "QTo",
+            "total_combos_available": 12,
+            "total_combos": 1.2108,
+            "total_frequency": 0.1009,
+            "actions_total_combos": {
+              "F": 1.2108,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 1,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "QTs": {
+            "name": "QTs",
+            "total_combos_available": 4,
+            "total_combos": 0.0088,
+            "total_frequency": 0.0022,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.0088
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 1.09018,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T2o": {
+            "name": "T2o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T2s": {
+            "name": "T2s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T3o": {
+            "name": "T3o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T3s": {
+            "name": "T3s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T4o": {
+            "name": "T4o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T4s": {
+            "name": "T4s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T5o": {
+            "name": "T5o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T5s": {
+            "name": "T5s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T6o": {
+            "name": "T6o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T6s": {
+            "name": "T6s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T7o": {
+            "name": "T7o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T7s": {
+            "name": "T7s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T8o": {
+            "name": "T8o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T8s": {
+            "name": "T8s",
+            "total_combos_available": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T9o": {
+            "name": "T9o",
+            "total_combos_available": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "T9s": {
+            "name": "T9s",
+            "total_combos_available": 4,
+            "total_combos": 0.0812,
+            "total_frequency": 0.0203,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0.0812
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 1
+            },
+            "hand_ev": 0.71161,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          },
+          "TT": {
+            "name": "TT",
+            "total_combos_available": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {
+              "F": 0,
+              "C": 0
+            },
+            "actions_total_frequencies": {
+              "F": 0,
+              "C": 0
+            },
+            "hand_ev": 0,
+            "hand_eq": 0,
+            "hand_eqr": 0
+          }
+        },
+        "equity_buckets_range": [],
+        "equity_buckets_advanced_range": [],
+        "equity_buckets": [
+          {
+            "name": "best_hands",
+            "index": 0,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "good_hands",
+            "index": 1,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "weak_hands",
+            "index": 2,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "trash_hands",
+            "index": 3,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "equity_buckets_advanced": [
+          {
+            "name": "hands_90_100",
+            "index": 0,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_80_90",
+            "index": 1,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_70_80",
+            "index": 2,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_60_70",
+            "index": 3,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_50_60",
+            "index": 4,
+            "display_order": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_25_50",
+            "index": 5,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "hands_0_25",
+            "index": 6,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "hand_categories": [
+          {
+            "name": "no_made_hand",
+            "index": 0,
+            "display_order": 16,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "king_high",
+            "index": 1,
+            "display_order": 15,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "ace_high",
+            "index": 2,
+            "display_order": 14,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "low_pair",
+            "index": 3,
+            "display_order": 13,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "third_pair",
+            "index": 4,
+            "display_order": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "second_pair",
+            "index": 5,
+            "display_order": 11,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "underpair",
+            "index": 6,
+            "display_order": 10,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "top_pair",
+            "index": 7,
+            "display_order": 9,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "overpair",
+            "index": 8,
+            "display_order": 8,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "two_pair",
+            "index": 9,
+            "display_order": 7,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "trips",
+            "index": 10,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "set",
+            "index": 11,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "straight",
+            "index": 12,
+            "display_order": 4,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "flush",
+            "index": 13,
+            "display_order": 3,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "fullhouse",
+            "index": 14,
+            "display_order": 2,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "quads",
+            "index": 15,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "straight_flush",
+            "index": 16,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "draw_categories": [
+          {
+            "name": "no_draw",
+            "index": 0,
+            "display_order": 15,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "onecard_bdfd",
+            "index": 16,
+            "display_order": 13,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "twocards_bdfd",
+            "index": 17,
+            "display_order": 12,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "gutshot",
+            "index": 1,
+            "display_order": 7,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "oesd",
+            "index": 2,
+            "display_order": 6,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "flush_draw",
+            "index": 3,
+            "display_order": 5,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "nut_flush_draw",
+            "index": 12,
+            "display_order": 1,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          },
+          {
+            "name": "combo_draw",
+            "index": 4,
+            "display_order": 0,
+            "total_combos": 0,
+            "total_frequency": 0,
+            "actions_total_combos": {},
+            "actions_total_frequencies": {}
+          }
+        ],
+        "relative_postflop_position": "OOP",
+        "eq_percentile": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "tournament_evs_converter": null
+      }
+    ],
+    "hand_categories_range": [],
+    "draw_categories_range": [],
+    "blocker_rate": [],
+    "unblocker_rate": [],
+    "blockers_frequencies": null,
+    "game": {
+      "players": [
+        {
+          "relative_postflop_position": "OOP",
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": false,
+          "is_hero": true,
+          "is_active": true,
+          "stack": "22.125",
+          "current_stack": "16.000",
+          "chips_on_table": "6",
+          "bounty": null,
+          "profile": null,
+          "position": "SB",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "21.000",
+          "chips_on_table": "1.000",
+          "bounty": null,
+          "profile": null,
+          "position": "BB",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "22.000",
+          "chips_on_table": "0",
+          "bounty": null,
+          "profile": null,
+          "position": "UTG",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "22.000",
+          "chips_on_table": "0",
+          "bounty": null,
+          "profile": null,
+          "position": "UTG+1",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "22.000",
+          "chips_on_table": "0",
+          "bounty": null,
+          "profile": null,
+          "position": "LJ",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": "IP",
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": false,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "0.000",
+          "chips_on_table": "22.000",
+          "bounty": null,
+          "profile": null,
+          "position": "HJ",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": false,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "22.000",
+          "chips_on_table": "0",
+          "bounty": null,
+          "profile": null,
+          "position": "CO",
+          "bounty_in_bb": null
+        },
+        {
+          "relative_postflop_position": null,
+          "hand": null,
+          "is_dealer": true,
+          "is_folded": true,
+          "is_hero": false,
+          "is_active": false,
+          "stack": "22.125",
+          "current_stack": "22.000",
+          "chips_on_table": "0",
+          "bounty": null,
+          "profile": null,
+          "position": "BTN",
+          "bounty_in_bb": null
+        }
+      ],
+      "current_street": {
+        "type": "PREFLOP",
+        "start_pot": "2.500",
+        "end_pot": "30.000"
+      },
+      "pot": "30.000",
+      "pot_odds": "0.348",
+      "active_position": "SB",
+      "board": "",
+      "bet_display_name": "RAISE"
+    },
+    "warning": null,
+    "hands_locked": null,
+    "usage": null
+  }
+}
