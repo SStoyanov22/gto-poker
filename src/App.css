@@ -57,6 +57,7 @@ body {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px solid var(--divider);
   background: var(--bg-surface);
@@ -79,6 +80,27 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.01em;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.mobile-menu-toggle:hover {
+  background: var(--btn-hover-bg);
 }
 
 /* ─── Body ───────────────────────────────────────────────────── */
@@ -267,4 +289,185 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* MOBILE & TABLET RESPONSIVE STYLES                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  :root {
+    --left-panel-w: 320px;
+  }
+
+  .app-logo-text {
+    font-size: 0.85rem;
+  }
+
+  .scenario-context {
+    font-size: 0.62rem;
+  }
+
+  .scenario-title {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablet & small landscape */
+@media (max-width: 768px) {
+  :root {
+    --left-panel-w: 280px;
+  }
+
+  .app-body {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    width: 100%;
+    height: auto;
+    max-height: 45vh;
+    border-right: none;
+    border-bottom: 1px solid var(--divider);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .right-panel {
+    flex: 1;
+    min-height: 55vh;
+    padding: 12px;
+  }
+
+  .grid-info-overlay {
+    top: 12px;
+    left: 12px;
+  }
+
+  .scenario-context {
+    font-size: 0.62rem;
+  }
+
+  .scenario-title {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  :root {
+    --header-h: 56px;
+    --left-panel-w: 100vw;
+  }
+
+  .app-header {
+    padding: 0 12px;
+  }
+
+  .app-logo-text {
+    font-size: 0.8rem;
+    display: none;
+  }
+
+  .app-logo-icon {
+    font-size: 1.1rem;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .app-body {
+    flex-direction: column;
+    transition: max-height 0.3s ease;
+  }
+
+  .left-panel {
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: none;
+    padding: 0;
+    gap: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .left-panel.mobile-open {
+    max-height: 60vh;
+    padding: 12px;
+    gap: 10px;
+    border-bottom: 1px solid var(--divider);
+    overflow-y: auto;
+  }
+
+  .right-panel {
+    flex: 1;
+    min-height: 40vh;
+    padding: 8px;
+    transition: min-height 0.3s ease;
+  }
+
+  .grid-info-overlay {
+    top: 8px;
+    left: 8px;
+    gap: 8px;
+  }
+
+  .scenario-context {
+    font-size: 0.6rem;
+  }
+
+  .scenario-title {
+    font-size: 0.8rem;
+  }
+
+  .stat-item {
+    padding: 5px 8px;
+    gap: 0;
+  }
+
+  .stat-label {
+    font-size: 0.58rem;
+  }
+
+  .stat-value {
+    font-size: 0.9rem;
+  }
+
+  .stat-combos {
+    font-size: 0.62rem;
+  }
+
+  .legend-item {
+    font-size: 0.65rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  :root {
+    --header-h: 52px;
+  }
+
+  .app-logo-icon {
+    font-size: 1rem;
+  }
+
+  .mobile-menu-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .scenario-title {
+    font-size: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 0.85rem;
+  }
 }
