@@ -107,8 +107,9 @@ export default function ScenarioSelector({
       <div className="selector-row">
         <span className="selector-row-label">Stack</span>
         <div className="stack-groups">
-          {/* Group stacks by range: short (≤28), mid (30-60), 70-90, 100-190, 200+ */}
+          {/* Group stacks by range: push/fold (1-9), short (10-28), mid (30-60), 70-90, 100-190, 200+ */}
           {[
+            { label: null, filter: ss => parseInt(ss.id) >= 1  && parseInt(ss.id) <= 9 },
             { label: null, filter: ss => parseInt(ss.id) >= 10 && parseInt(ss.id) <= 28 },
             { label: null, filter: ss => parseInt(ss.id) >= 30 && parseInt(ss.id) <= 60 },
             { label: null, filter: ss => parseInt(ss.id) >= 70 && parseInt(ss.id) < 100 },

@@ -313,66 +313,21 @@ body {
   }
 }
 
-/* Tablet & small landscape */
+/* Tablet & phone — stacked drawer layout with hamburger toggle */
 @media (max-width: 768px) {
   :root {
-    --left-panel-w: 280px;
-  }
-
-  .app-body {
-    flex-direction: column;
-  }
-
-  .left-panel {
-    width: 100%;
-    height: auto;
-    max-height: 45vh;
-    border-right: none;
-    border-bottom: 1px solid var(--divider);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 12px;
-    gap: 10px;
-  }
-
-  .right-panel {
-    flex: 1;
-    min-height: 55vh;
-    padding: 12px;
-  }
-
-  .grid-info-overlay {
-    top: 12px;
-    left: 12px;
-  }
-
-  .scenario-context {
-    font-size: 0.62rem;
-  }
-
-  .scenario-title {
-    font-size: 0.85rem;
-  }
-}
-
-/* Mobile phones */
-@media (max-width: 480px) {
-  :root {
-    --header-h: 56px;
-    --left-panel-w: 100vw;
+    /* Panel is no longer beside the grid, so don't reserve horizontal space for it. */
+    --left-panel-w: 0px;
+    --header-h: 52px;
   }
 
   .app-header {
     padding: 0 12px;
+    gap: 8px;
   }
 
   .app-logo-text {
-    font-size: 0.8rem;
-    display: none;
-  }
-
-  .app-logo-icon {
-    font-size: 1.1rem;
+    font-size: 0.85rem;
   }
 
   .mobile-menu-toggle {
@@ -381,40 +336,66 @@ body {
 
   .app-body {
     flex-direction: column;
-    transition: max-height 0.3s ease;
+    position: relative;
   }
 
+  /* Drawer: overlays the grid so the grid keeps its full height regardless of drawer state */
   .left-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
     width: 100%;
     height: auto;
     max-height: 0;
     overflow: hidden;
     border-right: none;
-    border-bottom: none;
-    padding: 0;
+    border-bottom: 1px solid transparent;
+    padding: 0 12px;
     gap: 0;
-    transition: max-height 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
+    transition: max-height 0.25s ease, padding 0.25s ease, gap 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
   .left-panel.mobile-open {
-    max-height: 60vh;
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
     padding: 12px;
     gap: 10px;
-    border-bottom: 1px solid var(--divider);
+    border-bottom-color: var(--divider);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .right-panel {
     flex: 1;
-    min-height: 40vh;
-    padding: 8px;
-    transition: min-height 0.3s ease;
+    min-height: 0;
+    padding: 10px;
+    /* Stack grid + info column-wise; align to top so info sits beneath the grid */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-y: auto;
   }
 
+  /* Grid info overlay → inline strip below the grid */
   .grid-info-overlay {
-    top: 8px;
-    left: 8px;
-    gap: 8px;
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  .scenario-context,
+  .scenario-title {
+    width: 100%;
+    text-align: center;
   }
 
   .scenario-context {
@@ -422,12 +403,21 @@ body {
   }
 
   .scenario-title {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .stats-block {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
   }
 
   .stat-item {
-    padding: 5px 8px;
-    gap: 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+    padding: 4px 8px;
   }
 
   .stat-label {
@@ -435,26 +425,18 @@ body {
   }
 
   .stat-value {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .stat-combos {
     font-size: 0.62rem;
   }
-
-  .legend-item {
-    font-size: 0.65rem;
-  }
 }
 
 /* Very small phones */
-@media (max-width: 360px) {
-  :root {
-    --header-h: 52px;
-  }
-
-  .app-logo-icon {
-    font-size: 1rem;
+@media (max-width: 380px) {
+  .app-logo-text {
+    display: none;
   }
 
   .mobile-menu-toggle {
@@ -464,10 +446,14 @@ body {
   }
 
   .scenario-title {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .stat-item {
+    padding: 3px 6px;
   }
 
   .stat-value {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
   }
 }

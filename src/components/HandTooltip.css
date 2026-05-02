@@ -76,3 +76,11 @@
   color: var(--text-muted);
   font-style: italic;
 }
+
+/* Touch devices have no hover, so the tooltip pops up randomly on tap and feels broken.
+   Hide it; the DecisionModal already handles tap-for-info on mixed cells. */
+@media (hover: none) {
+  .hand-tooltip {
+    display: none;
+  }
+}
