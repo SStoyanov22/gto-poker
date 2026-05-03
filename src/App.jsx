@@ -57,6 +57,7 @@ export default function App() {
   const [selectedPfrSizeId,   setSelectedPfrSizeId]   = useState('2.5bb')
   const [vs4bIsAllin,         setVs4bIsAllin]         = useState(false)
   const [vsSqueezeRfiFolds,   setVsSqueezeRfiFolds]   = useState(false)
+  const [mobileMenuOpen,      setMobileMenuOpen]      = useState(false)
 
   const handleGameTypeChange = (gameTypeId) => {
     const gt         = gameTypes.find(g => g.id === gameTypeId)
@@ -228,6 +229,14 @@ export default function App() {
 
       {/* ── Header ── */}
       <header className="app-header">
+        <button
+          className="mobile-menu-toggle"
+          onClick={() => setMobileMenuOpen(o => !o)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+        >
+          {mobileMenuOpen ? '✕' : '☰'}
+        </button>
         <div className="app-logo">
           <span className="app-logo-icon">♠</span>
           <span className="app-logo-text">GTO Preflop Ranges</span>
@@ -238,7 +247,7 @@ export default function App() {
       <div className="app-body">
 
         {/* Left panel */}
-        <aside className="left-panel">
+        <aside className={`left-panel${mobileMenuOpen ? ' mobile-open' : ''}`}>
           <ScenarioSelector
             gameTypes={gameTypes}
             pfrSizes={PFR_SIZES}
@@ -258,6 +267,7 @@ export default function App() {
               setSelectedScenarioId(id)
               setVs4bIsAllin(false)
               setVsSqueezeRfiFolds(false)
+              setMobileMenuOpen(false)
             }}
             onPfrSizeChange={setSelectedPfrSizeId}
           />

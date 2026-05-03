@@ -22,12 +22,11 @@ const DEFAULT_OPEN_SIZES = {
   100: { UTG: '2.1', UTG1: '2.1', LJ: '2.1', HJ: '2.1', CO: '2.2', BTN: '2.5', SB: '3.5' },
 }
 
-// 3-bet sizes per stack populated from vs-RFI responses at runtime.
-// Until populated, fall back to a percentage of stack (~10% deep, more shallow).
-const FALLBACK_3BET_FRAC = { ip: 0.085, oop: 0.10 }
-
-// Fallback 4-bet fraction: typically ~22% of stack at 100bb (e.g., R22 over R8).
-const FALLBACK_4BET_FRAC = 0.22
+// 3-bet/4-bet sizes per stack are populated from vs-RFI / vs-3B responses at
+// runtime. If unobserved, fall back to 'RAI' — at short stacks the only legal
+// raise is all-in, and at deeper stacks vs-RFI scrapes will populate the table
+// before we generate any vs-3B spots that need it. (Percentage-of-stack
+// fallbacks produced sub-min-raise sizes like R0.43 at 5bb.)
 
 const sizeTables = {
   open: structuredClone(DEFAULT_OPEN_SIZES),  // [stack][opener] → '2.1'
@@ -65,17 +64,11 @@ function openSize(opener) {
 }
 
 function threeBetSize(opener, threeBettor) {
-  const t = sizeTables.threeBet[currentStack]?.[opener]?.[threeBettor]
-  if (t) return t
-  const oop = threeBettor === 'SB' || threeBettor === 'BB'
-  const frac = oop ? FALLBACK_3BET_FRAC.oop : FALLBACK_3BET_FRAC.ip
-  return (currentStack * frac).toFixed(2).replace(/\.?0+$/, '')
+  return sizeTables.threeBet[currentStack]?.[opener]?.[threeBettor] ?? 'RAI'
 }
 
 function fourBetSize(opener, threeBettor) {
-  const t = sizeTables.fourBet[currentStack]?.[opener]?.[threeBettor]
-  if (t) return t
-  return (currentStack * FALLBACK_4BET_FRAC).toFixed(2).replace(/\.?0+$/, '')
+  return sizeTables.fourBet[currentStack]?.[opener]?.[threeBettor] ?? 'RAI'
 }
 
 // ── Path builders ────────────────────────────────────────────────────────────
@@ -87,11 +80,13 @@ export function rfiActions(opener) {
   return out.join('-')
 }
 
+function raiseToken(size) { return size === 'RAI' ? 'RAI' : `R${size}` }
+
 /** Hero faces an open from `opener`. Folds in between. Hero decides next. */
 export function vsOpenActions(hero, opener) {
   const out = []
   for (let i = 0; i < POS[opener]; i++) out.push('F')
-  out.push(`R${openSize(opener)}`)
+  out.push(raiseToken(openSize(opener)))
   for (let i = POS[opener] + 1; i < POS[hero]; i++) out.push('F')
   return out.join('-')
 }
@@ -100,19 +95,16 @@ export function vsOpenActions(hero, opener) {
 export function vs3betActions(opener, threeBettor) {
   const out = []
   for (let i = 0; i < POS[opener]; i++) out.push('F')
-  out.push(`R${openSize(opener)}`)
+  out.push(raiseToken(openSize(opener)))
   for (let i = POS[opener] + 1; i < POS[threeBettor]; i++) out.push('F')
-  const tb = threeBetSize(opener, threeBettor)
-  out.push(tb === 'RAI' ? 'RAI' : `R${tb}`)
+  out.push(raiseToken(threeBetSize(opener, threeBettor)))
   for (let i = POS[threeBettor] + 1; i < POS_NAMES.length; i++) out.push('F')
   return out.join('-')
 }
 
 /** 3-bettor faces a 4-bet from opener. Hero (3-bettor) decides next. */
 export function vs4betActions(opener, threeBettor) {
-  const base = vs3betActions(opener, threeBettor)
-  const fb = fourBetSize(opener, threeBettor)
-  return base + '-' + (fb === 'RAI' ? 'RAI' : `R${fb}`)
+  return vs3betActions(opener, threeBettor) + '-' + raiseToken(fourBetSize(opener, threeBettor))
 }
 
 // ── Spot generation ──────────────────────────────────────────────────────────
@@ -156,8 +148,10 @@ export function generateMttSpots() {
     }
   }
 
-  // vs 3B: opener faces 3-bet from any later position
+  // vs 3B: opener faces 3-bet from any later position.
+  // Skip when opener's RFI is all-in — you can't 3-bet a shove.
   for (const opener of openers) {
+    if (sizeTables.open[currentStack]?.[opener] === 'RAI') continue
     for (let i = POS[opener] + 1; i < POS_NAMES.length; i++) {
       const threeBettor = POS_NAMES[i]
       spots[`${opener.toLowerCase()}_vs_3b_${threeBettor.toLowerCase()}`] = {
@@ -172,12 +166,13 @@ export function generateMttSpots() {
   }
 
   // vs 4B: 3-bettor faces 4-bet from opener.
-  // Skip pairs where the discovered 3-bet is RAI — opener can't 4-bet an all-in,
-  // so this spot doesn't exist in the solver tree.
+  // Skip when open is all-in or 3-bet is all-in/undiscovered.
   for (const opener of openers) {
+    if (sizeTables.open[currentStack]?.[opener] === 'RAI') continue
     for (let i = POS[opener] + 1; i < POS_NAMES.length; i++) {
       const threeBettor = POS_NAMES[i]
-      if (sizeTables.threeBet[currentStack]?.[opener]?.[threeBettor] === 'RAI') continue
+      const tb = sizeTables.threeBet[currentStack]?.[opener]?.[threeBettor]
+      if (!tb || tb === 'RAI') continue
       spots[`${threeBettor.toLowerCase()}_vs_4b_${opener.toLowerCase()}`] = {
         description: `${threeBettor} vs ${opener} 4-bet`,
         actions: vs4betActions(opener, threeBettor),
@@ -212,4 +207,5 @@ export function stacksParam(depthBb) {
 export const STACK_SIZES = [
   200, 160, 130, 100, 80, 70, 60, 55, 50, 45, 40, 38, 35, 32, 30, 28, 26, 25, 22, 20,
   19, 17, 16, 15, 14, 13, 12, 11, 10,
+  9, 8, 7, 6, 5, 4, 3, 2, 1,
 ]

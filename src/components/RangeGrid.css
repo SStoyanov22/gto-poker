@@ -96,6 +96,25 @@
 }
 
 /* Responsive tweaks */
+@media (max-width: 768px) {
+  .range-grid {
+    /* On mobile the panel is no longer beside the grid — size to width only and let aspect-ratio
+       keep it square. Height comes from aspect-ratio, not the viewport. */
+    width: min(calc(100vw - 20px), calc(100vh - var(--header-h) - 120px));
+    gap: 2px;
+    grid-template-columns: 22px repeat(13, 1fr);
+    grid-template-rows: 22px repeat(13, 1fr);
+  }
+
+  .cell-label {
+    font-size: clamp(0.42rem, 1.6vw, 0.6rem);
+  }
+
+  .cell-combos {
+    font-size: clamp(0.34rem, 1.2vw, 0.46rem);
+  }
+}
+
 @media (max-width: 480px) {
   .range-grid {
     gap: 1px;
@@ -104,14 +123,11 @@
   }
 
   .grid-header {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
   }
 
-  .cell-label {
-    font-size: 0.42rem;
-  }
-
+  /* Hide combos count on tiny phones — cells are too small to read both */
   .cell-combos {
-    font-size: 0.32rem;
+    display: none;
   }
 }

@@ -57,6 +57,7 @@ body {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px solid var(--divider);
   background: var(--bg-surface);
@@ -79,6 +80,27 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.01em;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.mobile-menu-toggle:hover {
+  background: var(--btn-hover-bg);
 }
 
 /* ─── Body ───────────────────────────────────────────────────── */
@@ -267,4 +289,171 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* MOBILE & TABLET RESPONSIVE STYLES                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  :root {
+    --left-panel-w: 320px;
+  }
+
+  .app-logo-text {
+    font-size: 0.85rem;
+  }
+
+  .scenario-context {
+    font-size: 0.62rem;
+  }
+
+  .scenario-title {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablet & phone — stacked drawer layout with hamburger toggle */
+@media (max-width: 768px) {
+  :root {
+    /* Panel is no longer beside the grid, so don't reserve horizontal space for it. */
+    --left-panel-w: 0px;
+    --header-h: 52px;
+  }
+
+  .app-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .app-logo-text {
+    font-size: 0.85rem;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .app-body {
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Drawer: overlays the grid so the grid keeps its full height regardless of drawer state */
+  .left-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: 1px solid transparent;
+    padding: 0 12px;
+    gap: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
+    transition: max-height 0.25s ease, padding 0.25s ease, gap 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .left-panel.mobile-open {
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
+    padding: 12px;
+    gap: 10px;
+    border-bottom-color: var(--divider);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .right-panel {
+    flex: 1;
+    min-height: 0;
+    padding: 10px;
+    /* Stack grid + info column-wise; align to top so info sits beneath the grid */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  /* Grid info overlay → inline strip below the grid */
+  .grid-info-overlay {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  .scenario-context,
+  .scenario-title {
+    width: 100%;
+    text-align: center;
+  }
+
+  .scenario-context {
+    font-size: 0.6rem;
+  }
+
+  .scenario-title {
+    font-size: 0.85rem;
+  }
+
+  .stats-block {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .stat-item {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+    padding: 4px 8px;
+  }
+
+  .stat-label {
+    font-size: 0.58rem;
+  }
+
+  .stat-value {
+    font-size: 0.85rem;
+  }
+
+  .stat-combos {
+    font-size: 0.62rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .app-logo-text {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .scenario-title {
+    font-size: 0.78rem;
+  }
+
+  .stat-item {
+    padding: 3px 6px;
+  }
+
+  .stat-value {
+    font-size: 0.78rem;
+  }
 }

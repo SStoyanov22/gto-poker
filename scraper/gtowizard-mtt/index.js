@@ -274,15 +274,14 @@ async function scrapeSpot(stack, spotId, spot, outDir, opts) {
     }))
     const processed = processSpotSolution(raw)
 
-    // Capture canonical open size from RFI responses
+    // Capture canonical open size from RFI responses. At short stacks the only
+    // legal raise may be all-in — record that as 'RAI' so vs-RFI uses it.
     if (spot.kind === 'rfi') {
-      for (const sol of (raw.action_solutions ?? [])) {
-        const a = sol.action
-        if (a?.type === 'RAISE' && !a.allin) {
-          setOpenSize(stack, spot.position, a.betsize)
-          break
-        }
-      }
+      const sols = raw.action_solutions ?? []
+      const nonAllin = sols.find(s => s.action?.type === 'RAISE' && !s.action.allin)
+      const allin = sols.find(s => s.action?.type === 'RAISE' && s.action.allin)
+      if (nonAllin) setOpenSize(stack, spot.position, nonAllin.action.betsize)
+      else if (allin) setOpenSize(stack, spot.position, 'RAI')
     }
     // Pull 3-bet sizes out of vs-RFI responses to feed into vs-3B requests.
     // Prefer non-allin raise; fall back to all-in (e.g., 10bb stacks have only RAI).
@@ -338,13 +337,11 @@ async function bootstrapSizesFromExisting(stack, outDir) {
     if (!existsSync(path)) continue
     try {
       const data = JSON.parse(await readFile(path, 'utf-8'))
-      for (const sol of (data.raw?.action_solutions ?? [])) {
-        const a = sol.action
-        if (a?.type === 'RAISE' && !a.allin) {
-          setOpenSize(stack, pos, a.betsize)
-          break
-        }
-      }
+      const sols = data.raw?.action_solutions ?? []
+      const nonAllin = sols.find(s => s.action?.type === 'RAISE' && !s.action.allin)
+      const allin = sols.find(s => s.action?.type === 'RAISE' && s.action.allin)
+      if (nonAllin) setOpenSize(stack, pos, nonAllin.action.betsize)
+      else if (allin) setOpenSize(stack, pos, 'RAI')
     } catch {}
   }
   const { readdir } = await import('fs/promises')
